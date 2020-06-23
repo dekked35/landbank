@@ -1,0 +1,22 @@
+<p-panel>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">
+            <figure><img src="../../../assets/icons/icon_product.svg">
+            </figure>
+            <figcaption>
+                <h1>กำหนด Product
+                    <p-toggleButton
+                        onLabel="กำหนดตามคู่แข่ง"
+                        offLabel="กำหนดตามคู่แข่ง"
+                        onIcon="pi pi-check"  offIcon="pi pi-times"
+                        [(ngModel)]="showCompetitor">
+                    </p-toggleButton>
+                </h1>
+            </figcaption>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12 font-gray-color text_cover">
+            หมายเหตุ สัดส่วนที่แสดงมาจากค่ามาตรฐานจากทางผู้พัฒนาเว็บไซต์
+        </div>
+    </div>
+    <app-product-basic-type [showCompetitor]="showCompetitor"></app-product-basic-type>
+</p-panel>

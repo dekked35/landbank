@@ -1,0 +1,518 @@
+<div class="ui-g text_cover ui-fluid">
+    <p-dialog styleClass="mydialog" header="การแจ้งเตือน" [(visible)]="displayErrDialog">
+        <span class="font-red-color"> {{ displayErrDialogMsg }}</span>
+    </p-dialog>
+
+    <h3> {{ settingHeader }} <span> {{ settingSubHeader }}</span></h3>
+    <!-- ส่วนของห้องพัก -->
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="box_layout" style="float: left;">
+            <figure>
+                <img src="../../../../../../assets/icons/icon_hotel.svg">
+            </figure>
+            <figcaption style="color: #0060be; font-size:15px;">
+                ส่วนของห้องพัก
+            </figcaption>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout"  style="float: center;">
+            พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.room  | number }} </span> ตร.ม.
+            <!-- พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.room - (areaData.standardArea.area.room * 0.15 ) | number }} </span> ตร.ม. -->
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout" style="float: center;">
+            พื้นที่คงเหลือ <span> {{ areaData.standardArea.area.room - getTotalArea(ROOM) - (getTotalArea(ROOM) * 0.15 ) | number }}  </span> ตร.ม.
+        </div>
+        <div style="float: right; text-align: right;">
+            <app-standard-size [standardType]="'size'" [type]="'room'"></app-standard-size>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="wrap_table_sum">
+            <table class="table_sum_4" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>พื้นที่ก่อสร้าง</td>
+                    <td>
+                        <div> พื้นที่ใช้สอย <br> (ตร.ม.) </div>
+                    </td>
+                    <td>
+                        <div>จำนวนห้อง <br> (ห้อง)</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr *ngFor="let room of roomProducts; let i = index">
+                    <td>
+                        <div *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== ROOM" class="box_layout"
+                            style="text-align: left;">
+                            <figure>
+                                <img src="../../../../../../assets/icons/room/{{room.name}}.svg">
+                            </figure>
+                            <figcaption class="small-figcaption" style="color: #0060be;">
+                                {{ room.name }}
+                            </figcaption>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === ROOM">
+                            <p-dropdown [style]="dropDownSize" [options]="roomTypeOptions" (onChange)="onChangeDropdown($event, i, ROOM)"
+                                optionLabel="name"  [(ngModel)]="tempEdit">
+                                <ng-template let-item pTemplate="selectedItem">
+                                    <img src="../../../../../../assets/icons/room/{{item.label}}.svg"
+                                        [ngStyle]="iconSelectedItem" />
+                                    <span [ngStyle]="textSelectedItem">{{ item.label }}</span>
+                                </ng-template>
+                                <ng-template let-room pTemplate="item">
+                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                        <img src="../../../../../../assets/icons/room/{{room.label}}.svg"
+                                            [ngStyle]="iconItem" />
+                                        <div [ngStyle]="textItem">{{ room.label }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== ROOM">
+                            <span>{{ room.area | number:'1.2-2' }}</span>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === ROOM">
+                            <input [(ngModel)]="room.area" pKeyFilter="int" type="text" pInputText />
+                        </div>
+                        <!-- (change)="onChangeInput($event, i, 'area', ROOM)"  -->
+                    </td>
+                    <td>
+                        <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== ROOM">
+                            <span>{{ room.noRoom }} </span>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === ROOM">
+                            <input [(ngModel)]="room.noRoom" pKeyFilter="int" type="text" pInputText />
+                        </div>
+
+                        <!-- (change)="onChangeInput($event, i, 'noRoom', ROOM)" -->
+                    </td>
+                    <td>
+                        <div>
+                            <!-- Normal Mode label="กำหนด"-->
+                            <button pButton type="button" class="ui-button-info small-button" *ngIf="!enableEdit"
+                                (click)="enableEditMethod($event, i, ROOM)" icon="pi pi-pencil"
+                                style="margin-right: .2em"></button>
+                            <button pButton type="button" class="ui-button-danger small-button" *ngIf="!enableEdit"
+                                (click)="deleteItem(i, ROOM)" icon="pi pi-times"></button>
+                            <!-- Edit Mode -->
+                            <button pButton type="button" class="ui-button-success small-button"
+                                *ngIf="enableEdit && enableEditIndex === i && typeEdit === ROOM"
+                                (click)="saveButton(ROOM)" icon="pi pi-save" label="บันทึก"></button>
+                            <!-- <button pButton type="button" class="ui-button-warning"
+                            *ngIf="enableEdit && enableEditIndex === i && typeEdit === ROOM" (click)="cancleEdit(ROOM)"
+                            icon="pi pi-times"></button> -->
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        <span style="color:red"> * การเลือกจำนวนห้องพักส่งผลต่อที่จอดรถ</span> <br>
+        <span style="color:grey"> หมายเหตุ หากห้องพักมีจำนวนเกิน 70 ห้องขึ้นไป ต้องมีการขอ EIA</span>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        <div style="float: right;">
+            <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem('room')"></p-button>
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        พื้นที่รวมห้องพัก
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6 ">
+        <div class="box_layout" style="float: right;">
+            <span>{{ getTotalArea(ROOM) | number:'1.2-2' }} </span> ตร.ม.
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        พื้นที่ทางเดินส่วนกลาง 15% ของพื้นที่รวมห้องพัก
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        <div class="box_layout" style="float: right;">
+            <span>{{ getTotalArea(ROOM) * 0.15 | number:'1.2-2' }} </span> ตร.ม.
+        </div>
+    </div>
+
+    <!-- ส่วนของพื้นที่ส่วนกลาง -->
+    <div class="ui-g-12 ui-md-12 ui-lg-12"></div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="box_layout" style="float: left;">
+            <figure>
+                <img src="../../../../../../assets/icons/icon_pool.svg">
+            </figure>
+            <figcaption style="color: #0060be; font-size:15px;">
+                ส่วนของพื้นที่ส่วนกลาง
+            </figcaption>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout"  style="float: center;">
+            พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.central | number }} </span> ตร.ม.
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout" style="float: center;">
+            พื้นที่คงเหลือ <span> {{  areaData.standardArea.area.central - getTotalArea(CENTRAL) | number }}  </span> ตร.ม.
+        </div>
+        <div style="float: right;">
+            <app-standard-size [standardType]="'size'" [type]="'central'"></app-standard-size>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+        <div class="wrap_table_sum ">
+            <table class="table_sum_4" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>พื้นที่ก่อสร้าง</td>
+                    <td>
+                        <div> พื้นที่ใช้สอย <br> (ตร.ม.) </div>
+                    </td>
+                    <td>
+                        <div>จำนวนห้อง <br> (ห้อง)</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr *ngFor="let central of centralProducts; let i = index">
+
+                    <td>
+                        <div *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== CENTRAL" class="box_layout"
+                            style="text-align: left;">
+                            <!-- <span>
+                                {{ central.name }}
+                            </span> -->
+                            <figure>
+                                <img src="../../../../../../assets/icons/central/{{central.name}}.svg">
+                            </figure>
+                            <figcaption class="small-figcaption" style="color: #0060be;">
+                                {{ central.name }}
+                            </figcaption>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === CENTRAL">
+                            <p-dropdown [options]="centralTypeOptions" (onChange)="onChangeDropdown($event, i, CENTRAL)"
+                            optionLabel="name" [(ngModel)]="tempEdit">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <img src="../../../../../../assets/icons/central/{{item.label}}.svg"
+                                        [ngStyle]="iconSelectedItem" />
+                                <span [ngStyle]="textSelectedItem">{{ item.label }}</span>
+                            </ng-template>
+                            <ng-template let-room pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <img src="../../../../../../assets/icons/central/{{room.label}}.svg"
+                                        [ngStyle]="iconItem" />
+                                    <div [ngStyle]="textItem">{{ room.label }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== CENTRAL">
+                            <span>{{ central.area | number:'1.2-2' }}</span>
+                        </div>
+                        <!-- (change)="onChangeInput($event, i, 'area', ROOM)"  -->
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === CENTRAL">
+                            <input [(ngModel)]="central.area" pKeyFilter="int" type="text" pInputText />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== CENTRAL">
+                            <span>{{ central.noRoom }}</span>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === CENTRAL">
+                            <input [(ngModel)]="central.noRoom" pKeyFilter="int" type="text" pInputText />
+                        </div>
+                        <!-- (change)="onChangeInput($event, i, 'noRoom', ROOM)" -->
+                    </td>
+                    <td>
+                        <div>
+                            <!-- Normal Mode -->
+                            <button pButton type="button" class="ui-button-info small-button" *ngIf="!enableEdit"
+                                (click)="enableEditMethod($event, i, CENTRAL, central.name)" icon="pi pi-pencil"
+                                style="margin-right: .2em"></button>
+                            <button pButton type="button" class="ui-button-danger small-button" *ngIf="!enableEdit"
+                                (click)="deleteItem(i, CENTRAL)" icon="pi pi-times"></button>
+
+                            <!-- Edit Mode -->
+                            <button pButton type="button" class="ui-button-success small-button"
+                                *ngIf="enableEdit && enableEditIndex === i && typeEdit === CENTRAL"
+                                (click)="saveButton(CENTRAL)" icon="pi pi-save" label="บันทึก"
+                                style="margin-right: .2em"></button>
+                            <!-- <button pButton type="button" class="ui-button-warning"
+                            *ngIf="enableEdit && enableEditIndex === i && typeEdit === CENTRAL"
+                            (click)="cancleEdit(CENTRAL)" icon="pi pi-times"></button> -->
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- <div class="ui-g-6 ui-md-6 ui-lg-6">
+        <span style="color:red"> * การเลือกจำนวนห้องพักส่งผลต่อที่จอดรถ</span>
+    </div> -->
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div style="float: right;">
+            <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(CENTRAL)"></p-button>
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        พื้นที่รวมส่วนกลาง
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6 ">
+        <div class="box_layout" style="float: right;">
+            <span>{{ getTotalArea(CENTRAL) | number:'1.2-2' }} </span> ตร.ม.
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        พื้นที่ทางเดินส่วนกลาง 20% ของพื้นที่รวมส่วนกลาง
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        <div class="box_layout" style="float: right;">
+            <span>{{ getTotalArea(CENTRAL) * 0.2 | number:'1.2-2' }} </span> ตร.ม.
+        </div>
+    </div>
+
+    <!-- ส่วนของพื้นที่จอดรถในอาคาร -->
+    <ng-container *ngIf="areaData.standardArea.area.parking !== 0">
+        <div class="ui-g-12 ui-md-12 ui-lg-12"></div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <div class="box_layout" style="float: left;">
+                <figure>
+                    <img src="../../../../../../assets/icons/icon_map_car.svg">
+                </figure>
+                <figcaption style="color: #0060be; font-size:15px;">
+                    ส่วนของพื้นที่จอดรถในอาคาร
+                </figcaption>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12" style="display:inline-flexbox;">
+            <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout"  style="float: center;">
+                พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.parking | number }} </span> ตร.ม.
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout" style="float: center;">
+                พื้นที่คงเหลือ <span> {{ areaData.standardArea.area.parking - getTotalArea(PARKING) | number }}  </span> ตร.ม.
+            </div>
+            <div style="float: right;">
+                <app-standard-size [standardType]="'size'" [type]="'parking'"></app-standard-size>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+            <div class="wrap_table_sum ">
+                <table class="table_sum_4" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>พื้นที่ก่อสร้าง</td>
+                        <td>
+                            <div> พื้นที่ใช้สอย <br> (ตร.ม.) </div>
+                        </td>
+                        <td>
+                            <div>จำนวนห้อง <br> (ห้อง)</div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr *ngFor="let parking of parkingProducts; let i = index">
+                        <td>
+                            <div *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== PARKING" class="box_layout"
+                                style="text-align: left;">
+                                <!-- <span>
+                                    {{ parking.name }}
+                                </span> -->
+                                <figure>
+                                    <img src="../../../../../../assets/icons/parking/{{parking.name}}.svg">
+                                </figure>
+                                <figcaption class="small-figcaption" style="color: #0060be;">
+                                    {{ parking.name }}
+                                </figcaption>
+                            </div>
+                            <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === PARKING">
+                                <p-dropdown   [options]="parkingTypeOptions" (onChange)="onChangeDropdown($event, i, PARKING)"
+                                optionLabel="name" [(ngModel)]="tempEdit">
+                                <ng-template let-item pTemplate="selectedItem">
+                                    <img src="../../../../../../assets/icons/parking/{{item.label}}.svg"
+                                        [ngStyle]="iconSelectedItem" />
+                                    <span [ngStyle]="textSelectedItem">{{ item.label }}</span>
+                                </ng-template>
+                                <ng-template let-parking pTemplate="item">
+                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                        <img src="../../../../../../assets/icons/parking/{{parking.label}}.svg"
+                                            [ngStyle]="iconItem" />
+                                        <div [ngStyle]="textItem">{{ parking.label }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                            </div>
+
+                        </td>
+                        <td>
+                            <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== PARKING">
+                                <span>{{ parking.area | number:'1.2-2' }}</span>
+                            </div>
+                            <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === PARKING">
+                                <input [(ngModel)]="parking.area" pKeyFilter="int" type="text" pInputText />
+                            </div>
+                            <!-- (change)="onChangeInput($event, i, 'area', ROOM)"  -->
+                        </td>
+                        <td>
+                            <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== PARKING">
+                                <span>{{ parking.noRoom }}</span>
+                            </div>
+                            <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === PARKING">
+                                <input [(ngModel)]="parking.noRoom" pKeyFilter="int" type="text" pInputText />
+                            </div>
+                            <!-- (change)="onChangeInput($event, i, 'noRoom', ROOM)" -->
+                        </td>
+                        <td>
+                            <div>
+                                <!-- Normal Mode -->
+                                <button pButton type="button" class="ui-button-info" *ngIf="!enableEdit"
+                                    (click)="enableEditMethod($event, i, PARKING)" icon="pi pi-pencil"
+                                    style="margin-right: .2em"></button>
+                                <button pButton type="button" class="ui-button-danger" *ngIf="!enableEdit"
+                                    (click)="deleteItem(i, PARKING)" icon="pi pi-times"></button>
+
+                                <!-- Edit Mode -->
+                                <button pButton type="button" class="ui-button-success"
+                                    *ngIf="enableEdit && enableEditIndex === i && typeEdit === PARKING"
+                                    (click)="saveButton(PARKING)" icon="pi pi-save" label="บันทึก"
+                                    style="margin-right: .2em"></button>
+                                <!-- <button pButton type="button" class="ui-button-warning"
+                                *ngIf="enableEdit && enableEditIndex === i && typeEdit === PARKING"
+                                (click)="cancleEdit(PARKING)" icon="pi pi-times"></button> -->
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6">
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6">
+            <div style="float: right;">
+                <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(PARKING)"></p-button>
+            </div>
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6">
+            พื้นที่เสียจากถนนขับผ่าน 40%
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6">
+            <div class="box_layout" style="float: right;">
+                <span>{{ getTotalArea(PARKING) * 0.4 | number:'1.2-2' }} </span> ตร.ม.
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- ส่วนของพื้นที่ภายนอกอาคาร -->
+    <div class="ui-g-12 ui-md-12 ui-lg-12"></div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="box_layout" style="float: left;">
+            <figure>
+                <img src="../../../../../../assets/icons/icon_greenarea.svg">
+            </figure>
+            <figcaption style="color: #0060be; font-size:15px;">
+                ส่วนของพื้นที่ภายนอกอาคาร
+            </figcaption>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12" style="display:inline-flexbox;">
+          <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout"  style="float: center;">
+            พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ 1800 | number }} </span> ตร.ม.
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout" style="float: center;">
+            พื้นที่คงเหลือ <span> {{ 1720 | number }}  </span> ตร.ม.
+        </div>
+        <div style="float: right;">
+            <app-standard-size [standardType]="'size'" [type]="'outdoor'"></app-standard-size>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+        <div class="wrap_table_sum ">
+            <table class="table_sum_4" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>พื้นที่ก่อสร้าง</td>
+                    <td>
+                        <div> พื้นที่ใช้สอย <br> (ตร.ม.) </div>
+                    </td>
+                    <td>
+                        <div>จำนวนห้อง <br> (ห้อง)</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr *ngFor="let outdoor of outdoorProducts; let i = index">
+                    <td>
+                        <div *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== OUTDOOR" class="box_layout"
+                            style="text-align: left;">
+                            <figure>
+                                <img src="../../../../../../assets/icons/outdoor/{{outdoor.name}}.svg">
+                            </figure>
+                            <figcaption class="small-figcaption" style="color: #0060be;">
+                                {{ outdoor.name }}
+                            </figcaption>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === OUTDOOR">
+                            <p-dropdown
+                            [options]="outdoorTypeOptions" (onChange)="onChangeDropdown($event, i, OUTDOOR)"
+                            optionLabel="name" [(ngModel)]="tempEdit">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <img src="../../../../../../assets/icons/outdoor/{{item.label}}.svg"
+                                    [ngStyle]="iconSelectedItem" />
+                                <span [ngStyle]="textSelectedItem">{{ item.label }}</span>
+                            </ng-template>
+                            <ng-template let-outdoor pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <img src="../../../../../../assets/icons/outdoor/{{outdoor.label}}.svg"
+                                        [ngStyle]="iconItem" />
+                                    <div [ngStyle]="textItem">{{ outdoor.label }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== OUTDOOR">
+                            <span>{{ outdoor.area | number:'1.2-2' }}</span>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === OUTDOOR">
+                            <input [(ngModel)]="outdoor.area" pKeyFilter="int" type="text" pInputText />
+                        </div>
+                        <!-- (change)="onChangeInput($event, i, 'area', ROOM)"  -->
+                    </td>
+                    <td>
+                        <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== OUTDOOR">
+                            <span>{{ outdoor.noRoom }}</span>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === OUTDOOR">
+                            <input [(ngModel)]="outdoor.noRoom" pKeyFilter="int" type="text" pInputText />
+                        </div>
+                        <!-- (change)="onChangeInput($event, i, 'noRoom', ROOM)" -->
+                    </td>
+                    <td>
+                        <div>
+                            <!-- Normal Mode -->
+                            <button pButton type="button" class="ui-button-info" *ngIf="!enableEdit"
+                                (click)="enableEditMethod($event, i, OUTDOOR)" icon="pi pi-pencil"
+                                style="margin-right: .2em"></button>
+                            <button pButton type="button" class="ui-button-danger" *ngIf="!enableEdit"
+                                (click)="deleteItem(i, OUTDOOR)" icon="pi pi-times"></button>
+
+                            <!-- Edit Mode -->
+                            <button pButton type="button" class="ui-button-success"
+                                *ngIf="enableEdit && enableEditIndex === i && typeEdit === OUTDOOR"
+                                (click)="saveButton(OUTDOOR)" icon="pi pi-save" label="บันทึก"
+                                style="margin-right: .2em"></button>
+                            <!-- <button pButton type="button" class="ui-button-warning"
+                                *ngIf="enableEdit && enableEditIndex === i && typeEdit === OUTDOOR"
+                                (click)="cancleEdit(OUTDOOR)" icon="pi pi-times"></button> -->
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        <div style="float: right;">
+            <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(OUTDOOR)"></p-button>
+        </div>
+    </div>
+</div>

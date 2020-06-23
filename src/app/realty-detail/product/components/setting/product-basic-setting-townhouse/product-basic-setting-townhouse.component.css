@@ -1,0 +1,115 @@
+
+h3 {
+    color: #0060BE;
+}
+
+h3 span {
+    color: black;
+    font-size: 14px;
+}
+h4 {
+    color: #0060BE;
+}
+
+.slider_center {
+/* padding-top:30px; */
+}
+
+figure {
+    text-align: center;
+    color: #0060BE;
+    font-size: 12px;
+}
+
+@media (min-width: 64.063em) {
+    .wrap_logo {
+        width: 80px;
+        display: inline-block;
+        /* padding-left: 20px; */
+        padding-right: 20px;
+        padding-top: 30%;
+        align-self: center;
+        /* vertical-align: middle; */
+    }
+}
+
+@media (min-width: 40.063em) {
+    .wrap_logo {
+        width: 80px;
+        display: inline-block;
+        padding-top: 20%;
+        padding-right: 20px;
+        align-self: center;
+        /* vertical-align: middle; */
+    }
+}
+
+
+@media (min-width: 20.063em) {
+    .wrap_logo {
+        width: 80px;
+        display: inline-block;
+        /* padding-left: 20px; */
+        padding-right: 20px;
+        align-self: center;
+        /* vertical-align: middle; */
+    }
+}
+
+.slide-container {
+        width: 100%;
+}
+  
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 0.500em;
+    border: 0 none;
+    background: #e1e4e9;
+    outline: none;
+    opacity: 1;
+    -webkit-transition: .2s;
+    -webkit-transition: opacity .2s;
+    transition: opacity .2s;
+    border-radius: 3px;
+    position: relative;
+    text-align: left;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 1.3em;
+    width: 1.3em;
+    background-color: #0D70B5;
+    border: 4px solid #3D8DC4;
+    border-radius: 100%;
+    appearance: none;
+    cursor: pointer;
+    top:50%;
+    margin-top: -0.5715em;
+    transition: box-shadow 0.2s;
+  }
+
+  .slider::-moz-range-thumb {
+    height: 1.3em;
+    width: 1.3em;
+    background-color: #0D70B5;
+    border: 4px solid #3D8DC4;
+    cursor: pointer;
+  }
+  .wrap_product_logo {
+    padding-top:40px;
+  }
+  @media (max-width: 1024px) {
+    .wrap_product_logo {
+        color: #0060be;
+        float: center;
+        padding-top:80px;
+        text-align: center;
+        align-self: center;
+      }
+  }
