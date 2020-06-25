@@ -152,7 +152,7 @@
             พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.central | number }} </span> ตร.ม.
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout" style="float: center;">
-            พื้นที่คงเหลือ <span> {{  areaData.standardArea.area.central - getTotalArea(CENTRAL) | number }}  </span> ตร.ม.
+            พื้นที่คงเหลือ <span> {{  areaData.standardArea.area.central - getTotalArea(CENTRAL) - getTotalArea(CENTRAL) * 0.2 | number }}  </span> ตร.ม.
         </div>
         <div style="float: right;">
             <app-standard-size [standardType]="'size'" [type]="'central'"></app-standard-size>
@@ -289,7 +289,7 @@
                 พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.parking | number }} </span> ตร.ม.
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout" style="float: center;">
-                พื้นที่คงเหลือ <span> {{ areaData.standardArea.area.parking - getTotalArea(PARKING) | number }}  </span> ตร.ม.
+                พื้นที่คงเหลือ <span> {{ areaData.standardArea.area.parking - getTotalArea(PARKING) - getTotalArea(PARKING) * 0.4 | number }}  </span> ตร.ม.
             </div>
             <div style="float: right;">
                 <app-standard-size [standardType]="'size'" [type]="'parking'"></app-standard-size>
@@ -390,6 +390,14 @@
             </div>
         </div>
         <div class="ui-g-6 ui-md-6 ui-lg-6">
+            พื้นที่รวมที่จอดรถในอาคาร
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6 ">
+            <div class="box_layout" style="float: right;">
+                <span>{{ getTotalArea(PARKING) | number:'1.2-2' }} </span> ตร.ม.
+            </div>
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6">
             พื้นที่เสียจากถนนขับผ่าน 40%
         </div>
         <div class="ui-g-6 ui-md-6 ui-lg-6">
@@ -413,10 +421,10 @@
     </div>
     <div class="ui-g-12 ui-md-12 ui-lg-12" style="display:inline-flexbox;">
           <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout"  style="float: center;">
-            พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ 1800 | number }} </span> ตร.ม.
+            พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.outdoor | number }} </span> ตร.ม.
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout" style="float: center;">
-            พื้นที่คงเหลือ <span> {{ 1720 | number }}  </span> ตร.ม.
+            พื้นที่คงเหลือ <span> {{ areaData.standardArea.area.outdoor - getTotalArea(OUTDOOR)| number }}  </span> ตร.ม.
         </div>
         <div style="float: right;">
             <app-standard-size [standardType]="'size'" [type]="'outdoor'"></app-standard-size>
@@ -513,6 +521,14 @@
     <div class="ui-g-6 ui-md-6 ui-lg-6">
         <div style="float: right;">
             <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(OUTDOOR)"></p-button>
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6">
+        พื้นที่รวมภายนอาคาร
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6 ">
+        <div class="box_layout" style="float: right;">
+            <span>{{ getTotalArea(OUTDOOR) | number:'1.2-2' }} </span> ตร.ม.
         </div>
     </div>
 </div>

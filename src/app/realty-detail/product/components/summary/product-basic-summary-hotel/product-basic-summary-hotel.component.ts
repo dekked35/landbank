@@ -17,9 +17,9 @@ export class ProductBasicSummaryHotelComponent implements OnInit {
   products: any ;
   areaData: any;
   conclustionText : string = "สรุปจำนวน";
-
+  isin: number = 1
   constructor(private store: Store<any>) {}
-  
+
   ngOnInit() {
     // this.settingHeader = this.header[this.owner];
     this.store.select(fromCore.getPage)
@@ -31,10 +31,15 @@ export class ProductBasicSummaryHotelComponent implements OnInit {
     .subscribe(data => {
       this.areaData = data.payload;
     });
-    
+
     this.store.select(fromCore.getProduct)
     .subscribe(data => {
+      const opposite = this.owner === 'user' ? 'competitor' : 'user';
       this.products = data.payload[this.owner];
+      console.log(this.products)
+      // if (data.payload[this.owner].rooms.length === 0) {
+      //   this.products = data.payload[opposite];
+      // }
     });
   }
 }

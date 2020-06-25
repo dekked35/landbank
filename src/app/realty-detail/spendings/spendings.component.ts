@@ -28,6 +28,15 @@ const needToConvert = [
   'costAdvt'
 ]
 
+const needToConvertHotel = [
+  'specialEquipments',
+  'costPerMonths',
+  'outdoors',
+  'parking',
+  'centrals',
+  'rooms',
+]
+
 
 @Component({
   selector: "app-spendings",
@@ -200,7 +209,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
           }
         });
         this.store.dispatch(new spendingsAction.SuccessAction(newSpendingData));
-        // this.store.dispatch(new spendingsAction.IsLoadingAction(false));
+        this.store.dispatch(new spendingsAction.IsLoadingAction(false));
 
         this.getImplicitsCosts(tempSpending);
         this.getRateReturn(tempSpending);
@@ -209,16 +218,27 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   }
 
   convertNum(){
-    // tslint:disable-next-line: forin
-    for (const item in this.spendingsData) {
-      if (needToConvert.includes(item)) {
-        this.spendingsData[item] = parseFloat(this.spendingsData[item].toString().replace(/,/g, ''))
-        if (this.spendingsData.priceLandBought === 35000000 ){
-          this.value_again = true;
+    if (['village', 'townhome'].includes(this.currentProperty)) {
+      for (const item in this.spendingsData) {
+        if (needToConvert.includes(item)) {
+          this.spendingsData[item] = parseFloat(this.spendingsData[item].toString().replace(/,/g, ''))
+          if (this.spendingsData.priceLandBought === 35000000 ){
+            this.value_again = true;
+          }
+        }
+      }
+    } else {
+      for (const item in this.spendingsData) {
+        if (needToConvertHotel.includes(item) && this.spendingsData[item].length === 'array') {
+          if(item === 'specialEquipments' || item === 'costPerMonths'){
+            this.spendingsData[item].map( (item) => {
+                item.cost = parseFloat(item.cost.toString().replace(/,/g, ''));
+              })
+            }
+          }
         }
       }
     }
-  }
 
   setChange(){
     this.clickChange = true;

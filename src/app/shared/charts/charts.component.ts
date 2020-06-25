@@ -46,7 +46,6 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() chartData: any;
 
   series: ApexNonAxisChartSeries;
-
   @ViewChild("chart", { static: false }) chart: ChartComponent;
 
   public chartOptions: Partial<ChartOptions>;
@@ -65,11 +64,13 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     // this.chartMapping('init');
+    // console.log('product chart init',this.chartData, this.chartType)
     this.chartMapper(this.chartType);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     // this.chartMapping('onChange');
+    // console.log('product chart onChange',this.chartData, this.chartType)
     this.chartMapper(this.chartType);
 
   }
@@ -98,12 +99,12 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
         if (this.chart !== undefined) {
           this.series = product_series;
           this.chart.updateSeries(this.series);
-        } 
+        }
         else {
           chartDefault.series = product_series;
           this.chartOptions = chartDefault;
         }
-        
+
         break;
       case 'spendings':
         let spendings_series = this.spendingChartMapping(this.currentProperty);
@@ -133,7 +134,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
       series = [+this.chartData.percent.sellArea, +this.chartData.percent.roadSize, +this.chartData.percent.greenArea];
     } else {
       // condo hotel commall
-            series = [+this.chartData.percent.room, +this.chartData.percent.central, 
+            series = [+this.chartData.percent.room, +this.chartData.percent.central,
          +this.chartData.percent.corridor, +this.chartData.percent.parking,
          +this.chartData.percent.outdoor];
     }
@@ -151,7 +152,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       // condo
 
-      series = [this.chartData.totalRoomArea, this.chartData.totalCentralArea, 
+      series = [this.chartData.totalRoomArea, this.chartData.totalCentralArea,
       this.chartData.totalCorridor,  this.chartData.totalCentralArea, this.chartData.totalOutdoorArea];
       let empty = series.every((data) => { return +data === 0 });
       if(empty) {
@@ -160,7 +161,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
     }
     return series;
   }
-  
+
   spendingChartMapping(currentProperty:string) : Array<number> {
     let series = [];
     if(['village', 'townhome'].includes(currentProperty)) {

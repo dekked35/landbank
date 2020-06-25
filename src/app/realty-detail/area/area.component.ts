@@ -183,7 +183,6 @@ export class AreaComponent implements OnInit {
   }
 
   InputChange($event) {
-    console.log(this.standardArea)
     this.reloadData(true);
   }
 
@@ -213,7 +212,6 @@ export class AreaComponent implements OnInit {
     for (let [key, value] of Object.entries(percent)) {
       totalAreaRatio += +value;
     }
-
     this.totalAreaRatio = totalAreaRatio;
     this.raminingAreaRatio = 100 - this.totalAreaRatio;
     this.checkDisplayDialog(percent);
@@ -306,6 +304,7 @@ export class AreaComponent implements OnInit {
       'osrValue': osrValue,
       'totalArea': totalArea,
       'landPrice': landPrice,
+      'land_price' : landPrice,
       'usableArea': totalArea, // Not use this one but API still require
       'availableArea' : availableArea,
       'standardArea': this.parseObject(this.standardArea),
@@ -321,9 +320,10 @@ export class AreaComponent implements OnInit {
     this.standardArea.area = newAreaData.standardArea.area;
     // this.allArea = Object.values(this.standardArea.area).map( (x) => console.log(x))
     let test = Object.values(this.standardArea.area).reduce( (acc: number, cur: number) => acc + cur)
-    console.log(this.standardArea)
-    if (typeof test === 'number') {
+    if (typeof test === 'number' && test <= 10000) {
       this.allArea = test;
+      this.standardArea.percent.greenArea = 100 - this.standardArea.percent.roadSize - this.standardArea.percent.sellArea;
+      this.standardArea.area.greenArea = 10000 - this.standardArea.area.roadSize - this.standardArea.area.sellArea;
     }
     // Remove this after bank remove API.
     // console.log('Assign : ' +  costLandType);

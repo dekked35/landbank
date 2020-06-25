@@ -146,7 +146,7 @@
              </div>
              <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
                 <div>
-                   <span *ngIf="!is_loading"> {{ spendingsData.costDevelopLand | number:'1.2-2' }} </span>
+                   <span *ngIf="!is_loading"> {{ spendingsData.costDevelopLand + areaData.total_land_price | number:'1.2-2' }} </span>
                    <span *ngIf="is_loading"> 0.00 </span>
                    บาท
                 </div>
@@ -254,8 +254,10 @@
                      </td>
                      <td class="box_layout">
                         <div>
-                           <input pKeyFilter="int" [(ngModel)]="room.cost" type="number"
-                              (change)="InputOnchanges($event)" pInputText />
+                           <!-- <input pKeyFilter="int" [(ngModel)]="room.cost" type="number"
+                              (change)="InputOnchanges($event)" pInputText /> -->
+                            <input [(ngModel)]="room.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
                         </div>
                      </td>
                      <td class="box_layout">
@@ -308,8 +310,10 @@
                      </td>
                      <td class="box_layout">
                         <div>
-                           <input pKeyFilter="int" type="number" [(ngModel)]="central.cost"
-                              (change)="InputOnchanges($event)" pInputText />
+                           <!-- <input pKeyFilter="int" type="number" [(ngModel)]="central.cost"
+                              (change)="InputOnchanges($event)" pInputText /> -->
+                            <input [(ngModel)]="central.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
                         </div>
                      </td>
                      <td class="box_layout">
@@ -366,8 +370,10 @@
                         </td>
                         <td class="box_layout">
                            <div>
-                              <input pKeyFilter="int" type="number" [(ngModel)]="parking.cost"
-                                 (change)="InputOnchanges($event)" pInputText />
+                              <!-- <input pKeyFilter="int" type="number" [(ngModel)]="parking.cost"
+                                 (change)="InputOnchanges($event)" pInputText /> -->
+                                 <input [(ngModel)]="parking.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
                            </div>
                         </td>
                         <td class="box_layout">
@@ -424,8 +430,10 @@
 
                      <td class="box_layout">
                         <div>
-                           <input pKeyFilter="int" type="number" [(ngModel)]="ourdoor.cost"
-                              (change)="InputOnchanges($event)" pInputText />
+                           <!-- <input pKeyFilter="int" type="number" [(ngModel)]="ourdoor.cost"
+                              (change)="InputOnchanges($event)" pInputText /> -->
+                            <input [(ngModel)]="ourdoor.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
                         </div>
                      </td>
                      <td class="box_layout">
@@ -469,14 +477,18 @@
                      <td class="box_layout">  <input [(ngModel)]="item.type" type="text" pInputText /></td>
                      <td class="box_layout">
                         <div>
-                           <input pKeyFilter="int" [(ngModel)]="item.cost" (change)="InputOnchanges($event)"
-                              type="number" pInputText />
+                           <!-- <input pKeyFilter="int" [(ngModel)]="item.cost" (change)="InputOnchanges($event)"
+                              type="number" pInputText /> -->
+                            <input [(ngModel)]="item.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
                         </div>
                      </td>
                      <td class="box_layout">
                         <div>
-                           <input pKeyFilter="int" [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="number"
-                              pInputText />
+                           <!-- <input pKeyFilter="int" [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="number"
+                              pInputText /> -->
+                            <input [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
                         </div>
                      </td>
                      <td class="box_layout">
@@ -544,8 +556,10 @@
                      </td>
                      <td class="box_layout">
                         <div *ngIf="item.type !== 'ค่า Pre-Opening'">
-                           <input pKeyFilter="int" [(ngModel)]="item.cost" (change)="InputOnchanges($event)"
-                              type="number" pInputText />
+                           <!-- <input pKeyFilter="int" [(ngModel)]="item.cost" (change)="InputOnchanges($event)"
+                              type="number" pInputText /> -->
+                            <input [(ngModel)]="item.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
                         </div>
                         <div *ngIf="item.type === 'ค่า Pre-Opening'">
                            <span> {{ item.cost }} </span>
@@ -553,8 +567,10 @@
                      </td>
                      <td class="box_layout">
                         <div>
-                           <input pKeyFilter="int" [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="number"
-                              pInputText />
+                           <!-- <input pKeyFilter="int" [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="number"
+                              pInputText /> -->
+                            <input [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
                         </div>
                      </td>
                      <!-- <td class="box_layout">

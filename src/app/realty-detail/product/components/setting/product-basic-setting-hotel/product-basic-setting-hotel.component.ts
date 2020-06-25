@@ -105,7 +105,6 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
         this.areaData = area.payload;
         if (this.areaData.ratio_area.room > 0 && ['condo', 'hotel', 'communityMall'].includes(this.currentProperty)) {
           this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.roomProducts, null);
-          console.log('roomProducts ', this.roomProducts)
           this.dispatchProduct();
         }
       });
@@ -116,7 +115,6 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
         if(this.isCompetitor) {
           this.roomProducts = data.payload[this.owner].rooms;
         }
-        console.log(this.tempProductStore,this.roomProducts)
       });
 
     this.subscriptionSpending = this.store.select(fromCore.getSpendings)
@@ -134,7 +132,6 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
         this.rateReturnData = data.payload;
       });
 
-      console.log(this.tempProductStore)
     // if (this.areaData.ratio_area.room > 0) {
     //   this.dispatchProduct();
     // }
@@ -190,7 +187,6 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
     this.enableEdit = false;
     this.enableEditIndex = null;
     let variable = this.getVariable(type);
-    console.log('this[variable]',this[variable])
     this.dispatchProduct();
   }
 
@@ -314,9 +310,8 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
           productData[oppositeOwner] = this.tempProductStore[oppositeOwner];
           storeProduct.unsubscribe();
         }
-
+        console.log(productData)
         this.store.dispatch(new productAction.IsLoadingAction(true));
-        console.log('productData', productData)
         this.getProductService(productData);
     }
   }

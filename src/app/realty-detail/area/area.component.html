@@ -274,7 +274,7 @@
                         <img src="../../../assets/icons/icon_sign.svg"></figure>
                     <figcaption>
                         พื้นที่ขาย
-                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.area.sellArea / allArea * 100 | number: '1.0-1' }} </span>
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.sellArea | number: '1.0-1' }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.sellArea"
                             (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified /> %
                         คิดเป็น
@@ -329,7 +329,7 @@
                             <img src="../../../assets/icons/icon_road.svg"></figure>
                         <figcaption>
                             ถนน
-                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.area.roadSize / allArea * 100| number: '1.0-1' }} </span>
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.roadSize| number: '1.0-1' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.roadSize"
                                 (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
                             คิดเป็น
@@ -342,7 +342,7 @@
                             <img src="../../../assets/icons/icon_greenarea.svg"></figure>
                         <figcaption>
                             พื้นที่สีเขียว
-                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.area.greenArea / allArea * 100 | number: '1.0-1' }} </span>
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.greenArea | number: '1.0-1' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.greenArea"
                                 (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
                             คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
