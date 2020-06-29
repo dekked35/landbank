@@ -101,7 +101,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
       });
   }
 
-  speadingData: any;
+  spendingData: any;
   implicitsCostData: any;
   profitData: any;
   rateReturnData: any;
@@ -140,7 +140,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
       });
     this.subscriptionSpending = this.store.select(fromCore.getSpendings)
       .subscribe(data => {
-        this.speadingData = data.payload;
+        this.spendingData = data.payload;
       });
 
     this.subscriptionImplicitsCost = this.store.select(fromCore.getImplicitCosts)
@@ -267,9 +267,9 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   async fillInSpeading() {
     this.store.dispatch(new spendingsAction.IsLoadingAction(true));
-    const payload = this.generateSpeadingPayload(this.speadingData);
+    const payload = this.generateSpeadingPayload(this.spendingData);
     let newSpendingData = await this.requestManagerService.requestSpeading(payload); /// spending API
-    newSpendingData = this.mappingSpeadingResponse(this.speadingData, this.parseObject(newSpendingData));
+    newSpendingData = this.mappingSpeadingResponse(this.spendingData, this.parseObject(newSpendingData));
     this.store.dispatch(new spendingsAction.SuccessAction(newSpendingData));
     this.store.dispatch(new spendingsAction.IsLoadingAction(false));
     this.fillInImplicitsCost(newSpendingData);
@@ -277,8 +277,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     this.fillInRateReturn(newSpendingData);
   }
 
-  generateSpeadingPayload(speadingData: any) {
-    const tempInput = this.parseObject(speadingData);
+  generateSpeadingPayload(spendingData: any) {
+    const tempInput = this.parseObject(spendingData);
     let productData = JSON.parse(JSON.stringify(this.productData));
     productData = this.convertNum(productData)
     const requestProperty = this.currentProperty === 'townhome' ? 'townhouse' : this.currentProperty;

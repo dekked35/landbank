@@ -90,7 +90,6 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   balanceRatio: number;
   displayErrDialog = false;
   displayErrDialogMsg = '';
-  isFocus: boolean = false;
 
 
   setForm: FormGroup;
@@ -112,7 +111,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
       .subscribe(product => {
         this.is_loading = product.isLoading;
         this.productData = product.payload;
-        this.products = this.parseObjectForProduct(this.productData[this.owner]['products'], this.isFocus);
+        this.products = this.parseObjectForProduct(this.productData[this.owner]['products']);
       });
 
     this.subscriptionSpending = this.store.select(fromCore.getSpendings)
@@ -177,7 +176,6 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   handleRatioEnd(index: number, $event: any, text?: string) {
     this.convertNum()
-    this.isFocus = true;
     if (text) {
       switch (text) {
         case 'size':
@@ -215,6 +213,8 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   }
 
   async getBasicService() {
+  this.convertNum()
+  if(this.productData) {
     const payload = {
       'propertyType': this.currentProperty,
       'area_input': {
@@ -232,6 +232,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(new productAction.IsLoadingAction(false));
     this.fillInSpeading();
+  }
   }
 
   generateProductPayload() {
@@ -407,7 +408,6 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   }
 
   convertAreaToSize(){
-    console.log('is in')
     this.products.map( (arr , index) => {
       const demoArea = arr.area / this.convertRatio[index];
       arr.size = Math.round(demoArea);

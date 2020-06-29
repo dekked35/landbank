@@ -23,24 +23,27 @@
             <div class="ui-g-12 ui-md-6 ui-lg-6 form_expense">
                <div class="form-group">
                   <label>ราคาที่ดินที่ซื้อได้</label><span>บาท</span>
-                  <input [(ngModel)]="spendingsData.priceLandBought" (change)="InputOnchanges($event)" (click)="setChange()"pKeyFilter="int"
-                     type="text" pInputText inputWithComma/>
+                  <div class="ui-inputtextBox">
+                    {{ spendingsData.priceLandBought | number:'1.2-2' }}
+                  </div>
+                  <!-- <input (disabled)='clickChange' [(ngModel)]="spendingsData.priceLandBought" (change)="InputOnchanges($event)" (click)="setChange()"pKeyFilter="int"
+                     type="text" pInputText inputWithComma/> -->
                </div>
                <div class="form-group">
                   <label>ค่าต่างๆ/1 หลัง</label><span>บาท</span>
-                  <input [(ngModel)]="spendingsData.costOther" (change)="InputOnchanges($event)" pKeyFilter="int"
+                  <input [(ngModel)]="spendingsData.costOther" (change)="InputOnchanges($event)" (click)="setChange()" pKeyFilter="int"
                      type="text" pInputText inputWithComma />
                </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-6 form_expense">
                <div class="form-group">
                   <label>ต้นทุนค่าก่อสร้างพื้นที่ใช้สอย/ตร.ม.</label><span>บาท</span>
-                  <input [(ngModel)]="spendingsData.costConstructionLivingSpace" (change)="InputOnchanges($event)"
+                  <input [(ngModel)]="spendingsData.costConstructionLivingSpace" (change)="InputOnchanges($event)"(click)="setChange()"
                      pKeyFilter="int" type="text" pInputText inputWithComma />
                </div>
                <div class="form-group">
                   <label>ค่าแบบ</label><span>บาท</span>
-                  <input [(ngModel)]="spendingsData.costPlan" (change)="InputOnchanges($event)" pKeyFilter="int"
+                  <input [(ngModel)]="spendingsData.costPlan" (change)="InputOnchanges($event)" pKeyFilter="int" (click)="setChange()"
                      type="text" pInputText inputWithComma/>
                </div>
             </div>
@@ -136,7 +139,7 @@
                </div>
                <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
                   <div>
-                     <span *ngIf="!is_loading"> {{ spendingsData.costInProject | number:'1.2-2' }} </span>
+                     <span *ngIf="!is_loading"> {{ spendingsData.costDevelopLand | number:'1.2-2' }} </span>
                      <span *ngIf="is_loading"> 0.00 </span>
                      บาท
                   </div>
@@ -146,7 +149,7 @@
              </div>
              <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
                 <div>
-                   <span *ngIf="!is_loading"> {{ spendingsData.costDevelopLand + areaData.total_land_price | number:'1.2-2' }} </span>
+                   <span *ngIf="!is_loading"> {{ spendingsData.costInProject | number:'1.2-2' }} </span>
                    <span *ngIf="is_loading"> 0.00 </span>
                    บาท
                 </div>
@@ -208,7 +211,7 @@
                   </div>
                </div>
                <div class="mem_sum">(ปกติคิดที่ 1% ของมูลค่าโครงการ) =
-                  <span *ngIf="!is_loading"> {{ spendingsData.costAdvtOnePer * (percentCostAdvt ? percentCostAdvt : 1) | number:'1.2-2' }}</span>
+                  <span *ngIf="!is_loading"> {{ spendingsData.costAdvtOnePer | number:'1.2-2' }}</span>
                   <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
                   บาท</div>
             </div>
@@ -261,7 +264,7 @@
                         </div>
                      </td>
                      <td class="box_layout">
-                        <span>{{ room.cost * room.noRoom * room.area | number:'1.2-2' }}</span>
+                        <span>{{ convertToNum(room.cost) * room.noRoom * room.area | number:'1.2-2' }}</span>
                         <!-- <span>{{ room.totalCost  | number:'1.2-2' }}</span> -->
                      </td>
                   </tr>
@@ -318,7 +321,7 @@
                      </td>
                      <td class="box_layout">
                         <!-- <span>{{ central.totalCost | number:'1.2-2' }}</span> -->
-                        <span>{{ central.cost * central.noRoom * central.area | number:'1.2-2' }}</span>
+                        <span>{{ convertToNum(central.cost) * central.noRoom * central.area | number:'1.2-2' }}</span>
                      </td>
                   </tr>
                </table>
@@ -378,7 +381,7 @@
                         </td>
                         <td class="box_layout">
                            <!-- <span>{{ parking.totalCost | number:'1.2-2' }}</span> -->
-                           <span>{{ parking.cost * parking.noRoom * parking.area | number:'1.2-2' }}</span>
+                           <span>{{ convertToNum(parking.cost) * parking.noRoom * parking.area | number:'1.2-2' }}</span>
                         </td>
                      </tr>
                   </table>
@@ -438,11 +441,18 @@
                      </td>
                      <td class="box_layout">
                         <!-- <span>{{ ourdoor.totalCost | number:'1.2-2' }}</span> -->
-                        <span>{{ ourdoor.cost * ourdoor.noRoom * ourdoor.area | number:'1.2-2' }}</span>
+                        <span>{{ convertToNum(ourdoor.cost) * ourdoor.noRoom * ourdoor.area | number:'1.2-2' }}</span>
                      </td>
                   </tr>
                </table>
             </div>
+            <div class="ui-lg-4"></div>
+            <div class="ui-g-6 ui-md-6 ui-lg-4">
+              ต้นทุนก่อสร้างพื้นที่ภายนอกทั้งหมด
+           </div>
+           <div class="ui-g-6 ui-md-6 ui-lg-4 box_layout" style="text-align: right;">
+              <span> {{ spendingsData.totalOutDoorCost  | number:'1.2-2' }} </span> บาท
+           </div>
          </div>
 
          <!--ค่าใช้จ่ายรายเดือน -->
@@ -493,7 +503,7 @@
                      </td>
                      <td class="box_layout">
                         <!-- <span>{{ item.total | number:'1.2-2' }}</span> -->
-                        <span>{{ item.cost * item.no | number:'1.2-2' }}</span>
+                        <span>{{ convertToNum(item.cost) * convertToNum(item.no) | number:'1.2-2' }}</span>
                      </td>
                      <td>
                         <div>

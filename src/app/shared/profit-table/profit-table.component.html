@@ -71,11 +71,12 @@
             <label>กำไรสุทธิหลังหักค่าใช้จ่าย</label>
          </div>
          <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="text-align: right;">
-            <span> {{ profitData.netProfit | number:'1.2-2'}}</span>
+            <!-- <span> {{ profitData.netProfit | number:'1.2-2'}}</span> -->
+            <span> {{ netProfit | number:'1.2-2'}}</span>
                บาท
          </div>
          <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
-               <span style="color:#929292; font-size:12px;">  
+               <span style="color:#929292; font-size:12px;">
                 *หมายเหตุ: โดยเฉลี่ยกำไรต่อหลัง  {{ profitData.averageProfitPerHouse | number:'1.2-2'}} บาท</span>
          </div>
     </div>

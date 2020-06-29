@@ -87,6 +87,20 @@ body .ui-inputtext {
   appearance: none;
 }
 
+body .ui-inputtextBox {
+  font-size: 14px;
+  color: #333333;
+  background: #ffffff;
+  padding: 0.429em;
+  -moz-transition: border-color 0.2s, box-shadow 0.2s;
+  -o-transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 @media (max-width: 767px) {
   body .ui-inputtext {
     font-size: 12px !important;

@@ -164,8 +164,8 @@ export const townhome = {
             }
         ],
         "costInProject": 0.0,
-        "periodSellStart": "03/01/2020",
-        "periodSellEnd": "31/12/2022",
+        "periodSellStart": '01/01/2020',
+        "periodSellEnd": '12/31/2022',
         "sellPeriod": 24,
         "noEmployee": 5,
         "totalSalary": 0.0,
@@ -223,12 +223,12 @@ export const townhome = {
         "irrValue" : 0.0,
         "financeCosts" : 0.0, // ต้นทุนทางการเงิน
         "paybackPeriod" : 0.0, // ต้นทุนทางการเงิน
-        "investmentValue" : 0.0, // จำนวน มูลค่าเงินลงทุน	
+        "investmentValue" : 0.0, // จำนวน มูลค่าเงินลงทุน
         "ratioInvestmentValue" : 100, // สัดส่วน มูลค่าเงินลงทุน
-        "privateFund" : 0.0, // จำนวน ส่วนทุน	
+        "privateFund" : 0.0, // จำนวน ส่วนทุน
         "ratioPrivateFund" : 0.0, // สัดส่วน ส่วนทุน
         "interestPrivateFund" : 0.0, // ดอกเบี้ย ส่วนทุน
-        "borrowFund" : 0.0, // จำนวน ส่วนเงินกู้	
+        "borrowFund" : 0.0, // จำนวน ส่วนเงินกู้
         "ratioBorrowFund" : 0.0, // สัดส่วน ส่วนเงินกู้
         "interestBorrowFund" : 0.0, // ดอกเบี้ย ส่วนเงินกู้
         "borrowPeriod" : 4, // ระยะเวลากู้ธนาคาร

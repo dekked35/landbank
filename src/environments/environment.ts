@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   LANDBANK_MAIN_WEB : "https://dev.landbank.in.th",
   FEASIBILITY_API : "https://landbank-api.herokuapp.com"
+  // FEASIBILITY_API : 'http://localhost:3000'
 };
 
 /*

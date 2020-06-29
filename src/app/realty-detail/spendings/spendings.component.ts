@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, SimpleChanges } from "@angular/core";
 import { BasicTypeService } from "../../core/services/basic-type.service";
 import { Store } from "@ngrx/store";
 
@@ -93,7 +93,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
     this.subscriptionSpending = this.store
       .select(fromCore.getSpendings)
       .subscribe((spendings) => {
-        this.spendingsData = this.parseObjectCheckSpendings(spendings.payload, this.areaData, this.clickChange, this.value_again);
+        this.spendingsData = this.parseObject(spendings.payload);
         this.is_loading = spendings.isLoading;
         this.caculateMonthPeriod(true)
       });
@@ -115,6 +115,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       .subscribe((product) => {
         this.productData = product.payload;
       });
+      this.convertNum();
   }
 
   setFirstTime(){
@@ -122,7 +123,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   }
 
   caculateMonthPeriod($event) {
-    this.convertNum();
     if (
       this.spendingsData.periodSellStart !== undefined &&
       this.spendingsData.periodSellEnd !== undefined
@@ -180,7 +180,8 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       }
     } else {
       const tempSpending = this.parseObject(this.spendingsData);
-      // this.store.dispatch(new spendingsAction.IsLoadingAction(true));
+      console.log('tempSpending', tempSpending)
+      this.store.dispatch(new spendingsAction.IsLoadingAction(true));
       const payload = {
         // "propertyType": this.currentProperty,
         propertyType: 'hotel',
@@ -229,12 +230,17 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       }
     } else {
       for (const item in this.spendingsData) {
-        if (needToConvertHotel.includes(item) && this.spendingsData[item].length === 'array') {
-          if(item === 'specialEquipments' || item === 'costPerMonths'){
-            this.spendingsData[item].map( (item) => {
-                item.cost = parseFloat(item.cost.toString().replace(/,/g, ''));
-              })
-            }
+          if (needToConvertHotel.includes(item) && this.spendingsData[item].length > 0) {
+            this.spendingsData[item].map( (items) => {
+              console.log(items)
+              if(items.cost && typeof items.cost === 'string') {
+                items.cost = parseFloat(items.cost.toString().replace(/,/g, ''));
+              }
+              if (items === 'specialEquipments' || items === 'costPerMonths' && items.no && typeof items.no === 'string') {
+                items.no = parseFloat(items.no.toString().replace(/,/g, ''));
+              }
+                return items;
+              });
           }
         }
       }
@@ -247,11 +253,11 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   async getImplicitsCosts(tempSpending) {
     let payload = {};
     if (['village', 'townhome'].includes(this.currentProperty)) {
-      payload = this.generatePayload(tempSpending);
+      payload = this.parseObjectCheckSpendings(tempSpending, this.areaData, this.clickChange, this.value_again);
     } else {
       payload = this.generateImplicitCostPayload(tempSpending);
     }
-
+    console.log('payload before implicits',payload)
     const newImplicitsCost = await this.requestManagerService.requestImplicitsCost(
       payload
     );
@@ -352,6 +358,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
 
   // Model condo, hotel, commall
   generateImplicitCostPayload(tempInput) {
+    console.log('on implicit')
     let payload = {
       // "propertyType": this.currentProperty,
       propertyType: "hotel",
@@ -427,16 +434,17 @@ export class SpendingsComponent implements OnInit, OnDestroy {
 
   parseObjectCheckSpendings(data: any, area?: any, isClick?: boolean, same?: boolean) {
     let test = JSON.parse(JSON.stringify(data))
-    test.priceLandBought = isClick ? test.priceLandBought : area.costLand;
+    test.priceLandBought = area ? area.costLand : 2500000000;
     test.costOther = isClick ? test.costOther : 100000;
     test.costConstructionLivingSpace = isClick ? test.costConstructionLivingSpace : 10000;
-    test.costPlan = isClick ? test.costPlan : 300000;
+    // test.costPlan = isClick ? test.costPlan : 300000;
     test.costAdvt = isClick ? test.costAdvt : 10000;
-    if(test.priceLandBought === 35000000 && isClick === true){
-      if(same !== true){
-        test.priceLandBought = area.costLand;
-      }
-    }
+    // if(test.priceLandBought === 35000000 && isClick === true){
+    //   if(same !== true){
+    //     test.priceLandBought = 2500000000;
+    //   }
+    // }
+    console.log(test)
     return test;
   }
 
@@ -451,6 +459,10 @@ export class SpendingsComponent implements OnInit, OnDestroy {
 
   getWording() {
     return this.currentProperty === 'village' ? 'หลัง' : 'อาคาร';
+  }
+
+  convertToNum(num: string) {
+    return parseFloat(num.toString().replace(/,/g, ''));
   }
 
   ngOnDestroy() {

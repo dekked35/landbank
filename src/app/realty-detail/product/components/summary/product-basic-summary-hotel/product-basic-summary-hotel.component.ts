@@ -36,10 +36,9 @@ export class ProductBasicSummaryHotelComponent implements OnInit {
     .subscribe(data => {
       const opposite = this.owner === 'user' ? 'competitor' : 'user';
       this.products = data.payload[this.owner];
-      console.log(this.products)
-      // if (data.payload[this.owner].rooms.length === 0) {
-      //   this.products = data.payload[opposite];
-      // }
+      if (data.payload[this.owner].rooms.length === 0) {
+        this.products = data.payload[opposite];
+      }
     });
   }
 }

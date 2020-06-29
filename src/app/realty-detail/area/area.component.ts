@@ -194,16 +194,15 @@ export class AreaComponent implements OnInit {
     }
     this.totalArea = parseFloat(this.totalArea.toString().replace(/,/g, ''));
     this.landPrice = parseFloat(this.landPrice.toString().replace(/,/g, ''));
+
   }
 
   clickRatio () {
-    if (this.areaData.costLandType === 'rent') {
-      this.areaData.costLand = 0;
-      this.convertNum();
-      this.reloadData(true);
-    } else {
+    this.convertNum();
+    if (this.areaData.costLandType === 'buy') {
       this.areaData = this.calculatorManagerService.calculateArea(this.areaData);
     }
+    this.reloadData(true);
   }
 
   calculateAreaRatio($event) {
@@ -318,20 +317,19 @@ export class AreaComponent implements OnInit {
     this.store.dispatch(new areaAction.IsLoadingAction(true));
     let newAreaData = await this.requestManagerService.requestArea(areaData);
     this.standardArea.area = newAreaData.standardArea.area;
-    // this.allArea = Object.values(this.standardArea.area).map( (x) => console.log(x))
-    let test = Object.values(this.standardArea.area).reduce( (acc: number, cur: number) => acc + cur)
-    if (typeof test === 'number' && test <= 10000) {
-      this.allArea = test;
-      this.standardArea.percent.greenArea = 100 - this.standardArea.percent.roadSize - this.standardArea.percent.sellArea;
-      this.standardArea.area.greenArea = 10000 - this.standardArea.area.roadSize - this.standardArea.area.sellArea;
-    }
+    // let test = Object.values(this.standardArea.area).reduce( (acc: number, cur: number) => acc + cur)
+    // if (typeof test === 'number' && test <= 10000) {
+    //   this.allArea = test;
+    //   this.standardArea.percent.greenArea = 100 - this.standardArea.percent.roadSize - this.standardArea.percent.sellArea;
+    //   this.standardArea.area.greenArea = 10000 - this.standardArea.area.roadSize - this.standardArea.area.sellArea;
+    // }
     // Remove this after bank remove API.
     // console.log('Assign : ' +  costLandType);
     // this.areaData.availableArea = areaData.availableArea;
-    newAreaData.costLandType = costLandType;
-    newAreaData.deposit = this.areaData.deposit;
-    newAreaData.rentPerMonth = this.areaData.rentPerMonth;
-    newAreaData.rentNoYear = this.areaData.rentNoYear;
+    // newAreaData.costLandType = costLandType;
+    newAreaData.deposit = newAreaData.deposit ? newAreaData.deposit : this.areaData.deposit;
+    newAreaData.rentPerMonth = newAreaData.rentPerMonth ? newAreaData.rentPerMonth : this.areaData.rentPerMonth;
+    newAreaData.rentNoYear = newAreaData.rentNoYear ? newAreaData.rentNoYear : this.areaData.rentNoYear;
     newAreaData = this.calculatorManagerService.calculateArea(newAreaData);
     this.store.dispatch(new areaAction.SuccessAction(newAreaData));
     this.store.dispatch(new areaAction.IsLoadingAction(false));

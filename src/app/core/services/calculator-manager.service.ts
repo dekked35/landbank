@@ -77,12 +77,12 @@ export class CalculatorManagerService {
 
     if(this.propertyType === "village") {
       // calculate size of home
-      productData.user.products.map((product) => {
-        product.area = product.size * 4;
-      });
-      productData.competitor.products.map((product) => {
-        product.area = product.size * 4;
-      });
+      // productData.user.products.map((product) => {
+      //   product.area = product.size * 4;
+      // });
+      // productData.competitor.products.map((product) => {
+      //   product.area = product.size * 4;
+      // });
 
     }
     let field = (this.propertyType === "village") ? "size" : "area";

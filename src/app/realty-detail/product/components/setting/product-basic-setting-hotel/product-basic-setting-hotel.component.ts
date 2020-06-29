@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
-import { SelectItem } from 'primeng/api';
-import { Store } from '@ngrx/store'
+import { Store } from '@ngrx/store';
 import { DefaultsVariableService } from '../../../../../core/services/defaults-variable.service';
 import { RequestManagerService } from '../../../../../core/services/request-manager.service';
 import { CalculatorManagerService } from '../../../../../core/services/calculator-manager.service';
@@ -15,6 +14,13 @@ import * as rateReturnAction from '../../../../../core/actions/rate-return.actio
 import * as fromCore from '../../../../../core/reducers';
 
 const productSchema = schemaDefault.hotel.product;
+
+const needToConvert = [
+  'roomProducts',
+  'centralProducts',
+  'parkingProducts',
+  'outdoorProducts',
+]
 
 @Component({
   selector: 'app-product-basic-setting-hotel',
@@ -43,11 +49,11 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   typeEdit: string = '';
   // tempEdit: string = 'Deluxe';
   // tempEdit: string = 'Deluxe';
-  tempEdit : any;
+  tempEdit: any;
 
   header = {
-    "competitor": "โครงการคู่แข่ง",
-    "user": "โครงการของเรา"
+    'competitor': 'โครงการคู่แข่ง',
+    'user': 'โครงการของเรา'
   }
 
   //productOptions.ts
@@ -76,6 +82,15 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   implicitsCostData: any;
   rateReturnData: any;
 
+  dropDownSize = { 'width': '170px' };
+  iconSelectedItem = { 'width': '16px', 'vertical-align': 'middle' };
+  textSelectedItem = { 'vertical-align': 'middle', 'font-size': '13.5px', 'margin-left': '.5em' };
+  iconItem = { 'width': '24px', 'position': 'absolute', 'top': '1px', 'left': '5px' };
+  textItem = { 'font-size': '14px', 'float': 'right', 'margin-top': '4px' };
+
+  displayErrDialog: boolean = false;
+  displayErrDialogMsg: string = '';
+
   constructor(private store: Store<any>,
     private requestManagerService: RequestManagerService,
     private schemaManagerService: SchemaManagerService,
@@ -89,11 +104,11 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
 
 
   }
-  subscriptionArea:any;
-  subscriptionProduct:any;
+  subscriptionArea: any;
+  subscriptionProduct: any;
   subscriptionSpending: any;
   subscriptionImplicitsCost: any;
-  subscriptionRateReturn :any;
+  subscriptionRateReturn: any;
 
   async ngOnInit() {
     this.onResize(null);
@@ -112,7 +127,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
     this.subscriptionProduct = this.store.select(fromCore.getProduct)
       .subscribe(data => {
         this.tempProductStore = data.payload;
-        if(this.isCompetitor) {
+        if (this.isCompetitor) {
           this.roomProducts = data.payload[this.owner].rooms;
         }
       });
@@ -138,7 +153,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   }
 
   delay(ms: number) {
-    console.log("sleep " + ms + " ms");
+    console.log('sleep ' + ms + ' ms');
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
@@ -186,38 +201,37 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
     this.typeEdit = type;
     this.enableEdit = false;
     this.enableEditIndex = null;
-    let variable = this.getVariable(type);
     this.dispatchProduct();
   }
 
   addItem(type: string) {
     this.typeEdit = type;
     this.enableEdit = true;
-    let variable = this.getVariable(type);
-    let initValue = this.getDefaultByType(type);
+    const variable = this.getVariable(type);
+    const initValue = this.getDefaultByType(type);
     this.tempProducts = this.parseObject(this[variable]);
-    this[variable] = [...this[variable], initValue]
+    this[variable] = [...this[variable], initValue];
     this.enableEditIndex = this[variable].length - 1;
   }
 
   deleteItem(index, type) {
     this.typeEdit = type;
-    let variable = this.getVariable(type);
+    const variable = this.getVariable(type);
     this[variable].splice(index, 1);
     this.dispatchProduct();
   }
 
   onChangeDropdown(e, i, type,room, roomProduct) {
     this.typeEdit = type;
-    let variable = this.getVariable(type);
+    const variable = this.getVariable(type);
     this[variable][i]['name'] = e.value.name;
-    this[variable][i]['area'] = e.value.size
+    this[variable][i]['area'] = e.value.size;
     this[variable][i]['noRoom'] = 1;
   }
 
   cancleEdit(type) {
     this.typeEdit = type;
-    let variable = this.getVariable(type);
+    const variable = this.getVariable(type);
     this[variable] = JSON.parse(JSON.stringify(this.tempProducts));
     this.tempProducts = [];
     this.enableEdit = false;
@@ -262,72 +276,72 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   getDefaultByType(type: string) {
     if (type === this.ROOM) {
       return {
-        "type": "ห้องพัก",
-        "name": "Pool Villa",
-        "area": 65,
-        "noRoom": 1
+        'type': 'ห้องพัก',
+        'name': 'Pool Villa',
+        'area': 65,
+        'noRoom': 1
       };
     } else if (type === this.CENTRAL) {
       return {
-        "type": "ส่วนกลาง",
-        "name": "Lobby",
-        "area": 150,
-        "noRoom": 1
+        'type': 'ส่วนกลาง',
+        'name': 'Lobby',
+        'area': 150,
+        'noRoom': 1
       };
     } else if (type === this.PARKING) {
       return {
-        "type": "ที่จอดรถ",
-        "name": "Carpark 1",
-        "area": 20,
-        "noRoom": 5
+        'type': 'ที่จอดรถ',
+        'name': 'Carpark 1',
+        'area': 20,
+        'noRoom': 5
       };
     } else if (type === this.OUTDOOR) {
       return {
-        "type": "พื้นที่ภายนอก",
-        "name": "Garden",
-        "area": 60,
-        "noRoom": 1
+        'type': 'พื้นที่ภายนอก',
+        'name': 'Garden',
+        'area': 60,
+        'noRoom': 1
       };
     }
   }
 
   dispatchProduct() {
-    let oppositeOwner = (this.owner === 'user') ? 'competitor' : 'user';
-    let productData = this.parseObject(productSchema);
+    const oppositeOwner = (this.owner === 'user') ? 'competitor' : 'user';
+    const productData = this.parseObject(productSchema);
+    this.convertValue();
     this.checkDisplayErrorDialog();
-    if(!this.displayErrDialog) {
-        productData[this.owner]["rooms"] = this.parseObject(this.roomProducts);
-        productData[this.owner]["centrals"] = this.parseObject(this.centralProducts);
-        productData[this.owner]["parking"] = this.parseObject(this.parkingProducts);
-        productData[this.owner]["outdoors"] = this.parseObject(this.outdoorProducts);
+    if (!this.displayErrDialog) {
+        productData[this.owner]['rooms'] = this.parseObject(this.roomProducts);
+        productData[this.owner]['centrals'] = this.parseObject(this.centralProducts);
+        productData[this.owner]['parking'] = this.parseObject(this.parkingProducts);
+        productData[this.owner]['outdoors'] = this.parseObject(this.outdoorProducts);
         try {
           productData[oppositeOwner] = this.tempProductStore[oppositeOwner];
-        } catch(e){
-          let storeProduct = this.store.select(fromCore.getProduct)
+        } catch (e) {
+          const storeProduct = this.store.select(fromCore.getProduct)
           .subscribe(data => {
             this.tempProductStore = data.payload;
           });
           productData[oppositeOwner] = this.tempProductStore[oppositeOwner];
           storeProduct.unsubscribe();
         }
-        console.log(productData)
         this.store.dispatch(new productAction.IsLoadingAction(true));
         this.getProductService(productData);
     }
   }
 
   async getProductService(product: any) {
-    let payload = {
+    const payload = {
       // propertyType: this.currentProperty,
-      propertyType: "hotel",
+      propertyType: 'hotel',
       area_input: {
         ...this.areaData,
-        "percent": this.areaData.standardArea.percent,
-        "area": this.areaData.standardArea.percent
+        'percent': this.areaData.standardArea.percent,
+        'area': this.areaData.standardArea.percent
       },
       product_input: product
     }
-    let newProductData = await this.requestManagerService.requestProduct(payload);
+    const newProductData = await this.requestManagerService.requestProduct(payload);
     this.store.dispatch(new productAction.SuccessAction(newProductData));
     this.fillInSpeading(newProductData);
   }
@@ -337,22 +351,22 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   }
 
   async fillInSpeading(productData) {
-    let speandingsData = this.calculatorManagerService.calculateProductToSpeading(productData[this.owner], this.parseObject(this.speadingData))
+    const speandingsData = this.calculatorManagerService.calculateProductToSpeading(productData[this.owner], this.parseObject(this.speadingData))
     // type == central means that object it's not show icon.
 
     let payload = {
-      "propertyType": "hotel",
-      "area_input": {
+      'propertyType': 'hotel',
+      'area_input': {
         ...this.areaData,
-        "percent": this.areaData.standardArea.percent,
-        "area": this.areaData.standardArea.percent
+        'percent': this.areaData.standardArea.percent,
+        'area': this.areaData.standardArea.percent
       },
-      "product_input": productData,
-      "spendings_input": this.requestManagerService.generateSpeadingInput(speandingsData)
+      'product_input': productData,
+      'spendings_input': this.requestManagerService.generateSpeadingInput(speandingsData)
     }
 
     // TODO : Remove this after Bank edit API
-    let newSpendingData = await this.requestManagerService.requestSpeading(payload);
+    const newSpendingData = await this.requestManagerService.requestSpeading(payload);
     if (newSpendingData.costPerMonth !== undefined) {
       newSpendingData.costPerMonths = newSpendingData.costPerMonth
     }
@@ -361,54 +375,48 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   }
 
   async fillInImplicitCost(productData, speadingData) {
-    let implicitsCost = this.calculatorManagerService.calculateProductToImplicitsCost(productData[this.owner], this.parseObject(this.implicitsCostData));
+    const implicitsCost = this.calculatorManagerService.calculateProductToImplicitsCost(productData[this.owner], this.parseObject(this.implicitsCostData));
 
-    let payload = {
-      "propertyType": "hotel",
-      "area_input": {
+    const payload = {
+      'propertyType': 'hotel',
+      'area_input': {
         ...this.areaData,
-        "percent": this.areaData.standardArea.percent,
-        "area": this.areaData.standardArea.percent
+        'percent': this.areaData.standardArea.percent,
+        'area': this.areaData.standardArea.percent
       },
-      "product_input": productData,
-      "spendings_input": this.requestManagerService.generateSpeadingInput(speadingData) ,
-      "implicit_costs_input": implicitsCost,
+      'product_input': productData,
+      'spendings_input': this.requestManagerService.generateSpeadingInput(speadingData) ,
+      'implicit_costs_input': implicitsCost,
     }
-    let newImplicitsCost = await this.requestManagerService.requestImplicitsCost(payload);
+    const newImplicitsCost = await this.requestManagerService.requestImplicitsCost(payload);
     this.store.dispatch(new spendingsAction.SuccessAction(speadingData));
     this.fillInRateReturn(productData, speadingData, newImplicitsCost, this.rateReturnData);
   }
 
   async fillInRateReturn(productData, speadingData, implicitCostData, rateReturnData) {
-    let payload = {
-      "propertyType": "hotel",
-      "area_input": {
+    const payload = {
+      'propertyType': 'hotel',
+      'area_input': {
         ...this.areaData,
-        "percent": this.areaData.standardArea.percent,
-        "area": this.areaData.standardArea.percent
+        'percent': this.areaData.standardArea.percent,
+        'area': this.areaData.standardArea.percent
       },
-      "product_input": this.requestManagerService.generateProductInput('user', productData),
-      "spendings_input": this.requestManagerService.generateSpeadingInput(speadingData),
-      "implicit_costs_input": implicitCostData,
-      "ipr_input": rateReturnData
-    }
+      'product_input': this.requestManagerService.generateProductInput('user', productData),
+      'spendings_input': this.requestManagerService.generateSpeadingInput(speadingData),
+      'implicit_costs_input': implicitCostData,
+      'ipr_input': rateReturnData
+    };
 
     this.store.dispatch(new implicitCostsAction.SuccessAction(implicitCostData));
-    let newRateReturnData = await this.requestManagerService.requestIPRRateReturn(payload);
+    const newRateReturnData = await this.requestManagerService.requestIPRRateReturn(payload);
     this.store.dispatch(new rateReturnAction.SuccessAction(newRateReturnData));
 
   }
 
   getTotalArea(type: string) {
-    let variable = this.getVariable(type);
-    return this[variable].reduce((sum, data) => { return sum + (+data.area * +data.noRoom) }, 0);
+    const variable = this.getVariable(type);
+    return this[variable].reduce((sum, data) => sum + (+data.area * +data.noRoom), 0);
   }
-
-  dropDownSize = { 'width': '170px' };
-  iconSelectedItem = { 'width': '16px', 'vertical-align': 'middle' };
-  textSelectedItem = { 'vertical-align': 'middle', 'font-size': '13.5px', 'margin-left': '.5em' }
-  iconItem = { 'width': '24px', 'position': 'absolute', 'top': '1px', 'left': '5px' }
-  textItem = { 'font-size': '14px', 'float': 'right', 'margin-top': '4px' }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -429,48 +437,55 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
     }
   }
 
-  displayErrDialog:boolean = false;
-  displayErrDialogMsg: string = "";
-
   checkDisplayErrorDialog(){
     try {
-    let room_used =  this.getTotalArea(this.ROOM) + (this.getTotalArea(this.ROOM) * 0.15);
-    let central_used =  this.getTotalArea(this.CENTRAL) + (this.getTotalArea(this.CENTRAL) * 0.2);
-    let parking_used =  this.getTotalArea(this.PARKING) + (this.getTotalArea(this.PARKING) * 0.4);
-    let outdoor_used =  this.getTotalArea(this.OUTDOOR);
+    const room_used =  this.getTotalArea(this.ROOM) + (this.getTotalArea(this.ROOM) * 0.15);
+    const central_used =  this.getTotalArea(this.CENTRAL) + (this.getTotalArea(this.CENTRAL) * 0.2);
+    const parking_used =  this.getTotalArea(this.PARKING) + (this.getTotalArea(this.PARKING) * 0.4);
+    const outdoor_used =  this.getTotalArea(this.OUTDOOR);
 
     if(+room_used > +this.areaData.standardArea.area.room) {
       this.displayErrDialog = true;
-      this.displayErrDialogMsg = "ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ห้องพัก โปรดกำหนดพื้นที่ใหม่อีกครั้ง";
-      console.log("Room error " + room_used + ":" + this.areaData.standardArea.area.room )
-      return "";
+      this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ห้องพัก โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
+      console.log('Room error ' + room_used + ':' + this.areaData.standardArea.area.room )
+      return '';
     }
 
     if(+central_used > +this.areaData.standardArea.area.central) {
       this.displayErrDialog = true;
-      this.displayErrDialogMsg = "ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ส่วนกลาง โปรดกำหนดพื้นที่ใหม่อีกครั้ง";
-      console.log("central error " + central_used + ":" + this.areaData.standardArea.area.central )
+      this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ส่วนกลาง โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
+      console.log('central error ' + central_used + ':' + this.areaData.standardArea.area.central )
 
-      return "";
+      return '';
     }
 
     if(+parking_used > +this.areaData.standardArea.area.parking) {
       this.displayErrDialog = true;
-      this.displayErrDialogMsg = "ไม่มีพื้นที่คงเหลือสำหรับพื้นที่จอดรถ โปรดกำหนดพื้นที่ใหม่อีกครั้ง";
-      return "";
+      this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่จอดรถ โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
+      return '';
     }
 
     if(+outdoor_used > +this.areaData.standardArea.area.outdoor) {
       this.displayErrDialog = true;
-      this.displayErrDialogMsg = "ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ภายนอก โปรดกำหนดพื้นที่ใหม่อีกครั้ง";
-      console.log("outdoor error" + outdoor_used + ":" + this.areaData.standardArea.area.outdoor )
-      return "";
+      this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ภายนอก โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
+      console.log('outdoor error' + outdoor_used + ':' + this.areaData.standardArea.area.outdoor )
+      return '';
     }
-    return "";
+    return '';
   } catch(e) {
     // TODO: Inital Data issue
-    console.log("error");
+    console.log('error');
   }
+  }
+
+  convertValue(){
+    needToConvert.forEach( path => {
+      this[path].map( item => {
+        item.area = parseFloat(item.area.toString().replace(/,/g, ''))
+        item.noRoom = parseFloat(item.noRoom.toString().replace(/,/g, ''))
+        return item;
+      });
+    });
   }
 
   ngOnDestroy(){
