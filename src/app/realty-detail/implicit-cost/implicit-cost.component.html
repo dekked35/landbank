@@ -1,0 +1,186 @@
+<ng-container *ngIf="currentProperty === 'village' || currentProperty === 'townhome' || currentProperty === 'condo'">
+    <div class="ui-g-12 ui-md-12 ui-lg-6">
+        <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">
+            <figure> <img src="../../../assets/icons/icon_fee.svg">
+            </figure>
+            <figcaption>
+                <h1>ค่าพัฒนาและต้นทุนทั้งหมด</h1>
+            </figcaption>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="currentProperty !== 'townhome'" >
+                พื้นที่ใช้ขาย
+                <span *ngIf="!is_loading_implicitCost">
+                    {{ implicitsCostData.sellAreaSize | number:'1.2-2'  }} </span>
+                <span *ngIf="is_loading_implicitCost">
+                    <app-loading></app-loading>
+                </span>
+                บาท/ตารางวา
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                ต้นทุนที่ดินที่ใช้ขาย
+                <span *ngIf="!is_loading_implicitCost"> {{ implicitsCostData.costLand | number:'1.2-2'  }}
+                </span>
+                <span *ngIf="is_loading_implicitCost">
+                    <app-loading></app-loading>
+                </span>
+                บาท/ตารางวา
+                <!-- TODO: -->
+                <span class="font-gray-color"> หมายเหตุ : ต้องไม่เกิน 10,000 บาทต่อตารางวา </span>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                ต้นทุนทั้งหมด
+                <span *ngIf="!is_loading_implicitCost"> {{ implicitsCostData.costAll | number:'1.2-2'  }}
+                </span>
+                <span *ngIf="is_loading_implicitCost">
+                    <app-loading></app-loading>
+                </span>
+                บาท
+            </div>
+            <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                ค่าโฆษณาและพนักงาน
+                <span *ngIf="!is_loading_implicitCost">
+                    {{ implicitsCostData.costAdvtAndEmployee | number:'1.2-2'  }} </span>
+                <span *ngIf="is_loading_implicitCost">
+                    <app-loading></app-loading>
+                </span>
+                บาท
+                TODO:
+                <span class="font-gray-color"> หมายเหตุ ...</span>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="currentProperty === 'village'">
+                ราคาที่ตั้งขาย
+                <span *ngIf="!is_loading_implicitCost">
+                    {{ implicitsCostData.costProject | number:'1.2-2'  }} </span>
+                <span *ngIf="is_loading_implicitCost">
+                    <app-loading></app-loading>
+                </span>
+                บาท/ตารางวา
+            </div> -->
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="currentProperty === 'townhome'">
+                มูลค่าทั้งโครงการ
+                <span *ngIf="!is_loading_implicitCost">
+                    {{ implicitsCostData.costProject | number:'1.2-2'  }} </span>
+                <span *ngIf="is_loading_implicitCost">
+                    <app-loading></app-loading>
+                </span>
+                บาท/ตารางวา
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-6" *ngIf="currentProperty === 'village' || currentProperty === 'townhome'">
+        <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">
+            <figure><img src="../../../assets/icons/icon_profit.svg">
+            </figure>
+            <figcaption>
+                <h1>กำไร</h1>
+            </figcaption>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <app-profit-table></app-profit-table>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="currentProperty === 'hotel'  || currentProperty === 'communityMall'">
+    <!-- TODO: need to confirm again. -->
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">
+            <figure> <img src="../../../assets/icons/icon_fee.svg">
+            </figure>
+            <figcaption>
+                <h1>ต้นทุนทั้งหมดและรายได้</h1>
+            </figcaption>
+        </div>
+        <!-- <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                พื้นที่ใช้ขาย <span> {{ implicitsCostData.sellAreaSize | number:'1.2-2'  }} </span>
+                ตารางเมตร
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                ต้นทุนที่ดิน <span> {{ implicitsCostData.costLand | number:'1.2-2'  }} </span> บาท/ตารางเมตร
+            </div>
+
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                ค่าการตลาดและพนักงาน <span> {{ implicitsCostData.costAdvtAndEmployee | number:'1.2-2'  }}
+                </span> บาท
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                ต้นทุนทั้งหมด <span> {{  implicitsCostData.costAll | number:'1.2-2'  }} </span> บาท
+            </div>
+        </div> -->
+    </div>
+
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <h3 *ngIf="currentProperty === 'hotel'" style="padding-left: 25px;">รายได้จากห้องพัก</h3>
+        <h3 *ngIf="currentProperty === 'communityMall'" style="padding-left: 25px;">รายได้จากร้านค้า</h3>
+
+        <div class="ui-g-5 ui-md-3 ui-lg-2 box_layout">
+            Occupancy<span>{{ occupancy }}%</span>
+        </div>
+        <div class="ui-g-7 ui-md-4 ui-lg-4">
+            <div style="padding-top:5px;">
+                <p-slider [(ngModel)]="occupancy" [min]="0" [max]="100"
+                    (onSlideEnd)="onSlideEnd($event, 'occupancy')"></p-slider>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+            <div class="wrap_table_sum">
+                <table class="table_sum_4" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>ชื่อห้อง </td>
+                        <td>
+                            <div *ngIf="currentProperty === 'hotel'">
+                                ค่าบริการต่อห้อง
+                            </div>
+                            <div *ngIf="currentProperty === 'communityMall'">
+                                ค่าเช่าร้านค้า
+                            </div>
+                        </td>
+                        <td>รายได้ต่อวัน </td>
+                    </tr>
+                    <tr *ngFor="let income of implicitsCostData.incomes">
+                        <td class="box_layout">
+                            <!-- <img src="../../../assets/icons/room/{{income.roomName}}.svg"
+                                style="width:16px;vertical-align:middle" /> -->
+                            <span> {{ income.roomName }}</span>
+                        </td>
+                        <td class="box_layout">
+                            <div>
+                                <input pKeyFilter="int" [(ngModel)]="income.pricePerRoom" type="text"
+                                    (change)="inputOnChange($event)" pInputText />
+                            </div>
+                        </td>
+                        <td class="box_layout">
+                            <span>{{ income.incomePerDay | number:'1.2-2' }}</span> บาท
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6">
+            รายได้ต่อวัน
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+            <span> {{ implicitsCostData.totalIncomePerDay  | number:'1.2-2' }} </span> บาท
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6">
+            รายได้ต่อเดือน
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+            <span> {{ implicitsCostData.totalIncomePerMonth  | number:'1.2-2' }} </span> บาท
+        </div>
+        <div class="ui-g-8 ui-md-6 ui-lg-6">
+            รายได้ต่อคาดการณ์ต่อเดือน
+        </div>
+        <div class="ui-g-4 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+            <span> {{ implicitsCostData.estimatedIncomePerMonth  | number:'1.2-2' }} </span> บาท
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6">
+            รายได้ต่อปี
+        </div>
+        <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+            <span> {{ implicitsCostData.totalIncomePerYear  | number:'1.2-2' }} </span> บาท
+        </div>
+    </div>
+</ng-container>

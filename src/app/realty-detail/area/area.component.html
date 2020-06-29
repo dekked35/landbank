@@ -1,0 +1,554 @@
+<p-panel>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">
+            <figure> <img src="../../../assets/icons/icon_place.svg">
+            </figure>
+            <figcaption>
+                <h1>ข้อมูลพื้นที่</h1>
+            </figcaption>
+        </div>
+    </div>
+
+    <div class="ui-g text_cover">
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="box_layout">
+                <figure>
+                    <img src="../../../assets/icons/icon_location_color.svg"></figure>
+                <figcaption>
+                    สีผังเมือง
+                    <!-- สีผังเมือง <div [ngStyle]="getStyleTown()"></div> -->
+                </figcaption>
+            </div>
+            <div>
+                <p-dropdown [options]="colorsTown" [(ngModel)]="areaData.townPlanColor">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <div class="box_color" [style.background-color]="item.color"></div>
+                    </ng-template>
+                    <ng-template let-town pTemplate="item">
+                        <div class="ui-helper-clearfix">
+                            <div class="box_color" [style.background-color]="town.color"></div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+
+        <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
+            <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout">
+                <figure>
+                    <img src="../../../assets/icons/icon_fence.svg"></figure>
+                <figcaption>
+                    ความยาวรั้วโดยประมาณ
+                    <span *ngIf="!is_loading"> {{ areaData.fenceLength | number:'1.2-2'}} </span>
+                    <span *ngIf="is_loading"> 0</span>
+                </figcaption>
+            </div>
+        </ng-container>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+            <figure>
+                <img src="../../../assets/icons/icon_far.svg"></figure>
+            <figcaption>
+                <!-- ค่า FAR <span> {{ areaInput.farValue }}</span> -->
+                ค่า FAR
+                <input class="number" [(ngModel)]="farValue" size="10" (change)="InputChange($event)" pKeyFilter="int" type="text"
+                    pInputText inputWithComma /> &nbsp;
+                <button pButton type="button" color="ui-button-danger" icon="pi pi-info-circle"
+                    (click)="overlayPanelFAR.toggle($event)"></button>
+                <p-overlayPanel #overlayPanelFAR [style]="tableSize">
+                    ค่า FAR (Floor Area Ratio) หมายถึง อัตราส่วนพื้นที่อาคารรวมต่อพื้นที่ดิน กล่าวคือ
+                    หากมีที่ดินอยู่ 200 ตารางวา คูณด้วย 4 จะได้ 800 ตารางเมตร
+                    สามารถก่อสร้างอาคารมีพื้นที่รวมทุกชั้นทุกหลังในที่ดินแปลงนี้ได้ไม่เกินตารางเมตรที่ดิน คูณค่า FAR
+                    (กรณีนี้มีค่า FAR ไม่เกิน 6) จะได้พื้นที่อาคารรวมไม่เกิน 800 คูณด้วย 6 ได้ไม่เกิน 4,800
+                    ตารางเมตร (สูตร พื้นที่อาคารที่สร้างได้ = ค่า FAR X ขนาดพื้นที่ดินเป็นตารางเมตร)
+                </p-overlayPanel>
+            </figcaption>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+            <figure>
+                <img src="../../../assets/icons/icon_far.svg"></figure>
+            <figcaption>
+                <!-- ค่า OSR <span> {{ areaInput.osrValue }}</span> -->
+                ค่า OSR
+                <input [(ngModel)]="osrValue" size="10" (change)="InputChange($event)" pKeyFilter="int" type="text"
+                    pInputText matInputCommified/> &nbsp;
+                <p-button icon="pi pi-info-circle" (click)="overlayPanelOSR.toggle($event)"></p-button>
+                <p-overlayPanel #overlayPanelOSR [style]="tableSize">
+                    ค่า OSR (Open Space Ratio) หมายถึง อัตราส่วนของที่ว่างต่อพื้นที่อาคารรวม กล่าวคือ หากมีที่ดินอยู่
+                    200 ตารางวา คูณด้วย 4 ได้ 800 ตารางเมตร ตัวอาคารที่จะสร้างและชายคาปกคลุมพื้นดินมีขนาดเท่าใด
+                    ถือว่าเป็นพื้นที่ปกคลุม
+                </p-overlayPanel>
+            </figcaption>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+            <figure>
+                <img src="../../../assets/icons/icon_allarea.svg"></figure>
+            <figcaption>
+                พื้นที่รวม
+                <input [(ngModel)]="totalArea" size="7" (change)="InputChange($event,'totalArea')" pKeyFilter="int" type="text"
+                pInputText inputWithComma  />
+                ตร.ว.
+                <button pButton type="button" color="ui-button-danger" icon="pi pi-info-circle"
+                (click)="overlayPanelArea.toggle($event)"></button>
+                <p-overlayPanel #overlayPanelArea>
+                    เป็นค่าเริ่มต้นที่ทางผู้พัฒนากำหนดให้
+                </p-overlayPanel>
+            </figcaption>
+        </div>
+
+        <!-- พื้นที่ที่ใช้ได้ตามกฏหมาย -->
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout">
+            <figure>
+                <img src="../../../assets/icons/icon_law.svg"></figure>
+            <figcaption>
+                <!-- <input [(ngModel)]="availableArea" (change)="InputChange($event)" size="10" pKeyFilter="int" type="text"
+                    pInputText /> -->
+                พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ areaData.availableArea | number }}</span>
+
+                <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
+                    ตร.ว.
+                </ng-container>
+                <ng-container
+                    *ngIf="propertyType === 'condo' || propertyType === 'hotel' || propertyType === 'communityMall'">
+                    ตร.ม.
+                </ng-container>
+            </figcaption>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout">
+            <figure>
+                <img src="../../../assets/icons/icon_expense.svg"></figure>
+            <figcaption>
+                <!-- ราคาที่ดิน <span> {{ areaInput.landPrice }}</span> -->
+                ราคาที่ดิน
+                <input [(ngModel)]="landPrice" size="8" (change)="InputChange($event,'landPrice')" pKeyFilter="int" type="text"
+                    pInputText inputWithComma/>
+                บาท/ตร.ว.
+            </figcaption>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 font-gray-color text_cover">
+              *หมายเหตุ: <br>
+              <p style="color : red">
+             - ราคาขายที่ดินไม่ควรตั้งต่ำกว่าราคานี้และโดยปกติแล้วค่านี้ ไม่ควรต่ำกว่า 10,000 บาท </p>
+           </div>
+        </div>
+
+
+        <!--  ค่าที่ดินทั้งหมด -->
+        <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' || propertyType === 'condo' ">
+            <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout">
+                <figure></figure>
+                <figcaption>
+                    ค่าที่ดินทั้งหมด <span> {{ areaData.costLand | number:'1.2-2'}}</span> บาท
+                </figcaption>
+
+                <!-- <span style="padding-left: 20px;"> -->
+                <!-- <input [(ngModel)]="areaData.costLand" pKeyFilter="int" size="10" type="int" pInputText /> -->
+                <!-- </span> -->
+            </div>
+        </ng-container>
+        <ng-container *ngIf="propertyType === 'hotel' || propertyType === 'communityMall'">
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                ค่าที่ดินทั้งหมด
+                <span style="padding-left: 20px;">
+                    <p-radioButton name="costLandType" label="ซื้อ" [value]="'buy'" [(ngModel)]="areaData.costLandType"
+                        (onClick)="clickRatio($event)">
+                    </p-radioButton> &nbsp;&nbsp;
+                    <p-radioButton name="costLandType" label="เช่า" [value]="'rent'" [(ngModel)]="areaData.costLandType"
+                        (onClick)="clickRatio($event)">
+                    </p-radioButton>
+                </span>
+                <span>
+                    <ng-container *ngIf="areaData.costLandType === 'buy'">
+                        <div class="box_layout" style="padding-top: 5px; padding-left: 15%;">
+                            <figcaption>
+                                <span> {{ areaData.costLand | number:'1.2-2'}} </span> บาท
+                            </figcaption>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="areaData.costLandType === 'rent'">
+                        <p style="padding-bottom: 5px; padding-top: 5px;"> &nbsp; &nbsp;
+                            เงินมัดจำ <input [(ngModel)]="areaData.deposit" (change)="InputChange($event)"
+                                pKeyFilter="int" size="10" type="int" pInputText inputWithComma/>
+                            บาท </p>
+                        <p style="padding-bottom: 5px;"> &nbsp; &nbsp;
+                            ค่าเช่าต่อเดือน <input [(ngModel)]="areaData.rentPerMonth" (change)="InputChange($event)"
+                                size="10" pKeyFilter="int" type="int" pInputText inputWithComma /> บาท </p>
+                        <p style="padding-bottom: 5px;"> &nbsp; &nbsp;
+                            จำนวนปีที่เช่า <input [(ngModel)]="areaData.rentNoYear" (change)="InputChange($event)"
+                                size="10" pKeyFilter="int" type="int" pInputText inputWithComma /> ปี </p>
+                        <p style="padding-bottom: 5px;" class="box_layout"> &nbsp; &nbsp;
+                            รวมทั้งหมด <span> {{ areaData.costLand | number:'1.2-2'}} </span> บาท </p>
+                    </ng-container>
+                </span>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="ui-g text_cover">
+        <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">
+            <figure> <img src="../../../assets/icons/icon_proportion.svg">
+            </figure>
+            <figcaption>
+                <h1>สัดส่วนพื้นที่โดยมาตรฐาน</h1>
+            </figcaption>
+        </div>
+
+        <div class="ui-g-12 ui-md-6 ui-lg-4 " style="align-self: center;text-align:center;">
+            <div *ngIf="!is_loading" class="chart_expense" style="position: relative;">
+                <app-charts [chartType]="'area'" [chartData]="standardArea"> </app-charts>
+            </div>
+            <span *ngIf="is_loading">
+                <app-loading></app-loading>
+            </span>
+        </div>
+        <!-- ความคิดเห็นจากเรา -->
+        <div class="ui-g-12 ui-md-6 ui-lg-3 ">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <div class="box_layout">
+                    <figure>
+                        <img src="../../../../../../assets/icons/comment.svg">
+                    </figure>
+                    <figcaption style="color: #0060be; font-size:15px;">
+                        ความคิดเห็นจากเรา
+                    </figcaption>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                ความสวยงาม
+                <span [ngStyle]="getScoreColor(standardArea.score.beauty)">
+                    {{ standardArea.score.beauty }}
+                </span>
+                <!-- <span style="color:red;"> มาก </span> -->
+                <!-- <p-rating  readonly="true" stars="5" [cancel]="false" [ngModel]="5"></p-rating> -->
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                ความหนาแน่น
+                <span [ngStyle]="getScoreColor(standardArea.score.density)">
+                    {{ standardArea.score.density }}
+                </span>
+                <!-- <p-rating  readonly="true" stars="5" [cancel]="false" [ngModel]="3"></p-rating> -->
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                พื้นที่ขาย
+                <span [ngStyle]="getScoreColor(standardArea.score.congestion)">
+                    {{ standardArea.score.congestion }}
+                </span>
+                <!-- <p-rating  readonly="true" stars="5" [cancel]="false" [ngModel]="3"></p-rating> -->
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                พื้นที่อำนวยความสะดวก
+                <span [ngStyle]="getScoreColor(standardArea.score.convenientArea)">
+                    {{ standardArea.score.convenientArea }}
+                </span>
+                <!-- <p-rating  readonly="true" stars="5" [cancel]="false" [ngModel]="4"></p-rating> -->
+            </div>
+        </div>
+
+        <div class="ui-g-12 ui-md-12 ui-lg-5 wrap_graph_product">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                เลือกสัดส่วนของคุณต้องการ <br>
+                <p-selectButton [options]="models" [(ngModel)]="selectedModel" (click)="changeModel()"
+                    optionLabel="name"></p-selectButton>
+            </div>
+
+            <div *ngIf="selectedModel.id === 4" class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+                สัดส่วนพื้นที่ทั้งหมด <span> {{ totalAreaRatio }} </span> %
+            </div>
+            <div *ngIf="selectedModel.id === 4" class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+                สัดส่วนพื้นที่คงเหลือ <span> {{ raminingAreaRatio }} </span> %
+            </div>
+
+            <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
+                <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_allarea.svg"></figure>
+                    <figcaption>
+                        พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ areaData.availableArea | number }}</span> ตร.ว.
+                    </figcaption>
+                </div> -->
+                <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_sign.svg"></figure>
+                    <figcaption>
+                        พื้นที่ขาย
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.sellArea | number: '1.0-1' }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.sellArea"
+                            (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified /> %
+                        คิดเป็น
+                        <span> {{ standardArea.area.sellArea | number }}</span>
+                        ตร.ว.
+                    </figcaption>
+                </div>
+
+                <ng-container *ngIf="propertyType === 'village'">
+                    <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                        <figure>
+                            <img src="../../../assets/icons/home1.svg"></figure>
+                        <figcaption>
+                            บ้าน 1 ชั้น
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeOne | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeOne"
+                                (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardSellAreaRatio.typeOne/100 * standardArea.area.sellArea | number }}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                        <figure>
+                            <img src="../../../assets/icons/home2.svg"></figure>
+                        <figcaption>
+                            บ้าน 2 ชั้น
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeTwo  | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeTwo"
+                            (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardSellAreaRatio.typeTwo/100 * standardArea.area.sellArea | number }}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                        <figure>
+                            <img src="../../../assets/icons/home3.svg"></figure>
+                        <figcaption>
+                            บ้าน 3 ชั้น
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeThree | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeThree"
+                                (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardSellAreaRatio.typeThree/100 * standardArea.area.sellArea | number }}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                        <figure>
+                            <img src="../../../assets/icons/icon_road.svg"></figure>
+                        <figcaption>
+                            ถนน
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.roadSize| number: '1.0-1' }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.roadSize"
+                                (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardArea.area.roadSize | number }}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                        <figure>
+                            <img src="../../../assets/icons/icon_greenarea.svg"></figure>
+                        <figcaption>
+                            พื้นที่สีเขียว
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.greenArea | number: '1.0-1' }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.greenArea"
+                                (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
+                        </figcaption>
+                    </div>
+
+                </ng-container>
+
+                <ng-container *ngIf="propertyType === 'townhome'">
+                    <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                        <figure>
+                            <img src="../../../assets/icons/townhome2.svg"></figure>
+                        <figcaption>
+                            อาคารพาณิชย์ 2 ชั้น
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeOne | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeOne"
+                                (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardSellAreaRatio.typeOne/100 * standardArea.area.sellArea | number }}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                        <figure>
+                            <img src="../../../assets/icons/townhome3.svg"></figure>
+                        <figcaption>
+                            อาคารพาณิชย์ 3 ชั้น
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeTwo  | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeTwo"
+                            (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardSellAreaRatio.typeTwo/100 * standardArea.area.sellArea | number }}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                        <figure>
+                            <img src="../../../assets/icons/townhome4.svg"></figure>
+                        <figcaption>
+                            อาคารพาณิชย์ 4 ชั้น
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeThree | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeThree"
+                                (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardSellAreaRatio.typeThree/100 * standardArea.area.sellArea | number }}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                        <figure>
+                            <img src="../../../assets/icons/icon_road.svg"></figure>
+                        <figcaption>
+                            ถนน
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.roadSize| number: '1.0-1' }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.roadSize"
+                                (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardArea.area.roadSize | number }}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                        <figure>
+                            <img src="../../../assets/icons/icon_greenarea.svg"></figure>
+                        <figcaption>
+                            พื้นที่สีเขียว
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.greenArea | number: '1.0-1' }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.greenArea"
+                                (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
+                        </figcaption>
+                    </div>
+                </ng-container>
+
+            </ng-container>
+
+            <ng-container *ngIf="propertyType === 'condo' || propertyType === 'hotel' || propertyType === 'communityMall'">
+
+                <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_allarea.svg"></figure>
+                    <figcaption>
+                        พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ areaData.availableArea | number }}</span> ตร.ม.
+                    </figcaption>
+                </div> -->
+
+                <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_hotel.svg">
+                    </figure>
+                    <figcaption *ngIf="propertyType === 'condo' || propertyType === 'hotel'">
+                        พื้นที่รวมห้องพัก
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.room | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.room"
+                            (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                        คิดเป็น <span> {{ standardArea.area.room | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                    <figcaption *ngIf="propertyType === 'communityMall'">
+                        พื้นที่รวมร้านค้า
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.room | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.room"
+                            (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                        คิดเป็น
+                        <span> {{ standardArea.area.room  | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div>
+
+                <ng-container *ngIf="propertyType === 'hotel'">
+                    <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนของห้องพักได้ดังนี้</span>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                        <!-- <figure>
+                            <img src="../../../assets/icons/room/Deluxe.svg"></figure> -->
+                        <figcaption>
+                            ห้องพัก Deluxe
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardRoomArea.percent.deluxe | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomArea.percent.deluxe"
+                                (change)="updateProductRoomRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ (standardArea.area.room * standardRoomArea.percent.deluxe)/100   | number:'1.2-2' }}</span> ตร.ม.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                        <!-- <figure>
+                            <img src="../../../assets/icons/room/Super deluxe.svg"></figure> -->
+                        <figcaption>
+                            ห้องพัก Super Deluxe
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardRoomArea.percent.superDeluxe | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomArea.percent.superDeluxe"
+                                (change)="updateProductRoomRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ (standardArea.area.room * standardRoomArea.percent.superDeluxe)/100  | number:'1.2-2' }}</span> ตร.ม.
+                        </figcaption>
+                    </div>
+                </ng-container>
+
+                <ng-container  *ngIf="propertyType === 'condo' || propertyType === 'hotel' || propertyType === 'communityMall' ">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                        <figure>
+                            <img src="../../../assets/icons/icon_pool.svg"></figure>
+                        <figcaption>
+                            พื้นที่รวมส่วนกลาง
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.central | number }} </span>
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.central"
+                                (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            คิดเป็น
+                            <span> {{ standardArea.area.central  | number:'1.2-2' }}</span> ตร.ม.
+                        </figcaption>
+                    </div>
+                </ng-container>
+
+                <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_road.svg"></figure>
+                    <figcaption>
+                        พื้นที่รวมทางเดิน
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.corridor | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.corridor"
+                            (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText /> %
+                        คิดเป็น
+                        <span> {{ standardArea.area.corridor | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div> -->
+
+                <div *ngIf="selectedModel.id === 4" class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    ที่จอดรถในอาคาร &nbsp;
+                    <p-radioButton name="parking" label="มี" [value]="true" [(ngModel)]="selectedParking"
+                        (click)="clickParkingRatio()"></p-radioButton> &nbsp;&nbsp;
+                    <p-radioButton name="parking" label="ไม่มี" [value]="false" [(ngModel)]="selectedParking"
+                        (click)="clickParkingRatio()"></p-radioButton>
+                </div>
+                <div *ngIf="selectedParking" class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_map_car.svg"></figure>
+                    <figcaption>
+                        พื้นที่จอดรถในอาคาร
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.parking | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.parking"
+                            (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                        คิดเป็น
+                        <span> {{ standardArea.area.parking | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div>
+
+                <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_greenarea.svg"></figure>
+                    <figcaption>
+                        พื้นที่ภายนอกอาคาร
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.outdoor | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.outdoor"
+                            (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                        คิดเป็น
+                        <span> {{ standardArea.area.outdoor | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div>
+            </ng-container>
+
+            <p-dialog styleClass="mydialog" header="การแจ้งเตือน" [(visible)]="displayDialog">
+                <span class="font-red-color"> {{ displayDialogMsg }}</span>
+            </p-dialog>
+
+            <div class="ui-g-12 ui-md-12 ui-lg-12 font-gray-color">
+                *หมายเหตุ: สัดส่วนเป็นการคำนวณเกิดจากการคำนวณจากข้อมูลในระบบของกลุ่มนักพัฒนา
+            </div>
+        </div>
+
+    </div>
+</p-panel>

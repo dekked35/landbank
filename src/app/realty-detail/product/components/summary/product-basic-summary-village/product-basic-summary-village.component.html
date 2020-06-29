@@ -1,0 +1,68 @@
+<div class="text_cover">
+
+    <div class="ui-g">
+
+        <div class="ui-g-12 ui-md-6 ui-lg-6" style="align-self: center;text-align:center;">
+            <!-- <app-area-chart [chartName]="settingGraph"></app-area-chart> -->
+                <app-charts  *ngIf="!is_loading" [chartType]="'product'" [chartData]="ownerData.products"> </app-charts>
+                <!-- <app-charts  *ngIf="is_loading" [chartType]="'product'" [chartData]="ownerData.products"> </app-charts> -->
+                <span *ngIf="is_loading"><app-loading></app-loading></span>
+
+            </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-6">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <span style="font-size:16px;">{{ settingHeader }}</span>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                สรุปจำนวน
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                <div>
+                    <figure>
+                        <img src="../../../../assets/icons/home1.svg">
+                    </figure>
+                    <figcaption>
+                        <span *ngIf="!is_loading"> {{ ownerData.products[0].quantity | number}} </span>
+                        <span *ngIf="is_loading"> 0 </span> หลัง
+                    </figcaption>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout ">
+                <div>
+                    <figure>
+                        <img src="../../../../assets/icons/home2.svg">
+                    </figure>
+                    <figcaption>
+                        <span *ngIf="!is_loading"> {{ ownerData.products[1].quantity | number }} </span>
+                        <span *ngIf="is_loading"> 0 </span> หลัง
+                    </figcaption>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                <div>
+                    <figure>
+                        <img src="../../../../assets/icons/home3.svg">
+                    </figure>
+                    <figcaption>
+                        <span *ngIf="!is_loading"> {{ ownerData.products[2].quantity | number}} </span>
+                        <span *ngIf="is_loading"> 0 </span> หลัง
+                    </figcaption>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                จำนวนหลังที่ได้ทั้งหมด
+                <span *ngIf="!is_loading"> {{ ownerData.totalQuantity | number }} </span>
+                <span *ngIf="is_loading"> 0 </span> หลัง
+
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                มูลค่าโครงการรวม
+                <span *ngIf="!is_loading"> {{ ownerData.totalCost | number}} </span>
+                <span *ngIf="is_loading"> 0 </span> บาท
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

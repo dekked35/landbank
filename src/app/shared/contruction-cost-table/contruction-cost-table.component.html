@@ -1,0 +1,60 @@
+<div class="ui-g text_cover">
+    <div class="ui-g-12 ui-md-12 ui-lg-12 wrap_detail_expense">
+        <h2>ต้นทุนก่อสร้าง/{{getWord()}}</h2>
+        <div *ngIf="costConstructionPerItem" class="wrap_table_sum">
+            <table class="table_sum_4" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td><strong>ประเภท</strong></td>
+                    <!-- <td>
+                        ต้นทุนที่ก่อสร้าง
+                    </td> -->
+                    <td>จำนวน</td>
+                    <td>รวม
+                    </td>
+                </tr>
+                <tr>
+                    <td class="box_layout">
+                        <div class="wrap_propery_logo">
+                            <img src="../../../../assets/icons/{{getIcon(0)}}">
+                            <span > {{ costConstructionPerItem[0].type }} </span>
+                        </div>
+                    </td>
+                    <!-- <td class="box_layout"> <span>{{  costConstructionPerItem[0].costPerItem| number:'1.2-2'}}</span>
+                        บาท</td> -->
+                     <td class="box_layout"> <span>{{ costConstructionPerItem[0].quantity }}</span> {{getWord()}}</td>
+                     <td class="box_layout">
+                         <span>{{  costConstructionPerItem[0].total | number:'1.2-2' }} </span> บาท
+                     </td>
+                </tr>
+                <tr>
+                    <td class="box_layout">
+                        <div class="wrap_propery_logo">
+                            <img src="../../../../assets/icons/{{getIcon(1)}}">
+                            <span > {{ costConstructionPerItem[1].type }} </span>
+                        </div>
+                    </td>
+                    <!-- <td class="box_layout"> <span>{{ costConstructionPerItem[1].costPerItem | number:'1.2-2'}}</span>
+                        บาท</td> -->
+                     <td class="box_layout"> <span>{{ costConstructionPerItem[1].quantity }}</span> {{getWord()}}</td>
+                     <td class="box_layout">
+                         <span>{{  costConstructionPerItem[1].total | number:'1.2-2' }} </span> บาท
+                     </td>
+                </tr>
+                <tr>
+                    <td class="box_layout">
+                        <div class="wrap_propery_logo">
+                            <img src="../../../../assets/icons/{{getIcon(2)}}">
+                            <span > {{ costConstructionPerItem[2].type }} </span>
+                        </div>
+                    </td>
+                    <!-- <td class="box_layout"> <span>{{  costConstructionPerItem[0].costPerItem| number:'1.2-2'}}</span>
+                       บาท</td> -->
+                    <td class="box_layout"> <span>{{ costConstructionPerItem[2].quantity }}</span> {{getWord()}}</td>
+                    <td class="box_layout">
+                        <span>{{  costConstructionPerItem[2].total | number:'1.2-2' }} </span> บาท
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

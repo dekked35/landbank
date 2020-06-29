@@ -1,0 +1,56 @@
+.logo-frame  {
+    background-color: #eff5f7;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    transform: translate(0%,8%);
+    margin-bottom: 0;
+}
+
+.logo-frame > img {
+    width: 32px;
+    height: auto;
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.main-header > h1{
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+p-calendar {
+    width: 180px !important;
+}
+
+.table_sum_5 tr:first-child td {
+    background-color: #B5D3FF !important;
+}
+
+.table_sum_4 tr:first-child td {
+    background-color: #B5D3FF !important;
+}
+
+.table_sum_6 tr:first-child td {
+    background-color: #B5D3FF !important;
+}
+.wd-20{
+  width: 20%;
+}
+.wd-60{
+  width: 60%;
+}
+.float-right{
+  float: right;
+}
+.next-box{
+  margin-right: 5px;
+}
+
+

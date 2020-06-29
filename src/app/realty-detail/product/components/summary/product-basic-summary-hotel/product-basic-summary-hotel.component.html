@@ -1,0 +1,263 @@
+<div class="ui-g text_cover">
+   <h3> {{ conclustionText }} </h3>
+   <div class="ui-g-12 ui-md-12 ui-lg-12 form_expense">
+      <div class="ui-g-12 ui-md-12 ui-lg-12"></div>
+      <div class="ui-g-12 ui-md-8 ui-lg-6 box_layout">
+         <label>พื้นที่ที่ใช้ได้ตามกฏหมาย</label>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-lg-6 box_layout" style="text-align: right;">
+         <div>
+            <span>
+               {{ products.availableArea | number:'1.2-2' }} </span>
+            ตร.ม.
+         </div>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+         <label>พื้นที่ที่ใช้ไป</label>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+         <div>
+            <span>
+               {{ products.usedArea | number:'1.2-2' }} </span>
+            ตร.ม.
+         </div>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+         <label>พื้นที่รวมห้องพัก</label>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+         <div>
+            <span>
+               {{ products.totalRoomArea | number:'1.2-2' }} </span>
+            ตร.ม.
+         </div>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+         <label>พื้นที่รวมส่วนกลาง</label>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+         <div>
+            <span>
+               {{ products.totalCentralArea | number:'1.2-2' }} </span>
+            ตร.ม.
+         </div>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+         <label>พื้นที่รวมทางเดิน</label>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+         <div>
+            <span>
+               {{ products.totalCorridor | number:'1.2-2' }} </span>
+            ตร.ม.
+         </div>
+      </div>
+
+      <ng-container *ngIf="areaData.standardArea.area.parking !== 0">
+         <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+            <label>พื้นที่ในอาคาร</label>
+         </div>
+         <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+            <div>
+               <span>
+                  {{ products.totalParkingArea | number:'1.2-2' }} </span>
+               ตร.ม.
+            </div>
+         </div>
+      </ng-container>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout">
+         <label>พื้นที่ภายนอกอาคาร (ไม่ได้คำนวณ)</label>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+         <div>
+            <span>
+               {{ products.totalOutdoorArea | number:'1.2-2' }} </span>
+            ตร.ม.
+         </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-lg-12">
+         <div class="form-group">
+            <div class="expense_price"> </div>
+         </div>
+      </div>
+      <div class="ui-g-7 ui-md-6 ui-lg-6 box_layout">
+         <label>จำนวนห้องพักทั้งหมด </label>
+      </div>
+      <div class="ui-g-5 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+         <div>
+            <span>
+               {{ products.totalRoomQuantity | number }} </span>
+            ห้อง
+         </div>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+         <label>พื้นที่ว่างคงเหลือ </label>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+         <div>
+            <span>
+               {{ products.remainingArea | number:'1.2-2' }} </span>
+            ตร.ม.
+         </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-lg-12">
+         <div class="ui-g-12 ui-md-8 ui-lg-8 " style="align-self: center; text-align:center; overflow: auto;">
+            <div class="chart_expense" style="position: relative;">
+               <app-charts [chartType]="'product'" [chartData]="products"> </app-charts>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+<!-- <div class="ui-g-12 ui-md-12 ui-lg-12">
+   <div class="wrap_table_sum">
+      <table class="table_sum_5" cellspacing="0" cellpadding="0">
+         <tr>
+            <td><strong>ประเภท</strong></td>
+            <td>ชื่อห้อง</td>
+            <td>พื้นที่ใช้สอย</td>
+            <td>จำนวนห้อง</td>
+            <td>ค่าก่อสร้าง/ตร.ม.</td>
+         </tr>
+         <tr>
+            <td class="box_layout"><span>อาคาร A</span></td>
+            <td class="box_layout"><span>{{ 'TYPE A' }}</span></td>
+            <td class="box_layout"> <span>{{ 35 | number:'1.2-2' }}</span> ตร.ม.</td>
+            <td class="box_layout"> <span>{{ 20 | number:'1.2-2' }}</span> ห้อง</td>
+            <td class="box_layout"> <span>{{ 50000 | number:'1.2-2' }}</span> บาท</td>
+         </tr>
+         <tr>
+            <td class="box_layout" ><span>อาคาร B</span></td>
+            <td class="box_layout" ><span>{{ 'TYPE B' }}</span>
+            </td>
+            <td class="box_layout">
+               <span>{{ 30 | number:'1.2-2' }}</span> ตร.ม.</td>
+            <td class="box_layout">
+               <span>{{ 20 | number:'1.2-2' }}</span> ห้อง</td>
+            <td class="box_layout">
+               <span>{{ 2 | number:'1.2-2' }}</span> บาท</td>
+         </tr>
+         <tr>
+            <td class="box_layout"><span>อื่น ๆ</span></td>
+            <td class="box_layout"><span>{{ 'ฟิตเนต' }}</span></td>
+            <td class="box_layout"><span>{{ 40 | number:'1.2-2' }}</span> ตร.ม.</td>
+            <td class="box_layout"><span>{{ 2 | number:'1.2-2' }}</span> ห้อง</td>
+            <td class="box_layout"><span>{{ 50000 | number:'1.2-2' }}</span> บาท</td>
+         </tr>
+      </table>
+   </div>
+</div>
+<div class="ui-g-12 ui-md-12 ui-lg-12 form_expense">
+   <div class="ui-g-12 ui-md-12 ui-lg-12"></div>
+
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+      <label>รวมพื้นที่</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <div >
+         <span>
+            {{ 1000 | number:'1.2-2' }} </span>
+         ตร.ม.
+      </div>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+      <label>พื้นที่ว่างคงเหลือ</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <div >
+         <span>
+            {{ 20 | number:'1.2-2' }} </span>
+         ตร.ม.
+      </div>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+      <label>จำนวนห้องพักทั้งหมด</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <div >
+         <span>
+            {{ 100 | number:'1.2-2' }} </span>
+         ตร.ม.
+      </div>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+      <label>จำนวนที่จอดรถต้องมีอย่างน้อย</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <div >
+         <span>
+            {{ 50 | number:'1.2-2' }} </span>
+         คัน = 15% <i class="pi pi-info-circle"></i>
+      </div>
+   </div>
+   <div class="ui-g-12 ui-md-12 ui-lg-12"></div>
+   <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+      <figure>
+         <img src="../../../../../../assets/icons/icon_greenarea.svg"></figure>
+      <figcaption>
+         พื้นที่สีเขียว
+      </figcaption>
+   </div>
+   <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="padding-left: 30px;">
+      <label>ห้องพักที่มีพื้นที่น้อยกว่า 3 ตร.ม.</label>
+      <span> {{ 30 | number:'1.2-2' }}</span>
+      <label> ห้อง</label>
+   </div>
+   <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout" style="text-align: right;">
+      <label>พื้นที่สีเขียว/ห้อง</label>
+      <span> {{ 30 | number:'1.2-2' }}</span>
+      <label> ตร.ม.</label>
+   </div>
+   <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="padding-left: 30px;">
+      <label>ห้องพักที่มีพื้นที่มากกว่า 35 ตร.ม.</label>
+      <span> {{ 10 | number:'1.2-2' }}</span>
+      <label> ห้อง</label>
+   </div>
+   <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout" style="text-align: right;">
+      <label>พื้นที่สีเขียว/ห้อง</label>
+      <span> {{ 30 | number:'1.2-2' }}</span>
+      <label> ตร.ม.</label>
+   </div>
+   <div class="form-group">
+      <div class="expense_price"></div>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="padding-left: 30px;">
+      <label>พื้นที่สีเขียวทั้งหมด</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <span> {{ 30 | number:'1.2-2' }}</span>
+      <label> ตร.ม.</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="padding-left: 30px;">
+      <label>- พื้นที่สีเขียวบนอาคาร</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <span> {{ 30 | number:'1.2-2' }}</span>
+      <label> ตร.ม.</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="padding-left: 30px;">
+      <label>- พื้นที่สีเขียวบนพื้นดิน</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <span> {{ 30 | number:'1.2-2' }}</span>
+      <label> ตร.ม.</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="padding-left: 30px;">
+      <label>- พื้นที่สีเขียวยั่งยืน</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <span> {{ 30 | number:'1.2-2' }}</span>
+      <label> ตร.ม.</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="padding-left: 30px;">
+      <label>- พื้นที่สีเขียวธรรมดา</label>
+   </div>
+   <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+      <span> {{ 30 | number:'1.2-2' }}</span>
+      <label> ตร.ม.</label>
+   </div>
+</div> -->

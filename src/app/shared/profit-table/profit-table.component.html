@@ -1,0 +1,84 @@
+<div *ngIf="profitData.profitPerItems" class="ui-g-12 ui-md-12 ui-lg-12">
+
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="wrap_table_sum">
+            <table class="table_sum_4" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td><strong>ประเภท</strong></td>
+                    <td>
+                        ราคา
+                    </td>
+                    <td>จำนวน</td>
+                    <td>กำไรรวม
+                    </td>
+                </tr>
+                <tr>
+                    <td class="box_layout">
+                        <div class="wrap_propery_logo">
+                            <img src="../../../../assets/icons/{{getIcon(0)}}">
+                            <span > {{ profitData.profitPerItems[0].type }} </span>
+                        </div>
+                    </td>
+                    <td class="box_layout"> <span>{{ profitData.profitPerItems[0].profitPerItem | number:'1.2-2'}}</span>
+                       บาท</td>
+                    <td class="box_layout"> <span>{{ profitData.profitPerItems[0].noItem }}</span> หลัง</td>
+                    <td class="box_layout">
+                        <span>{{ profitData.profitPerItems[0].totalProfit | number:'1.2-2'}} </span> บาท</td>
+                </tr>
+                <tr>
+                    <td class="box_layout">
+                        <div class="wrap_propery_logo">
+                            <img src="../../../../assets/icons/{{getIcon(1)}}">
+                            <span > {{ profitData.profitPerItems[1].type }} </span>
+                        </div>
+                    </td>
+                    <td class="box_layout"> <span>{{ profitData.profitPerItems[1].profitPerItem | number:'1.2-2'}}</span>
+                       บาท</td>
+                    <td class="box_layout"> <span>{{ profitData.profitPerItems[1].noItem }}</span> หลัง</td>
+                    <td class="box_layout">
+                        <span>{{ profitData.profitPerItems[1].totalProfit | number:'1.2-2'}} </span> บาท</td>
+                </tr>
+                <tr>
+                    <td class="box_layout">
+                        <div class="wrap_propery_logo">
+                            <img src="../../../../assets/icons/{{getIcon(2)}}">
+                            <span > {{ profitData.profitPerItems[2].type }} </span>
+                        </div>
+                    </td>
+                    <td class="box_layout"> <span>{{ profitData.profitPerItems[2].profitPerItem | number:'1.2-2'}}</span>
+                       บาท</td>
+                    <td class="box_layout"> <span>{{ profitData.profitPerItems[2].noItem }}</span> หลัง</td>
+                    <td class="box_layout">
+                        <span>{{ profitData.profitPerItems[2].totalProfit | number:'1.2-2'}} </span> บาท
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12 form_expense">
+        <div class="ui-g-12 ui-md-12 ui-lg-12 form-group">
+            <div class="expense_price"></div>
+         </div>
+         <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout">
+            <label>กำไรรวมทั้งโครงการ</label>
+         </div>
+         <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="text-align: right;">
+            <span>
+                {{ profitData.totalProfit | number:'1.2-2'}} </span>
+             บาท
+         </div>
+         <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout">
+            <label>กำไรสุทธิหลังหักค่าใช้จ่าย</label>
+         </div>
+         <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="text-align: right;">
+            <!-- <span> {{ profitData.netProfit | number:'1.2-2'}}</span> -->
+            <span> {{ netProfit | number:'1.2-2'}}</span>
+               บาท
+         </div>
+         <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
+               <span style="color:#929292; font-size:12px;">
+                *หมายเหตุ: โดยเฉลี่ยกำไรต่อหลัง  {{ profitData.averageProfitPerHouse | number:'1.2-2'}} บาท</span>
+         </div>
+    </div>
+
+</div>

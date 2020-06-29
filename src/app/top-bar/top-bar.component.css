@@ -1,0 +1,103 @@
+.small-size-screen {
+    display:none;
+
+}
+.large-size-screen {
+    display:inline-block;
+}
+.menu_feas{
+    padding: 0;
+    z-index: 3;
+}
+
+.menu_feas ul{
+    display: inline-block;
+    background-color: rgba(255,255,255,0.5);
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.menu_feas ul li{
+    display: inline-block;
+    font-size: 1rem;
+    color: #333;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.menu_feas ul li i{
+    display: none;
+}
+
+.menu_feas ul li.active{
+    background-color: #FFF;
+}
+.ctn_backoffice {
+    padding-left: 50px;
+    padding-right: 5px;
+}
+
+@media (max-width: 1199px){
+    .ctn_backoffice {
+        /* padding-left: 85px; */
+        padding-left: 35px;
+        /* padding-right: 35px; */
+    }
+}
+@media (max-width: 767px){
+
+    .ctn_backoffice {
+        padding-left: 5px;
+        /* padding-right: 10px; */
+    }
+    .small-size-screen {
+        display:inline;
+    
+    }
+    .large-size-screen {
+        display:none ;
+    }
+    .menu_feas ul{
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .menu_feas ul li{
+        display: none;
+        list-style:none;
+        padding-left: 15px;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        order: 3;
+    }
+    .menu_feas ul li i{
+        position: absolute;
+        right: 12px;
+        top: 14px;
+    }
+
+    .menu_feas ul li.active{
+        display: block;
+        position: relative;
+        background-color: #0060be;
+        color: #FFF;
+        order: 1;
+    }
+    .menu_feas ul li.active i{
+        display: block;
+    }
+}
