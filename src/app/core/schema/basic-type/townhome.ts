@@ -49,7 +49,8 @@ export const townhome = {
                     "stairArea": 2,
                     "cost": 2,
                     "ratio": 50,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 21,
                 },
                 {
                     "type": "อาคารพานิชย์ 3 ชั้น",
@@ -57,7 +58,8 @@ export const townhome = {
                     "stairArea": 2.5,
                     "cost": 3,
                     "ratio": 30,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 21,
                 },
                 {
                     "type": "อาคารพานิชย์ 4 ชั้น",
@@ -65,7 +67,8 @@ export const townhome = {
                     "stairArea": 3,
                     "cost": 4,
                     "ratio": 20,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 21,
                 }
             ],
             "depth": 12,
@@ -91,7 +94,8 @@ export const townhome = {
                     "stairArea": 2,
                     "cost": 2,
                     "ratio": 50,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 21,
                 },
                 {
                     "type": "อาคารพานิชย์ 3 ชั้น",
@@ -99,7 +103,8 @@ export const townhome = {
                     "stairArea": 2.5,
                     "cost": 3,
                     "ratio": 30,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 21,
                 },
                 {
                     "type": "อาคารพานิชย์ 4 ชั้น",
@@ -107,7 +112,8 @@ export const townhome = {
                     "stairArea": 3,
                     "cost": 4,
                     "ratio": 20,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 21,
                 }
             ],
 
@@ -129,9 +135,9 @@ export const townhome = {
         }
     },
     "spendings": {
-        "priceLandBought": 35000000,
-        "costConstructionLivingSpace": 20000,
-        "costOther": 500000,
+        "priceLandBought": 2500000000,
+        "costConstructionLivingSpace": 10000,
+        "costOther": 100000,
         "costPlan": 300000,
         "costDevelopRoad": 0.0,
         "costRoadCover": 0.0,

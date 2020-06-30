@@ -43,7 +43,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   convert = [
     'area',
-    'ratio'
+    'size',
+    'stairArea'
   ];
 
   settingHeader: string;
@@ -51,8 +52,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   product_limit = {
     size: {
-      min: 30,
-      max: 400
+      min: 20,
+      max: 50
     },
     width: {
       min: 4,
@@ -159,6 +160,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
       });
     this.settingHeader = this.header[this.owner];
     this.calculateSize();
+    this.convertNumAndCheckSize();
     this.getBasicService(this.ownerProductData);
 
   }
@@ -202,6 +204,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     // this.calculateSize();
     // console.log(this.products);
     this.convertNumAndCheckSize();
+    this.calculateSize();
     this.getBasicService(this.ownerProductData);
   }
 
@@ -215,11 +218,13 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
       },
       'product_input': this.generateProductPayload(this.parseObject(ownerProductData))
     };
+    console.log('payload',payload)
     this.store.dispatch(new productAction.IsLoadingAction(true));
     let newProductData = await this.requestManagerService.requestProduct(payload);
     newProductData = this.parsePayloadResponse(newProductData);
     // console.log(newProductData[this.owner].products[0].stairArea);
     newProductData = this.calculatorManagerService.calculateProduct(this.areaData, newProductData);
+    console.log('newProduct',newProductData)
     this.store.dispatch(new productAction.SuccessAction(newProductData));
     this.store.dispatch(new productAction.IsLoadingAction(false));
     this.fillInSpeading();
@@ -228,7 +233,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   generateProductPayload(ownerProductData) {
     const productData = this.parseObject(this.productData);
     const oppositeOwner = (this.owner === 'user') ? 'competitor' : 'user';
-    const myProductList = this.parseObjectDecimal(this.products);
+    const myProductList = this.parseObject(this.products);
 
     productData[this.owner] = ownerProductData; // user or owner
     const depth = +ownerProductData.depth;
@@ -245,6 +250,9 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     productData[this.owner].products[0].ratio = myProductList[0].ratio;
     productData[this.owner].products[1].ratio = myProductList[1].ratio;
     productData[this.owner].products[2].ratio = myProductList[2].ratio;
+    productData[this.owner].products[0].size = myProductList[0].size;
+    productData[this.owner].products[1].size = myProductList[1].size;
+    productData[this.owner].products[2].size = myProductList[2].size;
     productData[oppositeOwner] = productData[oppositeOwner]; // user or owner
     productData[oppositeOwner].products[0].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[0].cost);
     productData[oppositeOwner].products[1].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[1].cost);
@@ -278,6 +286,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   }
 
   generateSpeadingPayload(spendingData: any) {
+    this.convertNumAndCheckSize()
     const tempInput = this.parseObject(spendingData);
     let productData = JSON.parse(JSON.stringify(this.productData));
     productData = this.convertNum(productData)
@@ -344,7 +353,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
 
   parseToMillionFormat(value: number) {
-    return +(value + '000000');
+    const stringValue = Math.floor(value);
+    return +(stringValue + '000000');
   }
 
   parseDate(date: string): string {
@@ -394,7 +404,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   convertNumAndCheckSize() {
     for (const info in this.products) {
-      if (this.convertField.includes(info)) {
+      if (this.convert.includes(info)) {
         this.products[info] = parseFloat(this.products[info].toString().replace(/,/g, ''));
         if (this.products[info] <= this.product_limit[info].min) {
           this.products[info] = this.product_limit[info].min;
@@ -403,6 +413,9 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
         }
       }
     }
+    this.convertField.forEach(element => {
+      this.ownerProductData[element] = parseFloat(this.ownerProductData[element].toString().replace(/,/g, ''));
+    });
   }
 
   convertNum(productData) {
