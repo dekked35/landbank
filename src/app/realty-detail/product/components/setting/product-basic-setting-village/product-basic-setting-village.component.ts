@@ -277,6 +277,9 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   generateSpeadingPayload(speadingData: any) {
     const tempInput = this.parseObject(speadingData);
+    if(this.areaData.total_land_price) {
+      tempInput.priceLandBought = this.areaData.total_land_price;
+    }
     const productData = JSON.parse(JSON.stringify(this.productData));
     const requestProperty = this.currentProperty === 'townhome' ? 'townhouse' : this.currentProperty;
     const payload = {
@@ -291,7 +294,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   mappingSpeadingResponse(tempSpending: any, newSpendings: any) {
     newSpendings.sellPeriod = tempSpending.sellPeriod;
     newSpendings.totalSalary = +tempSpending.sellPeriod * +tempSpending.salaryEmployee * +tempSpending.noEmployee;
-    newSpendings.costAdvt = +tempSpending.sellPeriod * +tempSpending.salaryEmployee * +tempSpending.noEmployee;
+    // newSpendings.costAdvt = +tempSpending.sellPeriod * +tempSpending.salaryEmployee * +tempSpending.noEmployee;
     newSpendings.salaryEmployee = +tempSpending.salaryEmployee;
     if (newSpendings.periodSellStart === '//') {
       newSpendings.periodSellStart = '';

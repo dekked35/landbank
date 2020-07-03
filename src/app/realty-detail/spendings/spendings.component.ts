@@ -88,6 +88,9 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.store.select(fromCore.getArea).subscribe((area) => {
       this.areaData = area.payload;
+      if(this.areaData.total_land_price) {
+        this.spendingsData.priceLandBought = this.areaData.total_land_price;
+      }
     });
 
     this.subscriptionSpending = this.store
@@ -116,10 +119,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
         this.productData = product.payload;
       });
       this.convertNum();
-  }
-
-  setFirstTime(){
-    this.clickChange = true
   }
 
   caculateMonthPeriod($event) {
@@ -163,7 +162,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
           this.store.dispatch(new spendingsAction.IsLoadingAction(true));
           const payload = this.generatePayload(tempSpending);
           let newSpendingData = await this.requestManagerService.requestSpeading(
-            payload
+            payload,'spendings'
           );
           newSpendingData = this.mappingResponse(
             tempSpending,
@@ -180,7 +179,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       }
     } else {
       const tempSpending = this.parseObject(this.spendingsData);
-      console.log('tempSpending', tempSpending)
       this.store.dispatch(new spendingsAction.IsLoadingAction(true));
       const payload = {
         // "propertyType": this.currentProperty,
@@ -199,7 +197,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
         this.productData.user.rooms.length > 0
       ) {
         const newSpendingData = await this.requestManagerService.requestSpeading(
-          payload
+          payload,'spending'
         );
         if (newSpendingData.costPerMonth !== undefined) {
           newSpendingData.costPerMonths = newSpendingData.costPerMonth;
@@ -232,7 +230,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       for (const item in this.spendingsData) {
           if (needToConvertHotel.includes(item) && this.spendingsData[item].length > 0) {
             this.spendingsData[item].map( (items) => {
-              console.log(items)
               if(items.cost && typeof items.cost === 'string') {
                 items.cost = parseFloat(items.cost.toString().replace(/,/g, ''));
               }
@@ -244,6 +241,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
           }
         }
       }
+    this.spendingsData.priceLandBought = this.areaData.total_land_price;
     }
 
   setChange(){
@@ -257,7 +255,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
     } else {
       payload = this.generateImplicitCostPayload(tempSpending);
     }
-    console.log('payload before implicits',payload)
     const newImplicitsCost = await this.requestManagerService.requestImplicitsCost(
       payload
     );
@@ -386,10 +383,10 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       +tempSpending.sellPeriod *
       +tempSpending.salaryEmployee *
       +tempSpending.noEmployee;
-    newSpendings.costAdvt =
-      +tempSpending.sellPeriod *
-      +tempSpending.salaryEmployee *
-      +tempSpending.noEmployee;
+    // newSpendings.costAdvt =
+    //   +tempSpending.sellPeriod *
+    //   +tempSpending.salaryEmployee *
+    //   +tempSpending.noEmployee;
     newSpendings.salaryEmployee = +tempSpending.salaryEmployee;
     if (newSpendings.periodSellStart === "//") {
       newSpendings.periodSellStart = "";
@@ -434,17 +431,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
 
   parseObjectCheckSpendings(data: any, area?: any, isClick?: boolean, same?: boolean) {
     let test = JSON.parse(JSON.stringify(data))
-    test.priceLandBought = area ? area.costLand : 2500000000;
-    test.costOther = isClick ? test.costOther : 100000;
-    test.costConstructionLivingSpace = isClick ? test.costConstructionLivingSpace : 10000;
-    // test.costPlan = isClick ? test.costPlan : 300000;
-    test.costAdvt = isClick ? test.costAdvt : 10000;
-    // if(test.priceLandBought === 35000000 && isClick === true){
-    //   if(same !== true){
-    //     test.priceLandBought = 2500000000;
-    //   }
-    // }
-    console.log(test)
     return test;
   }
 

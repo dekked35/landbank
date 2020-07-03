@@ -137,6 +137,7 @@ export class AreaComponent implements OnInit {
       .subscribe(data => {
         this.is_loading_product = data.isLoading;
         this.productData = data.payload;
+        this.checkRatio(this.productData)
       });
 
     this.store.select(fromCore.getSpendings)
@@ -158,7 +159,7 @@ export class AreaComponent implements OnInit {
     if (['village', 'townhome'].includes(this.propertyType)) {
       this.standardSellAreaRatio.typeOne = productData.user.products[0].ratio;
       this.standardSellAreaRatio.typeTwo = productData.user.products[1].ratio;
-      this.standardSellAreaRatio.TypeThree = productData.user.products[2].ratio;
+      this.standardSellAreaRatio.typeThree = productData.user.products[2].ratio;
     }
 
 
@@ -203,6 +204,14 @@ export class AreaComponent implements OnInit {
       this.areaData = this.calculatorManagerService.calculateArea(this.areaData);
     }
     this.reloadData(true);
+  }
+
+  checkRatio(product: any) {
+    if (['village', 'townhome'].includes(this.propertyType) && product.user.length > 0) {
+      this.standardSellAreaRatio.typeOne = product.user.products[0].ratio;
+      this.standardSellAreaRatio.typeTwo = product.user.products[1].ratio;
+      this.standardSellAreaRatio.typeThree = product.user.products[2].ratio;
+    }
   }
 
   calculateAreaRatio($event) {

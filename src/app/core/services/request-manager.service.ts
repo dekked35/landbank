@@ -119,8 +119,8 @@ export class RequestManagerService {
       let depth = +productData[owner].depth;
       let width = +productData[owner].width;
       productData[owner].products[0].area = myProductList[0].area;
-      productData[owner].products[1].area = myProductList[0].area;
-      productData[owner].products[2].area = myProductList[0].area;
+      productData[owner].products[1].area = myProductList[1].area;
+      productData[owner].products[2].area = myProductList[2].area;
       productData[owner].products[0].stairArea = myProductList[0].stairArea;
       productData[owner].products[1].stairArea = myProductList[1].stairArea;
       productData[owner].products[2].stairArea = myProductList[2].stairArea;
@@ -228,7 +228,7 @@ export class RequestManagerService {
   }
 
   parseToMillionFormat(value: number) {
-    return +(value + '000000');
+    return +(value * 1000000);
   }
 
   parseMillionToUnitFormat(value: number) {

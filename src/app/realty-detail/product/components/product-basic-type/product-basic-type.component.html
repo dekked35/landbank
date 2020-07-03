@@ -1,12 +1,4 @@
 <ng-container *ngIf="currentProperty === 'village'">
-    <div class="ui-g" *ngIf="isShowCompetitor">
-        <div class="ui-g-12 ui-md-12 ui-lg-6">
-            <app-product-basic-setting-village [owner]="'competitor'"></app-product-basic-setting-village>
-        </div>
-        <div class="ui-g-12 ui-md-12 ui-lg-6 wrap_graph_product">
-            <app-product-basic-summary-village [owner]="'competitor'" [ownerData]="productData.competitor"></app-product-basic-summary-village>
-        </div>
-    </div>
     <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-lg-6 ">
             <app-product-basic-setting-village [owner]="'user'"></app-product-basic-setting-village>
@@ -15,12 +7,20 @@
             <app-product-basic-summary-village [owner]="'user'" [ownerData]="productData.user"></app-product-basic-summary-village>
         </div>
     </div>
+    <div class="ui-g" *ngIf="isShowCompetitor">
+        <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <app-product-basic-setting-village [owner]="'competitor'"></app-product-basic-setting-village>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-6 wrap_graph_product">
+            <app-product-basic-summary-village [owner]="'competitor'" [ownerData]="productData.competitor"></app-product-basic-summary-village>
+        </div>
+    </div>
 </ng-container>
 
 <ng-container *ngIf="currentProperty === 'townhome'">
   <div class="ui-g">
       <div class="ui-g-12 ui-md-12 ui-lg-7">
-          <app-product-basic-setting-townhouse [owner]="'user'"></app-product-basic-setting-townhouse>
+          <app-product-basic-setting-townhouse [owner]="'user'" [isCompetitor]='false'></app-product-basic-setting-townhouse>
       </div>
       <div class="ui-g-12 ui-md-12 ui-lg-5 wrap_graph_product">
           <app-product-basic-summary-townhouse [owner]="'user'" [ownerData]="productData.user"></app-product-basic-summary-townhouse>
@@ -30,7 +30,7 @@
         <!-- <div class="ui-g-12 ui-md-12 ui-lg-2"> </div> -->
         <div class="ui-g-12 ui-md-12 ui-lg-7">
             <!-- <app-product-basic-setting-village [owner]="'competitor'"></app-product-basic-setting-village> -->
-            <app-product-basic-setting-townhouse [owner]="'competitor'"></app-product-basic-setting-townhouse>
+            <app-product-basic-setting-townhouse [owner]="'competitor'" [isCompetitor]='true'></app-product-basic-setting-townhouse>
         </div>
         <div class="ui-g-12 ui-md-12 ui-lg-5 wrap_graph_product">
             <app-product-basic-summary-townhouse [owner]="'competitor'" [ownerData]="productData.competitor"></app-product-basic-summary-townhouse>
