@@ -21,6 +21,7 @@ import * as fromCore from '../../../../../core/reducers';
 
 export class ProductBasicSettingTownhouseComponent implements OnInit {
   @Input() owner: string;
+  @Input() isCompetitor: boolean;
 
   currentProperty: string;
   areaData: any;
@@ -28,6 +29,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   products: Array<any> = [];
   ownerProductData: any;
   productData: any;
+  allArea : number;
+  allArea4 : number
 
   header = {
     'competitor': 'โครงการคู่แข่ง',
@@ -43,7 +46,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   convert = [
     'area',
-    'ratio'
+    'size',
+    'stairArea'
   ];
 
   settingHeader: string;
@@ -51,8 +55,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   product_limit = {
     size: {
-      min: 30,
-      max: 400
+      min: 20,
+      max: 50
     },
     width: {
       min: 4,
@@ -123,11 +127,14 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
     this.subscriptionArea = this.store.select(fromCore.getArea)
       .subscribe(product => {
-        this.areaData = product.payload;
-        // check for Area have been call API successfully.
-        if (this.areaData.ratio_area.sellArea > 0  && this.currentProperty === 'townhome') {
-          // this.getBasicService();
+        if (this.areaData !== product.payload) {
+          this.areaData = product.payload;
+          if(this.ownerProductData) {
+            this.convertNumAndCheckSize();
+            this.getBasicService(this.ownerProductData);
+          }
         }
+        // check for Area have been call API successfully.
       });
 
     this.initializeProductSchema();
@@ -158,7 +165,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
         this.rateReturnData = data.payload;
       });
     this.settingHeader = this.header[this.owner];
-    this.calculateSize();
+    // this.calculateSize();
+    this.convertNumAndCheckSize();
     this.getBasicService(this.ownerProductData);
 
   }
@@ -193,15 +201,16 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   calculateSize() {
     const depth = +this.ownerProductData.depth;
     const width = +this.ownerProductData.width;
-    this.products[0].area = depth * width * 2;
-    this.products[1].area = depth * width * 3;
-    this.products[2].area = depth * width * 4;
+    // this.products[0].area = depth * width * 2;
+    // this.products[1].area = depth * width * 3;
+    // this.products[2].area = depth * width * 4;
   }
 
   handleRatioEnd(index: number, $event: any) {
     // this.calculateSize();
     // console.log(this.products);
     this.convertNumAndCheckSize();
+    // this.calculateSize();
     this.getBasicService(this.ownerProductData);
   }
 
@@ -228,23 +237,26 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   generateProductPayload(ownerProductData) {
     const productData = this.parseObject(this.productData);
     const oppositeOwner = (this.owner === 'user') ? 'competitor' : 'user';
-    const myProductList = this.parseObjectDecimal(this.products);
+    const myProductList = this.parseObject(this.products);
 
     productData[this.owner] = ownerProductData; // user or owner
     const depth = +ownerProductData.depth;
     const width = +ownerProductData.width;
-    productData[this.owner].products[0].area = myProductList[0].area;
-    productData[this.owner].products[1].area = myProductList[1].area;
-    productData[this.owner].products[2].area = myProductList[2].area;
-    productData[this.owner].products[0].stairArea = myProductList[0].stairArea;
-    productData[this.owner].products[1].stairArea = myProductList[1].stairArea;
-    productData[this.owner].products[2].stairArea = myProductList[2].stairArea;
-    productData[this.owner].products[0].cost = this.parseToMillionFormat(myProductList[0].cost);
-    productData[this.owner].products[1].cost = this.parseToMillionFormat(myProductList[1].cost);
-    productData[this.owner].products[2].cost = this.parseToMillionFormat(myProductList[2].cost);
-    productData[this.owner].products[0].ratio = myProductList[0].ratio;
-    productData[this.owner].products[1].ratio = myProductList[1].ratio;
-    productData[this.owner].products[2].ratio = myProductList[2].ratio;
+    productData[this.owner].products[0].area = parseFloat(this.products[0].area);
+    productData[this.owner].products[1].area = parseFloat(this.products[1].area);
+    productData[this.owner].products[2].area = parseFloat(this.products[2].area);
+    productData[this.owner].products[0].stairArea = parseFloat(this.products[0].stairArea);
+    productData[this.owner].products[1].stairArea = parseFloat(this.products[1].stairArea);
+    productData[this.owner].products[2].stairArea = parseFloat(this.products[2].stairArea);
+    productData[this.owner].products[0].cost = this.parseToMillionFormat(this.products[0].cost);
+    productData[this.owner].products[1].cost = this.parseToMillionFormat(this.products[1].cost);
+    productData[this.owner].products[2].cost = this.parseToMillionFormat(this.products[2].cost);
+    productData[this.owner].products[0].ratio = this.products[0].ratio;
+    productData[this.owner].products[1].ratio = this.products[1].ratio;
+    productData[this.owner].products[2].ratio = this.products[2].ratio;
+    productData[this.owner].products[0].size = parseFloat(this.products[0].size);
+    productData[this.owner].products[1].size = parseFloat(this.products[1].size);
+    productData[this.owner].products[2].size = parseFloat(this.products[2].size);
     productData[oppositeOwner] = productData[oppositeOwner]; // user or owner
     productData[oppositeOwner].products[0].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[0].cost);
     productData[oppositeOwner].products[1].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[1].cost);
@@ -268,7 +280,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   async fillInSpeading() {
     this.store.dispatch(new spendingsAction.IsLoadingAction(true));
     const payload = this.generateSpeadingPayload(this.spendingData);
-    let newSpendingData = await this.requestManagerService.requestSpeading(payload); /// spending API
+    let newSpendingData = await this.requestManagerService.requestSpeading(payload,"product"); /// spending API
     newSpendingData = this.mappingSpeadingResponse(this.spendingData, this.parseObject(newSpendingData));
     this.store.dispatch(new spendingsAction.SuccessAction(newSpendingData));
     this.store.dispatch(new spendingsAction.IsLoadingAction(false));
@@ -278,7 +290,11 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   }
 
   generateSpeadingPayload(spendingData: any) {
+    this.convertNumAndCheckSize()
     const tempInput = this.parseObject(spendingData);
+    if(this.areaData.total_land_price) {
+      tempInput.priceLandBought = this.areaData.total_land_price;
+    }
     let productData = JSON.parse(JSON.stringify(this.productData));
     productData = this.convertNum(productData)
     const requestProperty = this.currentProperty === 'townhome' ? 'townhouse' : this.currentProperty;
@@ -294,7 +310,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   mappingSpeadingResponse(tempSpending, newSpendings) {
     newSpendings.sellPeriod = tempSpending.sellPeriod;
     newSpendings.totalSalary = +tempSpending.sellPeriod * +tempSpending.salaryEmployee * +tempSpending.noEmployee;
-    newSpendings.costAdvt = +tempSpending.sellPeriod * +tempSpending.salaryEmployee * +tempSpending.noEmployee;
+    // newSpendings.costAdvt = +tempSpending.sellPeriod * +tempSpending.salaryEmployee * +tempSpending.noEmployee;
     newSpendings.salaryEmployee = +tempSpending.salaryEmployee;
     if (newSpendings.periodSellStart === '//') {
       newSpendings.periodSellStart = '';
@@ -344,7 +360,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
 
   parseToMillionFormat(value: number) {
-    return +(value + '000000');
+    const stringValue = value * 1000000;
+    return stringValue;
   }
 
   parseDate(date: string): string {
@@ -389,26 +406,36 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   parseMillionToUnitFormat(value: number) {
     const stringValue = value + '';
-    return +(stringValue.replace('000000', ''));
+    return parseFloat(stringValue) / 1000000;
   }
 
   convertNumAndCheckSize() {
-    for (const info in this.products) {
-      if (this.convertField.includes(info)) {
-        this.products[info] = parseFloat(this.products[info].toString().replace(/,/g, ''));
-        if (this.products[info] <= this.product_limit[info].min) {
-          this.products[info] = this.product_limit[info].min;
-        } else if (this.products[info] > this.product_limit[info].max) {
-          this.products[info] = this.product_limit[info].max;
+    this.products.map( item => {
+      Object.keys(item).forEach(
+        data => {
+          if (this.convert.includes(data)) {
+            item[data] = parseFloat(item[data].toString().replace(/,/g, ''));
+            if (item[data] <= this.product_limit[data].min) {
+              item[data] = this.product_limit[data].min;
+            } else if (item[data] > this.product_limit[data].max) {
+              item[data] = this.product_limit[data].max;
+            }
+          }
         }
-      }
-    }
+        );
+        return item;
+      });
+    this.convertField.forEach(element => {
+      this.ownerProductData[element] = parseFloat(this.ownerProductData[element].toString().replace(/,/g, ''));
+    });
+    // tslint:disable-next-line: max-line-length
+    this.allArea = (this.ownerProductData.behindDepth * this.ownerProductData.width) + (this.ownerProductData.frontDepth * this.ownerProductData.width) + (this.ownerProductData.depth * this.ownerProductData.width)
+    this.allArea4 = this.allArea / 4;
   }
 
   convertNum(productData) {
     productData.user.products.map(element => {
         element.area = parseFloat(element.area);
-        element.ratio = parseFloat(element.ratio);
         return element;
       });
     return productData;

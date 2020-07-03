@@ -59,7 +59,7 @@ export const areaUnitList = [
           percent: {
             sellArea: 65,
             roadSize: 25,
-            greenArea: 5
+            greenArea: 10
           },
           area: {
             sellArea: 0,
@@ -69,7 +69,7 @@ export const areaUnitList = [
         },
         {
           id: 2,
-          name: 'แบบที่ 2', 
+          name: 'แบบที่ 2',
           score: {
             beauty: 'ปานกลาง',
             density: 'น้อย',
@@ -158,7 +158,7 @@ export const areaUnitList = [
         },
         {
           id: 2,
-          name: 'แบบที่ 2', 
+          name: 'แบบที่ 2',
           score: {
             beauty: 'ปานกลาง',
             density: 'น้อย',

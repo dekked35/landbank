@@ -3,7 +3,7 @@ export const townhome = {
         "townPlanColor": "#ff8407",
         "farValue": 3,
         "osrValue": 10,
-        "totalArea": 5000,
+        "totalArea": 10000,
         "availableArea": 5000,
         "landPrice": 250000,
         "fenceLength": 0,
@@ -18,20 +18,20 @@ export const townhome = {
                 "convenientArea": 'น้อย'
             },
             "percent": {
-                "sellArea": 70,
-                "roadSize": 15,
-                "greenArea": 15
+                "sellArea": 65,
+                "roadSize": 25,
+                "greenArea": 10
             },
             "area": {
-                "sellArea": 0,
-                "roadSize": 0,
-                "greenArea": 0
+                "sellArea": 19500,
+                "roadSize": 7500,
+                "greenArea": 3000
             }
         },
         "ratio_area": {
-            "sellArea": 0,
-            "roadSize": 0,
-            "greenArea": 0
+            "sellArea": 65,
+            "roadSize": 25,
+            "greenArea": 10
         },
 
         "costLand" : 200000000,
@@ -42,32 +42,35 @@ export const townhome = {
     },
     "product": {
         "competitor": {
-            "products": [
-                {
-                    "type": "อาคารพานิชย์ 2 ชั้น",
-                    "area": 0.0,
-                    "stairArea": 2,
-                    "cost": 2,
-                    "ratio": 50,
-                    "quantity": 0
-                },
-                {
-                    "type": "อาคารพานิชย์ 3 ชั้น",
-                    "area": 0.0,
-                    "stairArea": 2.5,
-                    "cost": 3,
-                    "ratio": 30,
-                    "quantity": 0
-                },
-                {
-                    "type": "อาคารพานิชย์ 4 ชั้น",
-                    "area": 0.0,
-                    "stairArea": 3,
-                    "cost": 4,
-                    "ratio": 20,
-                    "quantity": 0
-                }
-            ],
+          "products": [
+            {
+                "type": "อาคารพานิชย์ 2 ชั้น",
+                "area": 60.0,
+                "stairArea": 13.2,
+                "cost": 1.5,
+                "ratio": 50,
+                "quantity": 0,
+                "size" : 21,
+            },
+            {
+                "type": "อาคารพานิชย์ 3 ชั้น",
+                "area": 66.0,
+                "stairArea": 13.2,
+                "cost": 2,
+                "ratio": 30,
+                "quantity": 0,
+                "size" : 26.25,
+            },
+            {
+                "type": "อาคารพานิชย์ 4 ชั้น",
+                "area": 72.0,
+                "stairArea": 13.2,
+                "cost": 2.5,
+                "ratio": 20,
+                "quantity": 0,
+                "size" : 31.5,
+            }
+        ],
             "depth": 12,
             "width": 5,
             "frontDepth": 6,
@@ -87,27 +90,30 @@ export const townhome = {
             "products": [
                 {
                     "type": "อาคารพานิชย์ 2 ชั้น",
-                    "area": 0.0,
-                    "stairArea": 2,
-                    "cost": 2,
+                    "area": 60.0,
+                    "stairArea": 13.2,
+                    "cost": 1.5,
                     "ratio": 50,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 21,
                 },
                 {
                     "type": "อาคารพานิชย์ 3 ชั้น",
-                    "area": 0.0,
-                    "stairArea": 2.5,
-                    "cost": 3,
+                    "area": 66.0,
+                    "stairArea": 13.2,
+                    "cost": 2,
                     "ratio": 30,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 26.25,
                 },
                 {
                     "type": "อาคารพานิชย์ 4 ชั้น",
-                    "area": 0.0,
-                    "stairArea": 3,
-                    "cost": 4,
+                    "area": 72.0,
+                    "stairArea": 13.2,
+                    "cost": 2.5,
                     "ratio": 20,
-                    "quantity": 0
+                    "quantity": 0,
+                    "size" : 31.5,
                 }
             ],
 
@@ -129,9 +135,9 @@ export const townhome = {
         }
     },
     "spendings": {
-        "priceLandBought": 35000000,
-        "costConstructionLivingSpace": 20000,
-        "costOther": 500000,
+        "priceLandBought": 2500000000,
+        "costConstructionLivingSpace": 10000,
+        "costOther": 100000,
         "costPlan": 300000,
         "costDevelopRoad": 0.0,
         "costRoadCover": 0.0,
@@ -166,11 +172,11 @@ export const townhome = {
         "costInProject": 0.0,
         "periodSellStart": '01/01/2020',
         "periodSellEnd": '12/31/2022',
-        "sellPeriod": 24,
+        "sellPeriod": 36,
         "noEmployee": 5,
         "totalSalary": 0.0,
         "salaryEmployee": 15000,
-        "costAdvt": 100000,
+        "costAdvt": 10000,
         "costAdvtOnePer": 0
     },
     "implicitCosts": {

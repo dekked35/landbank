@@ -102,7 +102,7 @@
                         <label>พื้นที่รวม</label><span> ตร.ม.</span>
                         <div class="expense_price">
                             <span>
-                                {{  (ownerProductData.behindDepth * ownerProductData.width) + (ownerProductData.frontDepth * ownerProductData.width) + (ownerProductData.depth * ownerProductData.width)  | number:'1.2-2'}}</span>
+                                {{  allArea   | number:'1.2-2'}}</span>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                         <label>พื้นที่รวมตารางวา</label><span> ตร.ว.</span>
                         <div class="expense_price">
                             <span>
-                                {{  (ownerProductData.behindDepth * ownerProductData.width) + (ownerProductData.frontDepth * ownerProductData.width) + (ownerProductData.depth * ownerProductData.width) /4 | number:'1.2-2'}}</span>
+                                {{  allArea4 | number:'1.2-2'}}</span>
                         </div>
                     </div>
                 </div>
@@ -159,20 +159,34 @@
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
-                <div class="ui-g-6 ui-md-6 ui-lg-7">
+                <div class="ui-g-6 ui-md-6 ui-lg-7" style="height: 82.5px;">
                     <p>พื้นที่บันได</p>
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
-                    <input [(ngModel)]=" products[0].stairArea" type="text"
-                    pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" /> ตร.ม.
-                    <!-- <p> {{ products[0].stairArea | number:'1.2-2' }} ตร.ม.</p> -->
+                    <!-- <input [(ngModel)]=" products[0].stairArea" type="text"
+                    pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" /> ตร.ม. -->
+                    <p style="height: 35px;"> {{ products[0].stairArea | number:'1.2-2' }} ตร.ม.</p>
                 </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+                <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                     <p-slider [(ngModel)]="products[0].stairArea" [min]="product_limit.stairArea.min"
                         [max]="product_limit.stairArea.max" (onSlideEnd)="handleRatioEnd(0, $event)"></p-slider>
-                </div>
+                </div> -->
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <div class="ui-g-6 ui-md-6 ui-lg-6">
+                  <p>ขนาด</p>
+              </div>
+              <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
+                  <input [(ngModel)]=" products[0].size" type="text"
+                    pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" /> ตร.ว.
+                  <!-- <p> {{ products[0].area | number:'1.2-2' }} ตร.ม.</p> -->
+              </div>
+              <div class="ui-g-12 ui-md-12 ui-lg-12 ">
+                  <p-slider [(ngModel)]="products[0].size" [min]="product_limit.size.min"
+                      [max]="product_limit.size.max" (onSlideEnd)="handleRatioEnd(0, $event)"></p-slider>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
                 <div class="ui-g-6 ui-md-6 ui-lg-7">
                     <p>ราคาขาย</p>
                 </div>
@@ -235,22 +249,36 @@
                         [max]="product_limit.area.max" (onSlideEnd)="handleRatioEnd(1, $event)"></p-slider>
                 </div>
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-6">
-                <div class="ui-g-6 ui-md-6 ui-lg-7">
+            <div class="ui-g-12 ui-md-12 ui-lg-6" style="height: 82.5px;">
+                <div class="ui-g-6 ui-md-6 ui-lg-6">
                     <p>พื้นที่บันได</p>
                 </div>
-                <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
-                  <input [(ngModel)]="products[1].stairArea" type="text"
-                      pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ตร.ม.
-                    <!-- <p> {{ products[1].stairArea | number:'1.2-2' }} ตร.ม.</p> -->
+                <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
+                  <!-- <input [(ngModel)]="products[1].stairArea" type="text"
+                      pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ตร.ม. -->
+                      <p style="height: 35px;"> {{ products[1].stairArea | number:'1.2-2' }} ตร.ม.</p>
                 </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+                <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                     <p-slider [(ngModel)]="products[1].stairArea" [min]="product_limit.stairArea.min"
                         [max]="product_limit.stairArea.max" (onSlideEnd)="handleRatioEnd(1, $event)"></p-slider>
-                </div>
+                </div> -->
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12">
-                <div class="ui-g-6 ui-md-6 ui-lg-7">
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <div class="ui-g-6 ui-md-6 ui-lg-6">
+                  <p>ขนาด</p>
+              </div>
+              <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
+                  <input [(ngModel)]=" products[1].size" type="text"
+                    pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" /> ตร.ว.
+                  <!-- <p> {{ products[0].area | number:'1.2-2' }} ตร.ม.</p> -->
+              </div>
+              <div class="ui-g-12 ui-md-12 ui-lg-12 ">
+                  <p-slider [(ngModel)]="products[1].size" [min]="product_limit.size.min"
+                      [max]="product_limit.size.max" (onSlideEnd)="handleRatioEnd(0, $event)"></p-slider>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+                <div class="ui-g-6 ui-md-6 ui-lg-6">
                     <p>ราคาขาย</p>
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
@@ -312,34 +340,48 @@
                         [max]="product_limit.area.max" (onSlideEnd)="handleRatioEnd(2, $event)"></p-slider>
                 </div>
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <div class="ui-g-12 ui-md-12 ui-lg-6" style="height: 82.5px;">
                 <div class="ui-g-6 ui-md-6 ui-lg-7">
-                    <p>พื้นที่บันได</p>
+                  <p style="height: 35px;">พื้นที่บันได</p>
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
-                  <input [(ngModel)]="products[2].stairArea" type="text"
-                      pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ตร.ม.
-                    <!-- <p> {{ products[2].stairArea | number:'1.2-2' }} ตร.ม.</p> -->
+                  <!-- <input [(ngModel)]="products[2].stairArea" type="text"
+                      pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ตร.ม. -->
+                    <p> {{ products[2].stairArea | number:'1.2-2' }} ตร.ม.</p>
                 </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+                <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                     <p-slider [(ngModel)]="products[2].stairArea" [min]="product_limit.stairArea.min"
                         [max]="product_limit.stairArea.max" (onSlideEnd)="handleRatioEnd(2, $event)"></p-slider>
-                </div>
+                </div> -->
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12">
-                <div class="ui-g-6 ui-md-6 ui-lg-7">
-                    <p>ราคาขาย</p>
-                </div>
-                <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
-                  <input [(ngModel)]="products[2].cost" type="text"
-                      pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ล้านบาท
-                    <!-- <p> {{ products[2].cost }} ล้านบาท</p> -->
-                </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
-                    <p-slider [(ngModel)]="products[2].cost" [min]="product_limit.cost.min"
-                        [max]="product_limit.cost.max" (onSlideEnd)="handleRatioEnd(2, $event)"></p-slider>
-                </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <div class="ui-g-6 ui-md-6 ui-lg-6">
+                  <p>ขนาด</p>
+              </div>
+              <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
+                  <input [(ngModel)]=" products[2].size" type="text"
+                    pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" /> ตร.ว.
+                  <!-- <p> {{ products[0].area | number:'1.2-2' }} ตร.ม.</p> -->
+              </div>
+              <div class="ui-g-12 ui-md-12 ui-lg-12 ">
+                  <p-slider [(ngModel)]="products[2].size" [min]="product_limit.size.min"
+                      [max]="product_limit.size.max" (onSlideEnd)="handleRatioEnd(0, $event)"></p-slider>
+              </div>
             </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+              <div class="ui-g-6 ui-md-6 ui-lg-6">
+                  <p>ราคาขาย</p>
+              </div>
+              <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
+                <input [(ngModel)]="products[2].cost" type="text"
+                    pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ล้านบาท
+                  <!-- <p> {{ products[2].cost }} ล้านบาท</p> -->
+              </div>
+              <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+                  <p-slider [(ngModel)]="products[2].cost" [min]="product_limit.cost.min"
+                      [max]="product_limit.cost.max" (onSlideEnd)="handleRatioEnd(2, $event)"></p-slider>
+              </div>
+          </div>
             <!-- <div class="ui-g-12 ui-md-12 ui-lg-6">
                 <div class="ui-g-6 ui-md-6 ui-lg-6">
                     <p>สัดส่วน</p>
