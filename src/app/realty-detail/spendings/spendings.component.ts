@@ -161,9 +161,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
           const tempSpending = this.parseObjectCheckSpendings(this.spendingsData, this.areaData, this.clickChange,  this.value_again);
           this.store.dispatch(new spendingsAction.IsLoadingAction(true));
           const payload = this.generatePayload(tempSpending);
-          let newSpendingData = await this.requestManagerService.requestSpeading(
-            payload,'spendings'
-          );
+          let newSpendingData = await this.requestManagerService.requestSpeading(payload);
           newSpendingData = this.mappingResponse(
             tempSpending,
             this.parseObject(newSpendingData)
@@ -196,9 +194,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
         this.productData.user.rooms !== undefined ||
         this.productData.user.rooms.length > 0
       ) {
-        const newSpendingData = await this.requestManagerService.requestSpeading(
-          payload,'spending'
-        );
+        const newSpendingData = await this.requestManagerService.requestSpeading(payload);
         if (newSpendingData.costPerMonth !== undefined) {
           newSpendingData.costPerMonths = newSpendingData.costPerMonth;
         }

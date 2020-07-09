@@ -88,7 +88,7 @@
                 <img src="../../../assets/icons/icon_allarea.svg"></figure>
             <figcaption>
                 พื้นที่รวม
-                <input [(ngModel)]="totalArea" size="7" (change)="InputChange($event,'totalArea')" pKeyFilter="int" type="text"
+                <input [(ngModel)]="totalArea" size="7" (change)="InputChange($event)" pKeyFilter="int" type="text"
                 pInputText inputWithComma  />
                 ตร.ว.
                 <button pButton type="button" color="ui-button-danger" icon="pi pi-info-circle"
@@ -124,7 +124,7 @@
             <figcaption>
                 <!-- ราคาที่ดิน <span> {{ areaInput.landPrice }}</span> -->
                 ราคาที่ดิน
-                <input [(ngModel)]="landPrice" size="8" (change)="InputChange($event,'landPrice')" pKeyFilter="int" type="text"
+                <input [(ngModel)]="landPrice" size="8" (change)="InputChange($event)" pKeyFilter="int" type="text"
                     pInputText inputWithComma/>
                 บาท/ตร.ว.
             </figcaption>

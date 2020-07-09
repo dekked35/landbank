@@ -280,7 +280,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   async fillInSpeading() {
     this.store.dispatch(new spendingsAction.IsLoadingAction(true));
     const payload = this.generateSpeadingPayload(this.spendingData);
-    let newSpendingData = await this.requestManagerService.requestSpeading(payload,"product"); /// spending API
+    let newSpendingData = await this.requestManagerService.requestSpeading(payload); /// spending API
     newSpendingData = this.mappingSpeadingResponse(this.spendingData, this.parseObject(newSpendingData));
     this.store.dispatch(new spendingsAction.SuccessAction(newSpendingData));
     this.store.dispatch(new spendingsAction.IsLoadingAction(false));
