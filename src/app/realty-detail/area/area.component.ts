@@ -62,6 +62,7 @@ export class AreaComponent implements OnInit {
 
   farValue: number;
   osrValue: number;
+  lawAreaUsage: number;
   totalArea: number;
   landPrice: number;
   availableArea: number;
@@ -93,9 +94,9 @@ export class AreaComponent implements OnInit {
 
   // Hot fix.
   standardSellAreaRatio: any = {
-    typeOne: 50,
-    typeTwo: 25,
-    typeThree: 25
+    typeOne: 0,
+    typeTwo: 0,
+    typeThree: 0
   };
 
   displayDialog = false;
@@ -162,7 +163,7 @@ export class AreaComponent implements OnInit {
       this.standardSellAreaRatio.typeThree = productData.user.products[2].ratio;
     }
 
-
+    this.lawAreaUsage = areaData.farValue * areaData.totalArea *4;
     this.farValue = areaData.farValue;
     this.osrValue = areaData.osrValue;
     this.totalArea = 10000;
@@ -180,6 +181,17 @@ export class AreaComponent implements OnInit {
 
   changeModel() {
     this.standardArea = this.defaultsVariableService.getAreaUnit(this.propertyType, this.selectedModel.id);
+    if(this.selectedModel.id === 4) {
+      this.standardSellAreaRatio = {
+        typeOne: 0,
+        typeTwo: 0,
+        typeThree: 0
+      };
+    } else {
+      this.standardSellAreaRatio.typeOne = this.productData.user.products[0].ratio;
+      this.standardSellAreaRatio.typeTwo = this.productData.user.products[1].ratio;
+      this.standardSellAreaRatio.typeThree = this.productData.user.products[2].ratio;
+    }
     this.calculateAreaRatio(null);
   }
 
@@ -336,6 +348,7 @@ export class AreaComponent implements OnInit {
     // console.log('Assign : ' +  costLandType);
     // this.areaData.availableArea = areaData.availableArea;
     // newAreaData.costLandType = costLandType;
+    this.lawAreaUsage = newAreaData.farValue * newAreaData.totalArea *4;
     newAreaData.deposit = newAreaData.deposit ? newAreaData.deposit : this.areaData.deposit;
     newAreaData.rentPerMonth = newAreaData.rentPerMonth ? newAreaData.rentPerMonth : this.areaData.rentPerMonth;
     newAreaData.rentNoYear = newAreaData.rentNoYear ? newAreaData.rentNoYear : this.areaData.rentNoYear;

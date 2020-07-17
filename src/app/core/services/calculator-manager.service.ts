@@ -27,9 +27,9 @@ export class CalculatorManagerService {
     let far = +areaData.farValue;
     let totalArea = +areaData.totalArea;
     if (this.propertyType === 'village') {
-      areaData.availableArea =  totalArea;
-    } else if (this.propertyType === 'townhome') {
-      areaData.availableArea =  (far * totalArea);
+      areaData.availableArea =  totalArea *4;
+    // } else if (this.propertyType === 'townhome') {
+    //   areaData.availableArea =  (far * totalArea);
     } else {
       areaData.availableArea = (far * 4 * totalArea)
     }
@@ -85,7 +85,8 @@ export class CalculatorManagerService {
       // });
 
     }
-    let field = (this.propertyType === "village") ? "size" : "area";
+    // let field = (this.propertyType === "village") ? "size" : "area";
+    let field = "size";
     // calculate remainingArea
     if(this.propertyType === "village" || this.propertyType === "townhome") {
       let products = productData.user.products;
@@ -96,7 +97,6 @@ export class CalculatorManagerService {
       let sellArea = areaData.standardArea.area.sellArea;
       productData.user.usedArea = sellArea;
       productData.user.remainingArea = sellArea - sumArea;
-
       products = productData.competitor.products;
       sumArea = 0;
       for (let i = 0; i < products.length; i++) {

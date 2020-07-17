@@ -20,18 +20,21 @@ export const village = {
             'percent': {
                 'sellArea': 65,
                 'roadSize': 25,
-                'greenArea': 10
+                'greenArea': 5,
+                'centerArea': 5,
             },
             'area': {
                 'sellArea': 6500,
                 'roadSize': 2500,
-                'greenArea': 1000
+                'greenArea': 500,
+                'centerArea' : 500,
             }
         },
         'ratio_area': {
             'sellArea': 6500,
             'roadSize': 2500,
-            'greenArea': 1000
+            'greenArea': 500,
+            'centerArea' : 500,
         },
         'costLand' : 0,
         'costLandType' : '', // not support
@@ -74,36 +77,36 @@ export const village = {
             'remainingArea': 0
         },
         'user': {
-            'products': [
-                {
-                    'type': 'บ้าน 1 ชั้น',
-                    'size': 20,
-                    'area': 0,
-                    'cost': 1,
-                    'ratio': 50,
-                    'quantity': 0
-                },
-                {
-                    'type': 'บ้าน 2 ชั้น',
-                    'size': 20,
-                    'area': 0,
-                    'cost': 2,
-                    'ratio': 25,
-                    'quantity': 0
-                },
-                {
-                    'type': 'บ้าน 3 ชั้น',
-                    'size': 20,
-                    'area': 0,
-                    'cost': 3,
-                    'ratio': 25,
-                    'quantity': 0
-                }
-            ],
-            'totalQuantity': 0,
-            'totalCost': 0.0,
-            'usedArea': 0,
-            'remainingArea': 0
+          'products': [
+              {
+                  'type': 'บ้าน 1 ชั้น',
+                  'size': 50,
+                  'area': 110,
+                  'cost': 1,
+                  'ratio': 50,
+                  'quantity': 0
+              },
+              {
+                  'type': 'บ้าน 2 ชั้น',
+                  'size': 60,
+                  'area': 180,
+                  'cost': 2,
+                  'ratio': 25,
+                  'quantity': 0
+              },
+              {
+                  'type': 'บ้าน 3 ชั้น',
+                  'size': 70,
+                  'area': 200,
+                  'cost': 3,
+                  'ratio': 25,
+                  'quantity': 0
+              }
+          ],
+          'totalQuantity': 0,
+          'totalCost': 0.0,
+          'usedArea': 0,
+          'remainingArea': 0
         }
     },
     'spendings': {

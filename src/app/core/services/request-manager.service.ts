@@ -146,7 +146,7 @@ export class RequestManagerService {
     return JSON.parse(JSON.stringify(data));
   }
 
-  requestSpeading(payload: any): Promise<any>{
+  requestSpeading(payload: any, string ?: string): Promise<any>{
     console.log("request speading . . .");
     // console.log(JSON.stringify(payload));
     return new Promise((resolve, reject) => {

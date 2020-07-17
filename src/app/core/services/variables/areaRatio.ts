@@ -117,9 +117,9 @@ export const areaUnitList = [
             convenientArea: 'มาก'
           },
           percent: {
-            sellArea: 50,
-            roadSize: 25,
-            greenArea: 25
+            sellArea: 0,
+            roadSize: 0,
+            greenArea: 0
           },
           area: {
             sellArea: 0,

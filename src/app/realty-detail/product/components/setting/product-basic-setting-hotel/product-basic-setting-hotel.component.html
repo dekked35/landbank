@@ -94,12 +94,14 @@
                             <button pButton type="button" class="ui-button-info small-button" *ngIf="!enableEdit"
                                 (click)="enableEditMethod($event, i, ROOM)" icon="pi pi-pencil"
                                 style="margin-right: .2em"></button>
-                            <button pButton type="button" class="ui-button-danger small-button" *ngIf="!enableEdit"
-                                (click)="deleteItem(i, ROOM)" icon="pi pi-times"></button>
-                            <!-- Edit Mode -->
-                            <button pButton type="button" class="ui-button-success small-button"
+                                <!-- Edit Mode -->
+                            <button pButton type="button" class="ui-button-success small-button two-button"
                                 *ngIf="enableEdit && enableEditIndex === i && typeEdit === ROOM"
+                                [disabled]="room.area <= 0 || room.noRoom <= 0"
                                 (click)="saveButton(ROOM)" icon="pi pi-save" label="บันทึก"></button>
+                            <button pButton type="button" class="ui-button-danger small-button"
+                                *ngIf="(enableEdit && enableEditIndex === i && typeEdit === ROOM) || !enableEdit"
+                                (click)="deleteItem(i, ROOM)" icon="pi pi-times"></button>
                             <!-- <button pButton type="button" class="ui-button-warning"
                             *ngIf="enableEdit && enableEditIndex === i && typeEdit === ROOM" (click)="cancleEdit(ROOM)"
                             icon="pi pi-times"></button> -->
@@ -115,7 +117,7 @@
     </div>
     <div class="ui-g-6 ui-md-6 ui-lg-6">
         <div style="float: right;">
-            <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem('room')"></p-button>
+            <p-button [disabled]="enableEdit && typeEdit !== ROOM" icon="pi pi-plus-circle" label="เพิ่ม" (onClick)="addItem('room')"></p-button>
         </div>
     </div>
     <div class="ui-g-6 ui-md-6 ui-lg-6">
@@ -229,14 +231,15 @@
                             <button pButton type="button" class="ui-button-info small-button" *ngIf="!enableEdit"
                                 (click)="enableEditMethod($event, i, CENTRAL, central.name)" icon="pi pi-pencil"
                                 style="margin-right: .2em"></button>
-                            <button pButton type="button" class="ui-button-danger small-button" *ngIf="!enableEdit"
-                                (click)="deleteItem(i, CENTRAL)" icon="pi pi-times"></button>
-
                             <!-- Edit Mode -->
-                            <button pButton type="button" class="ui-button-success small-button"
+                            <button pButton type="button" class="ui-button-success small-button two-button"
                                 *ngIf="enableEdit && enableEditIndex === i && typeEdit === CENTRAL"
+                                [disabled]="central.area <= 0 || central.noRoom <= 0"
                                 (click)="saveButton(CENTRAL)" icon="pi pi-save" label="บันทึก"
                                 style="margin-right: .2em"></button>
+                            <button pButton type="button" class="ui-button-danger small-button"
+                                *ngIf="(enableEdit && enableEditIndex === i && typeEdit === CENTRAL) || !enableEdit"
+                                (click)="deleteItem(i, CENTRAL)" icon="pi pi-times"></button>
                             <!-- <button pButton type="button" class="ui-button-warning"
                             *ngIf="enableEdit && enableEditIndex === i && typeEdit === CENTRAL"
                             (click)="cancleEdit(CENTRAL)" icon="pi pi-times"></button> -->
@@ -251,7 +254,8 @@
     </div> -->
     <div class="ui-g-12 ui-md-12 ui-lg-12">
         <div style="float: right;">
-            <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(CENTRAL)"></p-button>
+          <p-button [disabled]="enableEdit && typeEdit !== CENTRAL" icon="pi pi-plus-circle" label="เพิ่ม" (onClick)="addItem(CENTRAL)"></p-button>
+          <!-- <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(CENTRAL)"></p-button> -->
         </div>
     </div>
     <div class="ui-g-6 ui-md-6 ui-lg-6">
@@ -365,14 +369,15 @@
                                 <button pButton type="button" class="ui-button-info" *ngIf="!enableEdit"
                                     (click)="enableEditMethod($event, i, PARKING)" icon="pi pi-pencil"
                                     style="margin-right: .2em"></button>
-                                <button pButton type="button" class="ui-button-danger" *ngIf="!enableEdit"
-                                    (click)="deleteItem(i, PARKING)" icon="pi pi-times"></button>
-
                                 <!-- Edit Mode -->
-                                <button pButton type="button" class="ui-button-success"
+                                <button pButton type="button" class="ui-button-success small-button two-button"
                                     *ngIf="enableEdit && enableEditIndex === i && typeEdit === PARKING"
+                                    [disabled]="parking.area <= 0 || parking.noRoom <= 0"
                                     (click)="saveButton(PARKING)" icon="pi pi-save" label="บันทึก"
                                     style="margin-right: .2em"></button>
+                                <button pButton type="button" class="ui-button-danger"
+                                    *ngIf="(enableEdit && enableEditIndex === i && typeEdit === PARKING) || !enableEdit"
+                                    (click)="deleteItem(i, PARKING)" icon="pi pi-times"></button>
                                 <!-- <button pButton type="button" class="ui-button-warning"
                                 *ngIf="enableEdit && enableEditIndex === i && typeEdit === PARKING"
                                 (click)="cancleEdit(PARKING)" icon="pi pi-times"></button> -->
@@ -386,7 +391,8 @@
         </div>
         <div class="ui-g-6 ui-md-6 ui-lg-6">
             <div style="float: right;">
-                <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(PARKING)"></p-button>
+                <!-- <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(PARKING)"></p-button> -->
+                <p-button [disabled]="enableEdit && typeEdit !== PARKING" icon="pi pi-plus-circle" label="เพิ่ม" (onClick)="addItem(PARKING)"></p-button>
             </div>
         </div>
         <div class="ui-g-6 ui-md-6 ui-lg-6">
@@ -498,14 +504,16 @@
                             <button pButton type="button" class="ui-button-info" *ngIf="!enableEdit"
                                 (click)="enableEditMethod($event, i, OUTDOOR)" icon="pi pi-pencil"
                                 style="margin-right: .2em"></button>
-                            <button pButton type="button" class="ui-button-danger" *ngIf="!enableEdit"
-                                (click)="deleteItem(i, OUTDOOR)" icon="pi pi-times"></button>
-
                             <!-- Edit Mode -->
-                            <button pButton type="button" class="ui-button-success"
+                            <button pButton type="button" class="ui-button-success small-button two-button"
                                 *ngIf="enableEdit && enableEditIndex === i && typeEdit === OUTDOOR"
+                                [disabled]="outdoor.area <= 0 || outdoor.noRoom <= 0"
                                 (click)="saveButton(OUTDOOR)" icon="pi pi-save" label="บันทึก"
                                 style="margin-right: .2em"></button>
+                            <button pButton type="button" class="ui-button-danger"
+                                *ngIf="(enableEdit && enableEditIndex === i && typeEdit === OUTDOOR) || !enableEdit"
+                                (click)="deleteItem(i, OUTDOOR)" icon="pi pi-times"></button>
+
                             <!-- <button pButton type="button" class="ui-button-warning"
                                 *ngIf="enableEdit && enableEditIndex === i && typeEdit === OUTDOOR"
                                 (click)="cancleEdit(OUTDOOR)" icon="pi pi-times"></button> -->
@@ -520,7 +528,8 @@
     </div>
     <div class="ui-g-6 ui-md-6 ui-lg-6">
         <div style="float: right;">
-            <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(OUTDOOR)"></p-button>
+          <p-button [disabled]="enableEdit && typeEdit !== OUTDOOR" icon="pi pi-plus-circle" label="เพิ่ม" (onClick)="addItem(OUTDOOR)"></p-button>
+          <!-- <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(OUTDOOR)"></p-button> -->
         </div>
     </div>
     <div class="ui-g-6 ui-md-6 ui-lg-6">

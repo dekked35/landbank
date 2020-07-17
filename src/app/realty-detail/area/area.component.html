@@ -106,14 +106,18 @@
             <figcaption>
                 <!-- <input [(ngModel)]="availableArea" (change)="InputChange($event)" size="10" pKeyFilter="int" type="text"
                     pInputText /> -->
-                พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ areaData.availableArea | number }}</span>
+                    พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ lawAreaUsage | number }}</span>
+                    <!-- พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ availableArea | number }}</span> -->
 
-                <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
+                <!-- <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
                     ตร.ว.
                 </ng-container>
                 <ng-container
                     *ngIf="propertyType === 'condo' || propertyType === 'hotel' || propertyType === 'communityMall'">
                     ตร.ม.
+                </ng-container> -->
+                <ng-container>
+                  ตร.ม.
                 </ng-container>
             </figcaption>
         </div>

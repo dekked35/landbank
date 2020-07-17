@@ -91,7 +91,7 @@ export const townhome = {
                 {
                     "type": "อาคารพานิชย์ 2 ชั้น",
                     "area": 60.0,
-                    "stairArea": 13.2,
+                    "stairArea": 10,
                     "cost": 1.5,
                     "ratio": 50,
                     "quantity": 0,
@@ -99,8 +99,8 @@ export const townhome = {
                 },
                 {
                     "type": "อาคารพานิชย์ 3 ชั้น",
-                    "area": 66.0,
-                    "stairArea": 13.2,
+                    "area": 60.0,
+                    "stairArea": 15,
                     "cost": 2,
                     "ratio": 30,
                     "quantity": 0,
@@ -108,8 +108,8 @@ export const townhome = {
                 },
                 {
                     "type": "อาคารพานิชย์ 4 ชั้น",
-                    "area": 72.0,
-                    "stairArea": 13.2,
+                    "area": 60.0,
+                    "stairArea": 20,
                     "cost": 2.5,
                     "ratio": 20,
                     "quantity": 0,
