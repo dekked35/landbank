@@ -27,11 +27,11 @@ export class CalculatorManagerService {
     let far = +areaData.farValue;
     let totalArea = +areaData.totalArea;
     if (this.propertyType === 'village') {
-      areaData.availableArea =  totalArea *4;
+      areaData.availableArea =  totalArea;
     // } else if (this.propertyType === 'townhome') {
     //   areaData.availableArea =  (far * totalArea);
     } else {
-      areaData.availableArea = (far * 4 * totalArea)
+      areaData.availableArea = (far * totalArea)
     }
     // คำนวณราคาที่ดิน
     let landPrice = +areaData.landPrice;

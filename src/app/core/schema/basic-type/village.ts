@@ -18,23 +18,28 @@ export const village = {
                 'convenientArea': 'น้อย'
             },
             'percent': {
-                'sellArea': 65,
+                'sellArea': 69,
                 'roadSize': 25,
                 'greenArea': 5,
-                'centerArea': 5,
+                'centerArea': 1,
             },
             'area': {
-                'sellArea': 6500,
+                'sellArea': 6922,
                 'roadSize': 2500,
                 'greenArea': 500,
-                'centerArea' : 500,
+                'centerArea' : 78,
+            },
+            'centerArea' : {
+              'swimming' : 31.25,
+              'fitnessZone' : 31.25,
+              'officeZone' : 15.625,
             }
         },
         'ratio_area': {
-            'sellArea': 6500,
+            'sellArea': 6922,
             'roadSize': 2500,
             'greenArea': 500,
-            'centerArea' : 500,
+            'centerArea' : 78,
         },
         'costLand' : 0,
         'costLandType' : '', // not support
@@ -56,7 +61,7 @@ export const village = {
                 },
                 {
                     'type': 'บ้าน 2 ชั้น',
-                    'size': 60,
+                    'size': 50,
                     'area': 180,
                     'cost': 2,
                     'ratio': 25,
@@ -64,7 +69,7 @@ export const village = {
                 },
                 {
                     'type': 'บ้าน 3 ชั้น',
-                    'size': 70,
+                    'size': 50,
                     'area': 200,
                     'cost': 3,
                     'ratio': 25,
@@ -88,7 +93,7 @@ export const village = {
               },
               {
                   'type': 'บ้าน 2 ชั้น',
-                  'size': 60,
+                  'size': 50,
                   'area': 180,
                   'cost': 2,
                   'ratio': 25,
@@ -96,7 +101,7 @@ export const village = {
               },
               {
                   'type': 'บ้าน 3 ชั้น',
-                  'size': 70,
+                  'size': 50,
                   'area': 200,
                   'cost': 3,
                   'ratio': 25,

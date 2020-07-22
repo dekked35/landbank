@@ -4523,4 +4523,9 @@ body
   width: 60px;
   margin-right: 6px !important;
 }
+
+.two-button{
+  width: 7em !important;
+  margin-right: 5px !important;
+}
 /* Add your customizations of theme here */

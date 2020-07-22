@@ -249,6 +249,14 @@
                 </span>
                 <!-- <p-rating  readonly="true" stars="5" [cancel]="false" [ngModel]="4"></p-rating> -->
             </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+              พื่นที่ส่วนกลาง
+              <span [ngStyle]="getScoreColor(standardArea.score.centerArea)">
+                  {{ standardArea.score.centerArea }}
+              </span>
+              <!-- <span style="color:red;"> มาก </span> -->
+              <!-- <p-rating  readonly="true" stars="5" [cancel]="false" [ngModel]="5"></p-rating> -->
+          </div>
         </div>
 
         <div class="ui-g-12 ui-md-12 ui-lg-5 wrap_graph_product">
@@ -280,7 +288,7 @@
                         พื้นที่ขาย
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.sellArea | number: '1.0-1' }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.sellArea"
-                            (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified /> %
+                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified /> %
                         คิดเป็น
                         <span> {{ standardArea.area.sellArea | number }}</span>
                         ตร.ว.
@@ -296,7 +304,7 @@
                             บ้าน 1 ชั้น
                             <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeOne | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeOne"
-                                (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                                (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeOne/100 * standardArea.area.sellArea | number }}</span>
                             ตร.ว.
@@ -309,7 +317,7 @@
                             บ้าน 2 ชั้น
                             <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeTwo  | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeTwo"
-                            (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                            (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeTwo/100 * standardArea.area.sellArea | number }}</span>
                             ตร.ว.
@@ -322,7 +330,7 @@
                             บ้าน 3 ชั้น
                             <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeThree | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeThree"
-                                (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                                (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeThree/100 * standardArea.area.sellArea | number }}</span>
                             ตร.ว.
@@ -335,7 +343,7 @@
                             ถนน
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.roadSize| number: '1.0-1' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.roadSize"
-                                (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น
                             <span> {{ standardArea.area.roadSize | number }}</span>
                             ตร.ว.
@@ -348,9 +356,67 @@
                             พื้นที่สีเขียว
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.greenArea | number: '1.0-1' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.greenArea"
-                                (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
+                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
                         </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                      <figure></figure>
+                          <!-- <img src="../../../assets/icons/icon_road.svg"> -->
+                      <figcaption>
+                          พื้นที่ส่วนกลาง
+                          <span > {{ standardArea.percent.centerArea| number: '1.0-1' }} </span>
+                          <!-- <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.centerArea"
+                              (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/>  -->
+                              % คิดเป็น
+                          <span> {{ standardArea.area.centerArea | number }}</span>
+                          ตร.ว.
+                      </figcaption>
+                    </div>
+                    <span style="padding-left: 25px; display: block;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                        <figure></figure>
+                        <!-- <img src="../../../assets/icons/home1.svg"> -->
+                        <figcaption>
+                            <p style="width: 60px; display: inline-block;">สระว่ายน้ำ</p>
+                            <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.swimming" style="margin-right: 5px;"
+                                (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                              <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
+                            <span  *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming}}</span>
+                            <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span>
+                            ตร.ว.
+                        </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                      <figure></figure>
+                      <!-- <img src="../../../assets/icons/home1.svg"> -->
+                      <figcaption>
+                        <p style="width: 60px; display: inline-block;">ฟิตเนส</p>
+
+                          <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone | number }} </span> -->
+                          <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.fitnessZone" style="margin-right: 5px;"
+                              (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                              <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone }}</span>
+                          <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.fitnessZone }}</span>
+                          ตร.ว.
+                      </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                      <figure></figure>
+                      <!-- <img src="../../../assets/icons/home1.svg"> -->
+                      <figcaption>
+                        <p style="width: 60px; display: inline-block;">สำนักงาน</p>
+
+                          <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone | number }} </span> -->
+                          <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.officeZone" style="margin-right: 5px;"
+                              (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                              <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone }}</span>
+                          <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span>
+                          ตร.ว.
+                      </figcaption>
                     </div>
 
                 </ng-container>
@@ -419,6 +485,64 @@
                                 (change)="calculateAreaRatio($event)" pKeyFilter="int" type="int" pInputText matInputCommified/> %
                             คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
                         </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                      <figure></figure>
+                          <!-- <img src="../../../assets/icons/icon_road.svg"> -->
+                      <figcaption>
+                          พื้นที่ส่วนกลาง
+                          <span > {{ standardArea.percent.centerArea| number: '1.0-1' }} </span>
+                          <!-- <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.centerArea"
+                              (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/>  -->
+                              % คิดเป็น
+                          <span> {{ standardArea.area.centerArea | number }}</span>
+                          ตร.ว.
+                      </figcaption>
+                    </div>
+                    <span style="padding-left: 25px; display: block;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                      <figure></figure>
+                      <!-- <img src="../../../assets/icons/home1.svg"> -->
+                      <figcaption>
+                          <p style="width: 60px; display: inline-block;">สระว่ายน้ำ</p>
+                          <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
+                          <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.swimming" style="margin-right: 5px;"
+                              (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                            <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
+                          <span  *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming}}</span>
+                          <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span>
+                          ตร.ว.
+                      </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                      <figure></figure>
+                      <!-- <img src="../../../assets/icons/home1.svg"> -->
+                      <figcaption>
+                        <p style="width: 60px; display: inline-block;">ฟิตเนส</p>
+
+                          <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone | number }} </span> -->
+                          <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.fitnessZone" style="margin-right: 5px;"
+                              (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                              <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone }}</span>
+                          <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.fitnessZone }}</span>
+                          ตร.ว.
+                      </figcaption>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                      <figure></figure>
+                      <!-- <img src="../../../assets/icons/home1.svg"> -->
+                      <figcaption>
+                        <p style="width: 60px; display: inline-block;">สำนักงาน</p>
+
+                          <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone | number }} </span> -->
+                          <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.officeZone" style="margin-right: 5px;"
+                              (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                              <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone }}</span>
+                          <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span>
+                          ตร.ว.
+                      </figcaption>
                     </div>
                 </ng-container>
 

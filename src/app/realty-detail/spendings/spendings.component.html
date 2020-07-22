@@ -122,6 +122,14 @@
                   </div>
                   <div *ngIf="is_loading" class="expense_price"> 0.00 </div>
                </div>
+               <div class="form-group">
+                <label>ค่าส่วนกลาง</label><span>บาท</span>
+                <div *ngIf="!is_loading" class="expense_price_no_line">
+                   <!-- class="expense_price" -->
+                   {{ spendingsData.centerCost | number:'1.2-2' }}
+                </div>
+                <div *ngIf="is_loading" class="expense_price_no_line"> 0.00 </div>
+             </div>
                <!-- <div class="form-group">
                   <label>ต้นทุนค่าพัฒนาที่ดินรวมทั้งหมด</label><span>บาท</span>
                   <div *ngIf="!is_loading" class="expense_price_no_line">
