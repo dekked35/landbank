@@ -18,20 +18,28 @@ export const townhome = {
                 "convenientArea": 'น้อย'
             },
             "percent": {
-                "sellArea": 65,
+                "sellArea": 64,
                 "roadSize": 25,
-                "greenArea": 10
+                "greenArea": 10,
+                "centerArea": 1,
             },
             "area": {
-                "sellArea": 19500,
+                "sellArea": 19422,
                 "roadSize": 7500,
-                "greenArea": 3000
+                "greenArea": 3000,
+                "centerArea": 78,
+            },
+            "centerArea" : {
+              "swimming" : 31.25,
+              "fitnessZone" : 31.25,
+              "officeZone" : 15.625,
             }
         },
         "ratio_area": {
             "sellArea": 65,
             "roadSize": 25,
-            "greenArea": 10
+            "greenArea": 10,
+            "centerArea" : 78,
         },
 
         "costLand" : 200000000,
@@ -91,7 +99,7 @@ export const townhome = {
                 {
                     "type": "อาคารพานิชย์ 2 ชั้น",
                     "area": 60.0,
-                    "stairArea": 13.2,
+                    "stairArea": 10,
                     "cost": 1.5,
                     "ratio": 50,
                     "quantity": 0,
@@ -99,8 +107,8 @@ export const townhome = {
                 },
                 {
                     "type": "อาคารพานิชย์ 3 ชั้น",
-                    "area": 66.0,
-                    "stairArea": 13.2,
+                    "area": 60.0,
+                    "stairArea": 15,
                     "cost": 2,
                     "ratio": 30,
                     "quantity": 0,
@@ -108,8 +116,8 @@ export const townhome = {
                 },
                 {
                     "type": "อาคารพานิชย์ 4 ชั้น",
-                    "area": 72.0,
-                    "stairArea": 13.2,
+                    "area": 60.0,
+                    "stairArea": 20,
                     "cost": 2.5,
                     "ratio": 20,
                     "quantity": 0,

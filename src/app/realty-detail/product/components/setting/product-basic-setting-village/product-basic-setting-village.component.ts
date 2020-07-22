@@ -111,7 +111,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
       .subscribe(product => {
         this.is_loading = product.isLoading;
         this.productData = product.payload;
-        this.products = this.parseObjectForProduct(this.productData[this.owner]['products']);
+        this.products = this.parseObject(this.productData[this.owner]['products']);
       });
 
     this.subscriptionSpending = this.store.select(fromCore.getSpendings)
@@ -186,7 +186,6 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
         }
         break;
         case 'area':
-          this.convertAreaToSize();
           if (this.products[index].area <= this.product_limit.area.min) {
             this.products[index].area = this.product_limit.area.min;
           } else if (this.products[index].area > this.product_limit.area.max) {
@@ -228,6 +227,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     let newProductData = await this.requestManagerService.requestProduct(payload);
     newProductData = this.parsePayloadResponse(newProductData);
     newProductData = this.calculatorManagerService.calculateProduct(this.areaData, newProductData);
+    console.log('newProduct',newProductData)
     this.store.dispatch(new productAction.SuccessAction(newProductData));
 
     this.store.dispatch(new productAction.IsLoadingAction(false));
@@ -243,6 +243,12 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     productData[this.owner].products[0].cost = this.parseToMillionFormat(myProduct[0].cost);
     productData[this.owner].products[1].cost = this.parseToMillionFormat(myProduct[1].cost);
     productData[this.owner].products[2].cost = this.parseToMillionFormat(myProduct[2].cost);
+    productData[this.owner].products[0].size = myProduct[0].size;
+    productData[this.owner].products[1].size = myProduct[1].size;
+    productData[this.owner].products[2].size = myProduct[2].size;
+    productData[this.owner].products[0].area = myProduct[0].area;
+    productData[this.owner].products[1].area = myProduct[1].area;
+    productData[this.owner].products[2].area = myProduct[2].area;
     productData[oppositeOwner].products[0].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[0].cost);
     productData[oppositeOwner].products[1].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[1].cost);
     productData[oppositeOwner].products[2].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[2].cost);
@@ -264,9 +270,8 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   async fillInSpeading() {
     console.log('fill in speading.');
     this.store.dispatch(new spendingsAction.IsLoadingAction(true));
-
     const payload = this.generateSpeadingPayload(this.speadingData);
-    let newSpendingData = await this.requestManagerService.requestSpeading(payload);
+    let newSpendingData = await this.requestManagerService.requestSpeading(payload,'productBasic');
     newSpendingData = this.mappingSpeadingResponse(this.speadingData, this.parseObject(newSpendingData));
     this.store.dispatch(new spendingsAction.SuccessAction(newSpendingData));
     this.store.dispatch(new spendingsAction.IsLoadingAction(false));

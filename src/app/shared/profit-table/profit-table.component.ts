@@ -59,7 +59,7 @@ export class ProfitTableComponent implements OnInit {
 
   calculateSpendings() {
     let totalSalary = +this.spendingsData.sellPeriod * +this.spendingsData.salaryEmployee * +this.spendingsData.noEmployee;
-   this.netProfit = this.profitData.totalProfit - this.spendingsData.costAdvtOnePer - totalSalary;
+    this.netProfit = this.profitData.totalProfit - this.spendingsData.costAdvtOnePer - totalSalary;
   }
 
 }

@@ -54,17 +54,25 @@ export const areaUnitList = [
             beauty: 'มาก',
             density: 'ปานกลาง',
             congestion: 'ปานกลาง',
-            convenientArea: 'น้อย'
+            convenientArea: 'น้อย',
+            centerArea: 'น้อย'
           },
           percent: {
-            sellArea: 65,
+            sellArea: 64.21875,
             roadSize: 25,
-            greenArea: 10
+            greenArea: 10,
+            centerArea: 0.78125,
           },
           area: {
             sellArea: 0,
             roadSize: 0,
-            greenArea: 0
+            greenArea: 0,
+            centerArea: 0,
+          },
+          centerArea : {
+            swimming : 31.25,
+            fitnessZone : 31.25,
+            officeZone : 15.625,
           }
         },
         {
@@ -74,17 +82,25 @@ export const areaUnitList = [
             beauty: 'ปานกลาง',
             density: 'น้อย',
             congestion: 'ปานกลาง',
-            convenientArea: 'ปานกลาง'
+            convenientArea: 'ปานกลาง',
+            centerArea: 'น้อย'
           },
           percent: {
-            sellArea: 60,
+            sellArea: 59.21875,
             roadSize: 25,
-            greenArea: 15
+            greenArea: 15,
+            centerArea: 0.78125
           },
           area: {
             sellArea: 0,
             roadSize: 0,
-            greenArea: 0
+            greenArea: 0,
+            centerArea: 0,
+          },
+          centerArea : {
+            swimming : 31.25,
+            fitnessZone : 31.25,
+            officeZone : 15.625,
           }
         },
         {
@@ -94,17 +110,25 @@ export const areaUnitList = [
             beauty: 'ปานกลาง',
             density: 'น้อย',
             congestion: 'น้อย',
-            convenientArea: 'มาก'
+            convenientArea: 'มาก',
+            centerArea: 'น้อย'
           },
           percent: {
-            sellArea: 50,
+            sellArea: 49.21875,
             roadSize: 25,
-            greenArea: 25
+            greenArea: 25,
+            centerArea: 0.78125
           },
           area: {
             sellArea: 0,
             roadSize: 0,
-            greenArea: 0
+            greenArea: 0,
+            centerArea: 0,
+          },
+          centerArea : {
+            swimming : 31.25,
+            fitnessZone : 31.25,
+            officeZone : 15.625,
           }
         },
         {
@@ -114,17 +138,25 @@ export const areaUnitList = [
             beauty: 'ปานกลาง',
             density: 'น้อย',
             congestion: 'น้อย',
-            convenientArea: 'มาก'
+            convenientArea: 'มาก',
+            centerArea: 'น้อย'
           },
           percent: {
-            sellArea: 50,
-            roadSize: 25,
-            greenArea: 25
+            sellArea: 0,
+            roadSize: 0,
+            greenArea: 0,
+            centerArea: 0,
           },
           area: {
             sellArea: 0,
             roadSize: 0,
-            greenArea: 0
+            greenArea: 0,
+            centerArea: 0,
+          },
+          centerArea : {
+            swimming : 31.25,
+            fitnessZone : 31.25,
+            officeZone : 15.625,
           }
         }
       ]

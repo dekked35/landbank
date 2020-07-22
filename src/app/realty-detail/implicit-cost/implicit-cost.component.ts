@@ -83,6 +83,7 @@ export class ImplicitCostComponent implements OnInit {
   }
 
   inputOnChange($event){
+    this.convertValue()
     this.getImplicitCostService();
   }
 
@@ -94,7 +95,7 @@ export class ImplicitCostComponent implements OnInit {
       this.rateReturnData.ratioPrivateFund =  this.rateReturnData.privateCash;
       this.rateReturnData.ratioBorrowFund =  this.rateReturnData.bankLoad;
     }
-
+    this.convertValue()
     this.getImplicitCostService();
   }
 
@@ -138,6 +139,13 @@ export class ImplicitCostComponent implements OnInit {
         err => {
           this.store.dispatch(new rateReturnAction.FailureAction(err));
         });
+  }
+
+  convertValue() {
+    this.implicitsCostData.incomes.map( item => {
+      item.pricePerRoom = parseFloat(item.pricePerRoom.toString().replace(/,/g, ''));
+      return item;
+    })
   }
 
   parseObject(data:any) {

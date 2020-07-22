@@ -62,6 +62,7 @@ export class AreaComponent implements OnInit {
 
   farValue: number;
   osrValue: number;
+  lawAreaUsage: number;
   totalArea: number;
   landPrice: number;
   availableArea: number;
@@ -93,10 +94,22 @@ export class AreaComponent implements OnInit {
 
   // Hot fix.
   standardSellAreaRatio: any = {
-    typeOne: 50,
-    typeTwo: 25,
-    typeThree: 25
+    typeOne: 0,
+    typeTwo: 0,
+    typeThree: 0
   };
+
+  standardCenterArea: any = {
+    swimming: 0,
+    fitnessZone: 0,
+    officeZone: 0,
+  };
+
+  centerAreaSave: any = {
+    swimming: 0,
+    fitnessZone: 0,
+    officeZone: 0,
+  }
 
   displayDialog = false;
   selectedParking = true;
@@ -161,8 +174,13 @@ export class AreaComponent implements OnInit {
       this.standardSellAreaRatio.typeTwo = productData.user.products[1].ratio;
       this.standardSellAreaRatio.typeThree = productData.user.products[2].ratio;
     }
+    if (this.propertyType === 'village') {
+      this.standardCenterArea.swimming = areaData.standardArea.centerArea.swimming;
+      this.standardCenterArea.fitnessZone = areaData.standardArea.centerArea.fitnessZone;
+      this.standardCenterArea.officeZone = areaData.standardArea.centerArea.officeZone;
+    }
 
-
+    this.lawAreaUsage = areaData.farValue * areaData.totalArea *4;
     this.farValue = areaData.farValue;
     this.osrValue = areaData.osrValue;
     this.totalArea = 10000;
@@ -180,6 +198,31 @@ export class AreaComponent implements OnInit {
 
   changeModel() {
     this.standardArea = this.defaultsVariableService.getAreaUnit(this.propertyType, this.selectedModel.id);
+    // const newProductData = this.parseObject(this.areaData);
+    if(this.selectedModel.id === 4) {
+      this.standardSellAreaRatio = {
+        typeOne: 0,
+        typeTwo: 0,
+        typeThree: 0
+      };
+      this.standardCenterArea = {
+        swimming: 0,
+        fitnessZone: 0,
+        officeZone: 0,
+      }
+      this.areaData.standardArea.centerArea = {
+        swimming: 0,
+        fitnessZone: 0,
+        officeZone: 0
+      }
+    } else {
+      this.standardSellAreaRatio.typeOne = this.productData.user.products[0].ratio;
+      this.standardSellAreaRatio.typeTwo = this.productData.user.products[1].ratio;
+      this.standardSellAreaRatio.typeThree = this.productData.user.products[2].ratio;
+      this.standardCenterArea.swimming = this.standardArea.centerArea.swimming;
+      this.standardCenterArea.fitnessZone = this.standardArea.centerArea.fitnessZone;
+      this.standardCenterArea.officeZone = this.standardArea.centerArea.officeZone;
+    }
     this.calculateAreaRatio(null);
   }
 
@@ -243,6 +286,47 @@ export class AreaComponent implements OnInit {
       this.displayDialog = false;
       this.store.dispatch(new productAction.SuccessAction(newProductData));
     }
+  }
+// uncomplete
+  updateCenterAreaRatio() {
+    const newAreaData = this.parseObject(this.areaData);
+    const newStandard = this.parseObject(this.standardArea)
+    this.centerAreaSave = {
+      swimming : parseFloat(this.standardCenterArea.swimming.toString().replace(/,/g, '')) * 1.25 / 4,
+      fitnessZone : parseFloat(this.standardCenterArea.fitnessZone.toString().replace(/,/g, '')) * 1.25 / 4,
+      officeZone : parseFloat(this.standardCenterArea.officeZone.toString().replace(/,/g, '')) * 1.25 / 4
+    };
+    // newAreaData.standardArea.centerArea = this.centerAreaSave;
+    const centerZone = Object.keys(this.centerAreaSave).reduce((sum, data) => this.centerAreaSave[data] + sum, 0)
+    // newAreaData.standardArea.area.centerArea = centerZone;
+    // newAreaData.standardArea.centerArea = this.centerAreaSave;
+    newStandard.area.centerArea = centerZone;
+    newStandard.percent.centerArea = centerZone/ newAreaData.availableArea * 100;
+    newStandard.centerArea = this.centerAreaSave;
+    this.standardArea = newStandard;
+    // newAreaData.standardArea.percent.centerArea = centerZone
+    // newStandardArea.centerArea = this.centerAreaSave;
+    // this.standardArea.area.centerArea = centerZone;
+    this.reloadData(true);
+    // this.store.dispatch(new areaAction.SuccessAction(newAreaData));
+    // this.reloadData(true);
+    // this.standardArea.percent.centerArea = centerZone/;
+    // console.log(centerZone,this.standardArea)
+    // newProductData.user.products[index].ratio = +percent;
+    // newProductData.competitor.products[index].ratio = +percent;
+    // const maxProduct = newProductData.user.products.reduce((sum, data) => data.ratio + sum, 0);
+    // if(maxProduct > 100) {
+    //   this.displayDialogMsg = 'โปรดระบุสัดส่วนของพื้นที่ขายให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น';
+    //   this.displayDialog = true;
+    // } else {
+    //   this.displayDialog = false;
+    //   this.store.dispatch(new productAction.SuccessAction(newProductData));
+    // }
+  }
+
+  convertToNum(item: any){
+    Object.keys(item).forEach(block => item[block] = parseFloat(item[block].toString().replace(/,/g, '')))
+    return item;
   }
 
   // hot Fixed solution
@@ -336,6 +420,7 @@ export class AreaComponent implements OnInit {
     // console.log('Assign : ' +  costLandType);
     // this.areaData.availableArea = areaData.availableArea;
     // newAreaData.costLandType = costLandType;
+    this.lawAreaUsage = newAreaData.farValue * newAreaData.totalArea *4;
     newAreaData.deposit = newAreaData.deposit ? newAreaData.deposit : this.areaData.deposit;
     newAreaData.rentPerMonth = newAreaData.rentPerMonth ? newAreaData.rentPerMonth : this.areaData.rentPerMonth;
     newAreaData.rentNoYear = newAreaData.rentNoYear ? newAreaData.rentNoYear : this.areaData.rentNoYear;

@@ -41,3 +41,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+.firebaserc
+.firebase/hosting.cHVibGlj.cache
+firebase.json
+package-lock.json
+database.rules.json
+tslint.json
+tsconfig.json

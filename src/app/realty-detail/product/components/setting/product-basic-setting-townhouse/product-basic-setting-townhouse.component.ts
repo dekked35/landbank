@@ -44,11 +44,11 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     'behindDepth'
   ];
 
-  convert = [
-    'area',
-    'size',
-    'stairArea'
-  ];
+  // convert = [
+  //   'area',
+  //   'size',
+  //   'stairArea'
+  // ];
 
   settingHeader: string;
   settingSubHeader = '(สัดส่วน % ในโครงการต้องรวมกันได้ 100% เท่านั้น)';
@@ -410,21 +410,21 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   }
 
   convertNumAndCheckSize() {
-    this.products.map( item => {
-      Object.keys(item).forEach(
-        data => {
-          if (this.convert.includes(data)) {
-            item[data] = parseFloat(item[data].toString().replace(/,/g, ''));
-            if (item[data] <= this.product_limit[data].min) {
-              item[data] = this.product_limit[data].min;
-            } else if (item[data] > this.product_limit[data].max) {
-              item[data] = this.product_limit[data].max;
-            }
-          }
-        }
-        );
-        return item;
-      });
+    // this.products.map( item => {
+    //   Object.keys(item).forEach(
+    //     data => {
+    //       if (this.convert.includes(data)) {
+    //         item[data] = parseFloat(item[data].toString().replace(/,/g, ''));
+    //         if (item[data] <= this.product_limit[data].min) {
+    //           item[data] = this.product_limit[data].min;
+    //         } else if (item[data] > this.product_limit[data].max) {
+    //           item[data] = this.product_limit[data].max;
+    //         }
+    //       }
+    //     }
+    //     );
+    //     return item;
+    //   });
     this.convertField.forEach(element => {
       this.ownerProductData[element] = parseFloat(this.ownerProductData[element].toString().replace(/,/g, ''));
     });

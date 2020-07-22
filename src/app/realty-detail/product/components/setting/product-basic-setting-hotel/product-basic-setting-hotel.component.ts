@@ -215,7 +215,9 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   }
 
   deleteItem(index, type) {
-    this.typeEdit = type;
+    // this.typeEdit = type;
+    this.enableEdit = false;
+    this.enableEditIndex = null;
     const variable = this.getVariable(type);
     this[variable].splice(index, 1);
     this.dispatchProduct();
@@ -486,6 +488,10 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
         return item;
       });
     });
+  }
+
+  checkTrue(value : string) {
+    console.log(value)
   }
 
   ngOnDestroy(){

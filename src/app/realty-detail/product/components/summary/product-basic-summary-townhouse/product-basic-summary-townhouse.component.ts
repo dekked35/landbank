@@ -17,10 +17,10 @@ export class ProductBasicSummaryTownhouseComponent implements OnInit, OnChanges 
 
   productData: any;
   is_loading: boolean = true;
-  constructor(private store: Store<any>) { 
+  constructor(private store: Store<any>) {
       this.store.select(fromCore.getProduct)
       .subscribe(product => {
-        // this.productData = JSON.parse(JSON.stringify(product.payload));
+        this.productData = JSON.parse(JSON.stringify(product.payload));
         this.is_loading = product.isLoading;
       });
   }
@@ -39,7 +39,7 @@ export class ProductBasicSummaryTownhouseComponent implements OnInit, OnChanges 
 
   ngOnInit() {
     this.settingHeader = this.header[this.owner];
-    this.settingGraph = this.graphs[this.owner];    
+    this.settingGraph = this.graphs[this.owner];
   }
  // TODO: User state store instead.
   ngOnChanges(changes: SimpleChanges) {

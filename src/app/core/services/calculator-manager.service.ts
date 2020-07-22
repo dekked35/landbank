@@ -28,10 +28,10 @@ export class CalculatorManagerService {
     let totalArea = +areaData.totalArea;
     if (this.propertyType === 'village') {
       areaData.availableArea =  totalArea;
-    } else if (this.propertyType === 'townhome') {
-      areaData.availableArea =  (far * totalArea);
+    // } else if (this.propertyType === 'townhome') {
+    //   areaData.availableArea =  (far * totalArea);
     } else {
-      areaData.availableArea = (far * 4 * totalArea)
+      areaData.availableArea = (far * totalArea)
     }
     // คำนวณราคาที่ดิน
     let landPrice = +areaData.landPrice;
@@ -85,7 +85,8 @@ export class CalculatorManagerService {
       // });
 
     }
-    let field = (this.propertyType === "village") ? "size" : "area";
+    // let field = (this.propertyType === "village") ? "size" : "area";
+    let field = "size";
     // calculate remainingArea
     if(this.propertyType === "village" || this.propertyType === "townhome") {
       let products = productData.user.products;
@@ -96,7 +97,6 @@ export class CalculatorManagerService {
       let sellArea = areaData.standardArea.area.sellArea;
       productData.user.usedArea = sellArea;
       productData.user.remainingArea = sellArea - sumArea;
-
       products = productData.competitor.products;
       sumArea = 0;
       for (let i = 0; i < products.length; i++) {
