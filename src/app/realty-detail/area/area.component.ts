@@ -1,5 +1,4 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-
 import { Store } from '@ngrx/store';
 import { SelectItem } from 'primeng/api';
 
@@ -12,6 +11,7 @@ import * as pageAction from '../../core/actions/page.actions';
 import * as areaAction from '../../core/actions/area.actions';
 import * as fromCore from '../../core/reducers';
 import * as productAction from '../../core/actions/product.actions';
+import { ActivatedRoute } from '@angular/router';
 
 const needToConvert = [
   'farValue',
@@ -69,6 +69,7 @@ export class AreaComponent implements OnInit {
   standardArea: any;
   error: any;
   allArea: number;
+  param: any;
   colorsTown: Array<any> = [
     { label: 'Orange', color: '#ff8407' },
     { label: 'Orange', color: '#FFFC10' },
@@ -120,30 +121,30 @@ export class AreaComponent implements OnInit {
     private defaultsVariableService: DefaultsVariableService,
     private requestManagerService: RequestManagerService,
     private calculatorManagerService: CalculatorManagerService,
-    private shemaManagerService: SchemaManagerService) {
-
+    private shemaManagerService: SchemaManagerService,
+    // private route: ActivatedRoute
+    ) {
       this.store.select(fromCore.getPage)
       .subscribe(data => {
-
         if (data.page !== this.propertyType) {
           const isReloadData = (this.propertyType === '') ? false : true;
           this.propertyType = data.page;
           this.initializeAreaSchema(isReloadData);
         }
-
       });
 
   }
 
   ngOnInit() {
-
     this.store.select(fromCore.getArea)
     .subscribe(data => {
       this.is_loading = data.isLoading;
       this.areaData = this.calculatorManagerService.calculateArea(this.parseObject(data.payload));
       this.error = data.error;
     });
-
+    // this.route.queryParams.subscribe(params => {
+    //   this.param = params;
+    // })
     this.reloadData(true);
 
     this.store.select(fromCore.getProduct)
@@ -266,7 +267,6 @@ export class AreaComponent implements OnInit {
     this.totalAreaRatio = totalAreaRatio;
     this.raminingAreaRatio = 100 - this.totalAreaRatio;
     this.checkDisplayDialog(percent);
-
     if (this.totalAreaRatio <= 100) {
       this.reloadData(true);
     }
@@ -363,9 +363,12 @@ export class AreaComponent implements OnInit {
 
   reloadData(isReload: boolean) {
     if(isReload) {
-      let costLandType = (this.areaData.costLandType === undefined || this.areaData.costLandType === '') ? 'buy' : this.areaData.costLandType;
+      const costLandType = ((this.areaData.costLandType === undefined || this.areaData.costLandType === '') && isReload) ? 'buy' : this.areaData.costLandType;
       this.convertNum();
       this.getAreaBasicService(+this.osrValue, +this.farValue, +this.totalArea, +this.landPrice, +this.areaData.availableArea, costLandType);
+    } else {
+      // const fromParam = this.convertParamToObject(this.param)
+      // this.getAreaBasicService(fromParam.osr, fromParam.far, fromParam.totalArea, fromParam.landPrice, fromParam.totalArea, costLandType);
     }
   }
 
@@ -387,6 +390,18 @@ export class AreaComponent implements OnInit {
     } else {
       this.displayDialog = false;
     }
+  }
+
+  convertParamToObject(params: any){
+    const paramNew = this.parseObject(params)
+    Object.keys(paramNew).forEach( item => {
+      if (['osr', 'far','totalArea','landPrice'].includes(item)){
+          paramNew[item] = parseFloat(paramNew[item].toString().replace(/,/g, ''));
+      } else if (['colorTown'].includes(item)) {
+        paramNew[item] = ['#', paramNew[item]].join('');
+      }
+    })
+    return paramNew;
   }
 
   async getAreaBasicService(osrValue: number, farValue: number, totalArea: number, landPrice: number, availableArea: number, costLandType: string) {
