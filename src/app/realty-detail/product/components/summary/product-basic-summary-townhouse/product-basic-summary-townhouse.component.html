@@ -1,7 +1,11 @@
 <div class="text_cover" *ngIf="!is_loading">
 
     <div class="ui-g">
-
+        <div class="ui-g-12 ui-md-6 ui-lg-6" style="align-self: center;text-align:center;">
+          <figure>
+            <img src="../../../../assets/images/building.jpg">
+          </figure>
+        </div>
         <div class="ui-g-12 ui-md-6 ui-lg-9">
             <!-- <app-area-chart [chartName]="settingGraph"></app-area-chart> -->
                 <app-charts [chartType]="'product'" [chartData]="ownerData.products"> </app-charts>

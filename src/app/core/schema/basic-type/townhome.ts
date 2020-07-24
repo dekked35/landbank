@@ -18,16 +18,16 @@ export const townhome = {
                 "convenientArea": 'น้อย'
             },
             "percent": {
-                "sellArea": 64,
+                "sellArea": 64.21,
                 "roadSize": 25,
                 "greenArea": 10,
-                "centerArea": 1,
+                "centerArea": 0.78,
             },
             "area": {
-                "sellArea": 19422,
-                "roadSize": 7500,
-                "greenArea": 3000,
-                "centerArea": 78,
+                "sellArea": 6421.875,
+                "roadSize": 2500,
+                "greenArea": 1000 ,
+                "centerArea": 78.125,
             },
             "centerArea" : {
               "swimming" : 31.25,
