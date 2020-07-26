@@ -25,7 +25,8 @@ const needToConvert = [
   'costPlan',
   'noEmployee',
   'salaryEmployee',
-  'costAdvt'
+  'costAdvt',
+  'costCommission'
 ]
 
 const needToConvertHotel = [

@@ -130,8 +130,10 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 
   areaChartMapping(currentProperty:string) :Array<number>{
     let series = [];
-    if(['village', 'townhome'].includes(currentProperty)) {
+    if(['village'].includes(currentProperty)) {
       series = [+this.chartData.percent.sellArea, +this.chartData.percent.roadSize, +this.chartData.percent.greenArea, +this.chartData.percent.centerArea];
+    } else if (['townhome'].includes(currentProperty)) {
+      series = [+this.chartData.percent.sellArea, +this.chartData.percent.roadSize, +this.chartData.percent.greenArea];
     } else {
       // condo hotel commall
             series = [+this.chartData.percent.room, +this.chartData.percent.central,

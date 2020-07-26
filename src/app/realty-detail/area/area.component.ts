@@ -220,9 +220,11 @@ export class AreaComponent implements OnInit {
       this.standardSellAreaRatio.typeOne = this.productData.user.products[0].ratio;
       this.standardSellAreaRatio.typeTwo = this.productData.user.products[1].ratio;
       this.standardSellAreaRatio.typeThree = this.productData.user.products[2].ratio;
-      this.standardCenterArea.swimming = this.standardArea.centerArea.swimming;
-      this.standardCenterArea.fitnessZone = this.standardArea.centerArea.fitnessZone;
-      this.standardCenterArea.officeZone = this.standardArea.centerArea.officeZone;
+      if (this.propertyType === 'village') {
+        this.standardCenterArea.swimming = this.standardArea.centerArea.swimming;
+        this.standardCenterArea.fitnessZone = this.standardArea.centerArea.fitnessZone;
+        this.standardCenterArea.officeZone = this.standardArea.centerArea.officeZone;
+      }
     }
     this.calculateAreaRatio(null);
   }
@@ -268,6 +270,7 @@ export class AreaComponent implements OnInit {
     this.raminingAreaRatio = 100 - this.totalAreaRatio;
     this.checkDisplayDialog(percent);
     if (this.totalAreaRatio <= 100) {
+      console.log('is reload')
       this.reloadData(true);
     }
 

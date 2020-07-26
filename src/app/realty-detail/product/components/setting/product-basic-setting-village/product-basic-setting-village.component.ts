@@ -56,11 +56,11 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   product_limit = {
     size: {
-      min: 10,
+      min: 1,
       max: 1000
     },
     area: {
-      min: 40,
+      min: 1,
       max: 4000
     },
     cost: {
