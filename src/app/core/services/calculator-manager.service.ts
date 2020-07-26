@@ -26,13 +26,13 @@ export class CalculatorManagerService {
     // คำนวณพื้นที่ที่ใช้ได้ตามกฏหมาย
     let far = +areaData.farValue;
     let totalArea = +areaData.totalArea;
-    if (this.propertyType === 'village') {
+    if (['village','townhome'].includes(this.propertyType)) {
       areaData.availableArea =  totalArea;
     // } else if (this.propertyType === 'townhome') {
     //   areaData.availableArea =  (far * totalArea);
     } else {
-      // areaData.availableArea = (far * totalArea)
-      areaData.availableArea = totalArea
+      areaData.availableArea = (far * totalArea * 4)
+      // areaData.availableArea = totalArea
     }
     // คำนวณราคาที่ดิน
     let landPrice = +areaData.landPrice;
@@ -93,7 +93,7 @@ export class CalculatorManagerService {
       let products = productData.user.products;
       let sumArea = 0;
       for (let i = 0; i < products.length; i++) {
-        sumArea += products[i].quantity *  products[i][field] * (this.propertyType === "village"  ? 4 : 1);
+        sumArea += products[i].quantity *  products[i][field] ;
       }
       let sellArea = areaData.standardArea.area.sellArea;
       productData.user.usedArea = sellArea;

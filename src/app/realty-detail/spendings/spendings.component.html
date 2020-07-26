@@ -122,7 +122,7 @@
                   </div>
                   <div *ngIf="is_loading" class="expense_price"> 0.00 </div>
                </div>
-               <div class="form-group">
+               <div class="form-group" *ngIf="currentProperty === 'village'">
                 <label>ค่าพัฒนาพื้นที่ส่วนกลาง</label><span>บาท</span>
                 <div *ngIf="!is_loading" class="expense_price_no_line">
                    <!-- class="expense_price" -->
@@ -210,19 +210,22 @@
                </div>
                <div class="mem_sum"> บาท/เดือน =<span> {{ spendingsData.totalSalary |  number:'1.2-2' }}</span>บาท รวมเงินเดือนทั้งหมดจนจบโครงการ</div>
                <div class="form-group form_calendar">
-                  <label>ค่าคอมมิชชั่นเซลล์ต่อหลัง</label>
-                  <div>
-                    <input [(ngModel)]="percentCostAdvt" (change)="InputOnchanges($event)" type="text"
-                       pInputText matInputCommified (keypress)="numberOnly($event)" class="wd-20 next-box"/> %
-                    <input [(ngModel)]="spendingsData.costAdvt" (change)="InputOnchanges($event)" type="text"
-                       pInputText inputWithComma class="wd-60 float-right"/>
-                  </div>
-               </div>
-               <div class="mem_sum">(ปกติคิดที่ 1% ของมูลค่าโครงการ) =
-                  <span *ngIf="!is_loading"> {{ spendingsData.costAdvtOnePer | number:'1.2-2' }}</span>
-                  <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
-                  บาท</div>
-            </div>
+                <label>ค่าโฆษณา</label>
+                <input [(ngModel)]="spendingsData.costAdvt" (change)="InputOnchanges($event)" type="text" pKeyFilter="int"
+                   pInputText inputWithComma />
+              </div>
+              <div class="mem_sum">(ปกติคิดที่ 1% ของมูลค่าโครงการ) =
+                 <span *ngIf="!is_loading"> {{ spendingsData.costAdvtOnePer | number:'1.2-2' }}</span>
+                 <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
+                 บาท</div>
+              <div class="form-group form_calendar">
+                <label>ค่าคอมมิชชั่นเซลล์ต่อหลัง</label>
+                <div>
+                  <input [(ngModel)]="spendingsData.costCommission" (change)="InputOnchanges($event)" type="text"
+                      pInputText inputWithComma/>
+                </div>
+              </div>
+             </div>
          </div>
 
       </div>

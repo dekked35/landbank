@@ -157,7 +157,7 @@ export const village = {
         'totalSalary': 0.0,
         'salaryEmployee': 15000,
         'costAdvt': 100000,
-        'costAdvtOnePer': 0
+        'costCommission': 10000
     },
     'implicitCosts': {
         'sellAreaSize': 0.00,
