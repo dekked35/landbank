@@ -270,7 +270,6 @@ export class AreaComponent implements OnInit {
     this.raminingAreaRatio = 100 - this.totalAreaRatio;
     this.checkDisplayDialog(percent);
     if (this.totalAreaRatio <= 100) {
-      console.log('is reload')
       this.reloadData(true);
     }
 

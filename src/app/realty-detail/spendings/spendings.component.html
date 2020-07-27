@@ -225,6 +225,10 @@
                       pInputText inputWithComma/>
                 </div>
               </div>
+              <div class="mem_sum">สรุปค่าใช้จ่ายต่อเดือน =
+                <span *ngIf="!is_loading"> {{ spendingsData.costPerOneMonth | number:'1.2-2' }}</span>
+                <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
+                บาท</div>
              </div>
          </div>
 
