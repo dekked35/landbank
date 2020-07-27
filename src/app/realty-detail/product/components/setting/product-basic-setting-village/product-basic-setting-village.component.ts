@@ -227,7 +227,6 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     let newProductData = await this.requestManagerService.requestProduct(payload);
     newProductData = this.parsePayloadResponse(newProductData);
     newProductData = this.calculatorManagerService.calculateProduct(this.areaData, newProductData);
-    console.log('newProduct',newProductData)
     this.store.dispatch(new productAction.SuccessAction(newProductData));
 
     this.store.dispatch(new productAction.IsLoadingAction(false));
