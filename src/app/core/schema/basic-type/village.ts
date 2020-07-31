@@ -30,9 +30,9 @@ export const village = {
                 'centerArea' : 78,
             },
             'centerArea' : {
-              'swimming' : 31.25,
-              'fitnessZone' : 31.25,
-              'officeZone' : 15.625,
+              'swimming' : 100,
+              'fitnessZone' : 100,
+              'officeZone' : 50,
             }
         },
         'ratio_area': {
