@@ -14,6 +14,7 @@ import * as fromCore from '../../../../../core/reducers';
 export class ProductBasicSummaryTownhouseComponent implements OnInit, OnChanges {
   @Input() owner: string;
   @Input() ownerData: any;
+  areaData?: any;
 
   productData: any;
   is_loading: boolean = true;
@@ -22,6 +23,10 @@ export class ProductBasicSummaryTownhouseComponent implements OnInit, OnChanges 
       .subscribe(product => {
         this.productData = JSON.parse(JSON.stringify(product.payload));
         this.is_loading = product.isLoading;
+      });
+      this.store.select(fromCore.getArea)
+      .subscribe(area => {
+        this.areaData = area.payload;
       });
   }
 
@@ -46,8 +51,15 @@ export class ProductBasicSummaryTownhouseComponent implements OnInit, OnChanges 
     try {
       let newOwnerData = changes.ownerData;
       this.ownerData = JSON.parse(JSON.stringify(newOwnerData.currentValue));
+      this.checkDataCenter();
     } catch (e) {
       this.ownerData = { products: []}
+    }
+  }
+
+  checkDataCenter(){
+    if(this.areaData.percent && this.areaData.percent.centerArea === 0 ){
+      this.productData.centerArea = [0, 0, 0];
     }
   }
 

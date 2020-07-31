@@ -88,7 +88,7 @@
                 <img src="../../../assets/icons/icon_allarea.svg"></figure>
             <figcaption>
                 พื้นที่รวม
-                <input [(ngModel)]="totalArea" size="7" (change)="InputChange($event)" pKeyFilter="int" type="text"
+                <input [(ngModel)]="totalArea" size="7" (change)="InputChangeTotalArea($event)" pKeyFilter="int" type="text"
                 pInputText inputWithComma  />
                 ตร.ว.
                 <button pButton type="button" color="ui-button-danger" icon="pi pi-info-circle"
@@ -290,7 +290,7 @@
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.sellArea"
                             (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified /> %
                         คิดเป็น
-                        <span> {{ standardArea.area.sellArea | number }}</span>
+                        <span> {{ standardArea.area.sellArea | number: '1.0-2' }}</span>
                         ตร.ว.
                     </figcaption>
                 </div>
@@ -306,7 +306,7 @@
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeOne"
                                 (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น
-                            <span> {{ standardSellAreaRatio.typeOne/100 * standardArea.area.sellArea | number }}</span>
+                            <span> {{ standardSellAreaRatio.typeOne/100 * standardArea.area.sellArea | number: '1.0-2' }}</span>
                             ตร.ว.
                         </figcaption>
                     </div>
@@ -319,7 +319,7 @@
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeTwo"
                             (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น
-                            <span> {{ standardSellAreaRatio.typeTwo/100 * standardArea.area.sellArea | number }}</span>
+                            <span> {{ standardSellAreaRatio.typeTwo/100 * standardArea.area.sellArea | number: '1.0-2' }}</span>
                             ตร.ว.
                         </figcaption>
                     </div>
@@ -332,7 +332,7 @@
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeThree"
                                 (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น
-                            <span> {{ standardSellAreaRatio.typeThree/100 * standardArea.area.sellArea | number }}</span>
+                            <span> {{ standardSellAreaRatio.typeThree/100 * standardArea.area.sellArea | number: '1.0-2' }}</span>
                             ตร.ว.
                         </figcaption>
                     </div>
@@ -345,7 +345,7 @@
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.roadSize"
                                 (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
                             คิดเป็น
-                            <span> {{ standardArea.area.roadSize | number }}</span>
+                            <span> {{ standardArea.area.roadSize | number: '1.0-2' }}</span>
                             ตร.ว.
                         </figcaption>
                     </div>
@@ -357,26 +357,28 @@
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.greenArea | number: '1.0-1' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.greenArea"
                                 (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
-                            คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
+                            คิดเป็น <span> {{ standardArea.area.greenArea | number: '1.0-2' }}</span> ตร.ว.
                         </figcaption>
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                      <figure></figure>
-                          <!-- <img src="../../../assets/icons/icon_road.svg"> -->
+                      <figure>
+                          <img src="../../../assets/icons/icon_pool.svg">
+                      </figure>
                       <figcaption>
                           พื้นที่ส่วนกลาง
                           <span > {{ standardArea.percent.centerArea| number: '1.0-1' }} </span>
                           <!-- <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.centerArea"
                               (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/>  -->
                               % คิดเป็น
-                          <span> {{ standardArea.area.centerArea | number }}</span>
+                          <span> {{ standardArea.area.centerArea | number: '1.0-2' }}</span>
                           ตร.ว.
                       </figcaption>
                     </div>
                     <span style="padding-left: 25px; display: block;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
-                        <figure></figure>
-                        <!-- <img src="../../../assets/icons/home1.svg"> -->
+                        <figure>
+                          <img src="../../../assets/icons/central/Pool.svg">
+                        </figure>
                         <figcaption>
                             <p style="width: 60px; display: inline-block;">สระว่ายน้ำ</p>
                             <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
@@ -384,13 +386,14 @@
                                 (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
                               <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                             <span  *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming}}</span>
-                            <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span>
-                            ตร.ว.
+                            <!-- <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span> -->
+                            ตร.ม.
                         </figcaption>
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
-                      <figure></figure>
-                      <!-- <img src="../../../assets/icons/home1.svg"> -->
+                      <figure>
+                      <img src="../../../assets/icons/central/Gym.svg">
+                      </figure>
                       <figcaption>
                         <p style="width: 60px; display: inline-block;">ฟิตเนส</p>
 
@@ -399,13 +402,14 @@
                               (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
                               <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                           <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone }}</span>
-                          <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.fitnessZone }}</span>
-                          ตร.ว.
+                          <!-- <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.fitnessZone }}</span> -->
+                          ตร.ม.
                       </figcaption>
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
-                      <figure></figure>
-                      <!-- <img src="../../../assets/icons/home1.svg"> -->
+                      <figure>
+                      <img src="../../../assets/icons/central/Lobby.svg">
+                      </figure>
                       <figcaption>
                         <p style="width: 60px; display: inline-block;">สำนักงาน</p>
 
@@ -414,8 +418,8 @@
                               (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
                               <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                           <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone }}</span>
-                          <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span>
-                          ตร.ว.
+                          <!-- <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span> -->
+                          ตร.ม.
                       </figcaption>
                     </div>
 
@@ -486,13 +490,13 @@
                             คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
                         </figcaption>
                     </div>
-                    <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                       <figure></figure>
                       <figcaption>
                           พื้นที่ส่วนกลาง
                           <span > {{ standardArea.percent.centerArea| number: '1.0-1' }} </span>
                               % คิดเป็น
-                          <span> {{ standardArea.area.centerArea | number }}</span>
+                          <span> {{ standardArea.area.centerArea | number : '1.0-2' }}</span>
                           ตร.ว.
                       </figcaption>
                     </div>
@@ -506,7 +510,7 @@
                             <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                           <span  *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming}}</span>
                           <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span>
-                          ตร.ว.
+                          ตร.ม.
                       </figcaption>
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
@@ -519,7 +523,7 @@
                               <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                           <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone }}</span>
                           <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.fitnessZone }}</span>
-                          ตร.ว.
+                          ตร.ม.
                       </figcaption>
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
@@ -532,9 +536,9 @@
                               <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                           <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone }}</span>
                           <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span>
-                          ตร.ว.
+                          ตร.ม.
                       </figcaption>
-                    </div> -->
+                    </div>
                 </ng-container>
 
             </ng-container>

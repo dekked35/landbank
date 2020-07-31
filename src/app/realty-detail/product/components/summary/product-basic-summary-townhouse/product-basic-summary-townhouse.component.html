@@ -52,7 +52,27 @@
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                 มูลค่าโครงการรวม  <span> {{ ownerData.totalCost | number}} </span> บาท
-            </div>
+            </div><div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+              พื้นที่ส่วนกลาง
+          </div>
+          <div class="ui-g-1"></div>
+          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
+            สระว่ายน้ำ
+            <span *ngIf="!is_loading"> {{ productData.centerArea[0] | number}} </span>
+            <span *ngIf="is_loading"> 0 </span> บาท
+          </div>
+          <div class="ui-g-1"></div>
+          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
+            ฟิตเนส
+            <span *ngIf="!is_loading"> {{ productData.centerArea[1] | number}} </span>
+            <span *ngIf="is_loading"> 0 </span> บาท
+          </div>
+          <div class="ui-g-1"></div>
+          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
+            สำนักงาน
+            <span *ngIf="!is_loading"> {{ productData.centerArea[2] | number}} </span>
+            <span *ngIf="is_loading"> 0 </span> บาท
+          </div>
         </div>
     </div>
 </div>

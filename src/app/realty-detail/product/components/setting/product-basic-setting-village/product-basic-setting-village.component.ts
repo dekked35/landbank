@@ -100,9 +100,9 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
       .subscribe(product => {
         this.areaData = product.payload;
         // check for Area have been cal API successfully.
-        if (this.areaData.ratio_area.sellArea > 0 && this.currentProperty === 'village') {
+        // if (this.areaData.ratio_area.sellArea > 0 && this.currentProperty === 'village') {
           this.getBasicService();
-        }
+        // }
       });
 
     this.initializeProductSchema();

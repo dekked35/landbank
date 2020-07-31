@@ -14,7 +14,7 @@
                 พื้นที่ที่ใช้ได้ทั้งหมด <span>{{ productData[owner].usedArea | number }}</span> ตร.ว.
             </div>
             <div class="ui-g-12 ui-md-4 ui-lg-4 box_layout" style="float: center;">
-                พื้นที่คงเหลือ <span>{{ productData[owner].remainingArea | number }}</span> ตร.ม.
+                พื้นที่คงเหลือ <span>{{ productData[owner].remainingArea * 4 | number }}</span> ตร.ม.
             </div>
             <div  style="float: right; text-align: right;">
                 <app-standard-size [standardType]="'size'" [type]="'village'"></app-standard-size>
@@ -32,7 +32,7 @@
                     สัดส่วน <span> {{products[0].ratio }}</span> %
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    คิดเป็น <span> {{ products[0].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ม.
+                    คิดเป็น <span> {{ products[0].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ว.
                 </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -113,7 +113,7 @@
                     สัดส่วน <span> {{products[1].ratio }}</span> %
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    คิดเป็น <span> {{ products[1].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ม.
+                    คิดเป็น <span> {{ products[1].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ว.
                 </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -192,7 +192,7 @@
                     สัดส่วน <span> {{products[2].ratio }}</span> %
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    คิดเป็น <span> {{ products[2].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ม.
+                    คิดเป็น <span> {{ products[2].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ว.
                 </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-6">

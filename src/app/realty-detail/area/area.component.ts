@@ -233,6 +233,17 @@ export class AreaComponent implements OnInit {
     this.reloadData(true);
   }
 
+  InputChangeTotalArea($event){
+    const newStandartArea = this.parseObject(this.standardArea)
+    const allSellArea = newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
+    const centerArea: any = Object.values(newStandartArea.centerArea).reduce((t: number, value: number) => t + value, 0);
+    const newRatioCenter = (centerArea *1.25 / 4)  / parseFloat(this.totalArea.toString().replace(/,/g, '')) * 100;
+    newStandartArea.percent.centerArea = newRatioCenter;
+    newStandartArea.percent.sellArea = allSellArea - newRatioCenter;
+    this.standardArea = newStandartArea;
+    this.reloadData(true);
+  }
+
   convertNum() {
     for (const item in this.areaData) {
       if (ratioConvert.includes(item)) {
@@ -294,12 +305,12 @@ export class AreaComponent implements OnInit {
     const newAreaData = this.parseObject(this.areaData);
     const newStandard = this.parseObject(this.standardArea)
     this.centerAreaSave = {
-      swimming : parseFloat(this.standardCenterArea.swimming.toString().replace(/,/g, '')) * 1.25 / 4,
-      fitnessZone : parseFloat(this.standardCenterArea.fitnessZone.toString().replace(/,/g, '')) * 1.25 / 4,
-      officeZone : parseFloat(this.standardCenterArea.officeZone.toString().replace(/,/g, '')) * 1.25 / 4
+      swimming : parseFloat(this.standardCenterArea.swimming.toString().replace(/,/g, '')) / 4,
+      fitnessZone : parseFloat(this.standardCenterArea.fitnessZone.toString().replace(/,/g, '')) / 4,
+      officeZone : parseFloat(this.standardCenterArea.officeZone.toString().replace(/,/g, '')) / 4
     };
     // newAreaData.standardArea.centerArea = this.centerAreaSave;
-    const centerZone = Object.keys(this.centerAreaSave).reduce((sum, data) => this.centerAreaSave[data] + sum, 0)
+    const centerZone = Object.keys(this.centerAreaSave).reduce((sum, data) => this.centerAreaSave[data] + sum, 0) * 1.25;
     // newAreaData.standardArea.area.centerArea = centerZone;
     // newAreaData.standardArea.centerArea = this.centerAreaSave;
     newStandard.area.centerArea = centerZone;
