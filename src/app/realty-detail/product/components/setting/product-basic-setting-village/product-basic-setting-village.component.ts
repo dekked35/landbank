@@ -336,7 +336,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   async fillInRateReturn(spendingData: any) {
     // TODO: need to remove try catch when Bank finished API.
-    this.checkDisplayErrorDialog();
+    // this.checkDisplayErrorDialog();
     try {
       const payload = this.generateSpeadingPayload(spendingData);
       payload.implicit_costs_input = this.implicitsCostData;

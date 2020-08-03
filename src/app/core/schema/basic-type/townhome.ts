@@ -21,25 +21,25 @@ export const townhome = {
                 "sellArea": 65,
                 "roadSize": 25,
                 "greenArea": 10,
-                "centerArea": 0.78,
+                // "centerArea": 0.78,
             },
             "area": {
-                "sellArea": 6421.875,
+                "sellArea": 6500,
                 "roadSize": 2500,
                 "greenArea": 1000 ,
-                "centerArea": 78.125,
+                // "centerArea": 78.125,
             },
-            "centerArea" : {
-              "swimming" : 31.25,
-              "fitnessZone" : 31.25,
-              "officeZone" : 15.625,
-            }
+            // "centerArea" : {
+            //   "swimming" : 31.25,
+            //   "fitnessZone" : 31.25,
+            //   "officeZone" : 15.625,
+            // }
         },
         "ratio_area": {
             "sellArea": 65,
             "roadSize": 25,
             "greenArea": 10,
-            "centerArea" : 78,
+            // "centerArea" : 78,
         },
 
         "costLand" : 200000000,
@@ -185,7 +185,8 @@ export const townhome = {
         "totalSalary": 0.0,
         "salaryEmployee": 15000,
         'costAdvt': 100000,
-        'costCommission': 10000
+        'costCommission': 10000,
+        "percentCostAdvt": 1,
     },
     "implicitCosts": {
         "sellAreaSize": 0.00,

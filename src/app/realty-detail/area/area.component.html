@@ -384,7 +384,6 @@
                             <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.swimming" style="margin-right: 5px;"
                                 (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
-                              <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                             <span  *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming}}</span>
                             <!-- <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span> -->
                             ตร.ม.
@@ -400,7 +399,6 @@
                           <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone | number }} </span> -->
                           <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.fitnessZone" style="margin-right: 5px;"
                               (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
-                              <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                           <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone }}</span>
                           <!-- <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.fitnessZone }}</span> -->
                           ตร.ม.
@@ -416,7 +414,6 @@
                           <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone | number }} </span> -->
                           <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.officeZone" style="margin-right: 5px;"
                               (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
-                              <p style="display: inline;" *ngIf="selectedModel.id === 4">ตร.ม.    คิดเป็น</p>
                           <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone }}</span>
                           <!-- <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span> -->
                           ตร.ม.
@@ -490,7 +487,7 @@
                             คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
                         </figcaption>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                       <figure></figure>
                       <figcaption>
                           พื้นที่ส่วนกลาง
@@ -538,7 +535,7 @@
                           <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span>
                           ตร.ม.
                       </figcaption>
-                    </div>
+                    </div> -->
                 </ng-container>
 
             </ng-container>

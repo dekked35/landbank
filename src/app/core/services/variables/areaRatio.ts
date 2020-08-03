@@ -45,7 +45,7 @@ export const areaRatioList = [
 
 export const areaUnitList = [
 {
-    propertyType : ["village","townhome"],
+    propertyType : ["village"],
     areaRatio : [
         {
           id: 1,
@@ -162,6 +162,99 @@ export const areaUnitList = [
       ]
 },
 {
+  propertyType : ["townhome"],
+  areaRatio : [
+      {
+        id: 1,
+        name: 'แบบที่ 1',
+        score: {
+          beauty: 'มาก',
+          density: 'ปานกลาง',
+          congestion: 'ปานกลาง',
+          convenientArea: 'น้อย',
+          centerArea: 'น้อย'
+        },
+        percent: {
+          sellArea: 65,
+          roadSize: 25,
+          greenArea: 10,
+        },
+        area: {
+          sellArea: 0,
+          roadSize: 0,
+          greenArea: 0,
+          centerArea: 0,
+        }
+      },
+      {
+        id: 2,
+        name: 'แบบที่ 2',
+        score: {
+          beauty: 'ปานกลาง',
+          density: 'น้อย',
+          congestion: 'ปานกลาง',
+          convenientArea: 'ปานกลาง',
+          centerArea: 'น้อย'
+        },
+        percent: {
+          sellArea: 60,
+          roadSize: 25,
+          greenArea: 15,
+        },
+        area: {
+          sellArea: 0,
+          roadSize: 0,
+          greenArea: 0,
+          centerArea: 0,
+        }
+      },
+      {
+        id: 3,
+        name: 'แบบที่ 3',
+        score: {
+          beauty: 'ปานกลาง',
+          density: 'น้อย',
+          congestion: 'น้อย',
+          convenientArea: 'มาก',
+          centerArea: 'น้อย'
+        },
+        percent: {
+          sellArea: 50,
+          roadSize: 25,
+          greenArea: 25,
+        },
+        area: {
+          sellArea: 0,
+          roadSize: 0,
+          greenArea: 0,
+          centerArea: 0,
+        }
+      },
+      {
+        id: 4,
+        name: 'กำหนดเอง',
+        score: {
+          beauty: 'ปานกลาง',
+          density: 'น้อย',
+          congestion: 'น้อย',
+          convenientArea: 'มาก',
+          centerArea: 'น้อย'
+        },
+        percent: {
+          sellArea: 0,
+          roadSize: 0,
+          greenArea: 0,
+        },
+        area: {
+          sellArea: 0,
+          roadSize: 0,
+          greenArea: 0,
+          centerArea: 0,
+        }
+      }
+    ]
+},
+{
     propertyType : ["condo","hotel","communityMall"],
     areaRatio : [
         {
@@ -263,122 +356,3 @@ export const areaUnitList = [
       ]
 }
 ]
-
-
-// {
-//   propertyType : ["village","townhome"],
-//   areaRatio : [
-//       {
-//         id: 1,
-//         name: 'แบบที่ 1',
-//         score: {
-//           beauty: 'มาก',
-//           density: 'ปานกลาง',
-//           congestion: 'ปานกลาง',
-//           convenientArea: 'น้อย',
-//           centerArea: 'น้อย'
-//         },
-//         percent: {
-//           sellArea: 64.21875,
-//           roadSize: 25,
-//           greenArea: 10,
-//           centerArea: 0.78125,
-//         },
-//         area: {
-//           sellArea: 0,
-//           roadSize: 0,
-//           greenArea: 0,
-//           centerArea: 0,
-//         },
-//         centerArea : {
-//           swimming : 31.25,
-//           fitnessZone : 31.25,
-//           officeZone : 15.625,
-//         }
-//       },
-//       {
-//         id: 2,
-//         name: 'แบบที่ 2',
-//         score: {
-//           beauty: 'ปานกลาง',
-//           density: 'น้อย',
-//           congestion: 'ปานกลาง',
-//           convenientArea: 'ปานกลาง',
-//           centerArea: 'น้อย'
-//         },
-//         percent: {
-//           sellArea: 59.21875,
-//           roadSize: 25,
-//           greenArea: 15,
-//           centerArea: 0.78125
-//         },
-//         area: {
-//           sellArea: 0,
-//           roadSize: 0,
-//           greenArea: 0,
-//           centerArea: 0,
-//         },
-//         centerArea : {
-//           swimming : 31.25,
-//           fitnessZone : 31.25,
-//           officeZone : 15.625,
-//         }
-//       },
-//       {
-//         id: 3,
-//         name: 'แบบที่ 3',
-//         score: {
-//           beauty: 'ปานกลาง',
-//           density: 'น้อย',
-//           congestion: 'น้อย',
-//           convenientArea: 'มาก',
-//           centerArea: 'น้อย'
-//         },
-//         percent: {
-//           sellArea: 49.21875,
-//           roadSize: 25,
-//           greenArea: 25,
-//           centerArea: 0.78125
-//         },
-//         area: {
-//           sellArea: 0,
-//           roadSize: 0,
-//           greenArea: 0,
-//           centerArea: 0,
-//         },
-//         centerArea : {
-//           swimming : 31.25,
-//           fitnessZone : 31.25,
-//           officeZone : 15.625,
-//         }
-//       },
-//       {
-//         id: 4,
-//         name: 'กำหนดเอง',
-//         score: {
-//           beauty: 'ปานกลาง',
-//           density: 'น้อย',
-//           congestion: 'น้อย',
-//           convenientArea: 'มาก',
-//           centerArea: 'น้อย'
-//         },
-//         percent: {
-//           sellArea: 0,
-//           roadSize: 0,
-//           greenArea: 0,
-//           centerArea: 0,
-//         },
-//         area: {
-//           sellArea: 0,
-//           roadSize: 0,
-//           greenArea: 0,
-//           centerArea: 0,
-//         },
-//         centerArea : {
-//           swimming : 31.25,
-//           fitnessZone : 31.25,
-//           officeZone : 15.625,
-//         }
-//       }
-//     ]
-// },

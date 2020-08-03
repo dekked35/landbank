@@ -225,6 +225,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
       'product_input': this.generateProductPayload(this.parseObject(ownerProductData))
     };
     this.store.dispatch(new productAction.IsLoadingAction(true));
+    // console.log('payload',payload)
     let newProductData = await this.requestManagerService.requestProduct(payload);
     newProductData = this.parsePayloadResponse(newProductData);
     // console.log(newProductData[this.owner].products[0].stairArea);
@@ -410,21 +411,6 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   }
 
   convertNumAndCheckSize() {
-    // this.products.map( item => {
-    //   Object.keys(item).forEach(
-    //     data => {
-    //       if (this.convert.includes(data)) {
-    //         item[data] = parseFloat(item[data].toString().replace(/,/g, ''));
-    //         if (item[data] <= this.product_limit[data].min) {
-    //           item[data] = this.product_limit[data].min;
-    //         } else if (item[data] > this.product_limit[data].max) {
-    //           item[data] = this.product_limit[data].max;
-    //         }
-    //       }
-    //     }
-    //     );
-    //     return item;
-    //   });
     this.convertField.forEach(element => {
       this.ownerProductData[element] = parseFloat(this.ownerProductData[element].toString().replace(/,/g, ''));
     });
