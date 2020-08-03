@@ -122,7 +122,7 @@
                   </div>
                   <div *ngIf="is_loading" class="expense_price"> 0.00 </div>
                </div>
-               <div class="form-group">
+               <div class="form-group" *ngIf=" this.currentProperty === 'village' ">
                 <label>ค่าพัฒนาพื้นที่ส่วนกลาง</label><span>บาท</span>
                 <div *ngIf="!is_loading" class="expense_price_no_line">
                    <!-- class="expense_price" -->
@@ -211,11 +211,14 @@
                <div class="mem_sum"> บาท/เดือน =<span> {{ spendingsData.totalSalary |  number:'1.2-2' }}</span>บาท รวมเงินเดือนทั้งหมดจนจบโครงการ</div>
                <div class="form-group form_calendar">
                 <label>ค่าโฆษณา</label>
-                <input [(ngModel)]="spendingsData.costAdvt" (change)="InputOnchanges($event)" type="text" pKeyFilter="int"
-                   pInputText inputWithComma />
+                <div>
+                  <input [(ngModel)]="spendingsData.percentCostAdvt" (change)="InputOnchanges($event)" type="number" pKeyFilter="int" pInputText style="width: 30%;" min="1" max="100"/> %
+                  <input [(ngModel)]="spendingsData.costAdvt" (change)="InputOnchanges($event)" type="text" pKeyFilter="int"
+                     pInputText inputWithComma style="width: 60%; float: right;" />
+                </div>
               </div>
               <div class="mem_sum">(ปกติคิดที่ 1% ของมูลค่าโครงการ) =
-                 <span *ngIf="!is_loading"> {{ spendingsData.costAdvtOnePer | number:'1.2-2' }}</span>
+                 <span *ngIf="!is_loading"> {{ spendingsData.costAdvtOnePer * percentCostAdvt | number:'1.2-2' }}</span>
                  <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
                  บาท</div>
               <div class="form-group form_calendar">
@@ -225,10 +228,10 @@
                       pInputText inputWithComma/>
                 </div>
               </div>
-              <div class="mem_sum">สรุปค่าใช้จ่ายต่อเดือน =
+              <!-- <div class="mem_sum">สรุปค่าใช้จ่ายต่อเดือน =
                 <span *ngIf="!is_loading"> {{ spendingsData.costPerOneMonth | number:'1.2-2' }}</span>
                 <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
-                บาท</div>
+                บาท</div> -->
              </div>
          </div>
 
