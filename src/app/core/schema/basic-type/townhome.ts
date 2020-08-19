@@ -18,28 +18,28 @@ export const townhome = {
                 "convenientArea": 'น้อย'
             },
             "percent": {
-                "sellArea": 65,
+                "sellArea": 64.22,
                 "roadSize": 25,
                 "greenArea": 10,
-                // "centerArea": 0.78,
+                "centerArea": 0.78,
             },
             "area": {
-                "sellArea": 6500,
+                "sellArea": 6422.875,
                 "roadSize": 2500,
                 "greenArea": 1000 ,
-                // "centerArea": 78.125,
+                "centerArea": 78.125,
             },
-            // "centerArea" : {
-            //   "swimming" : 31.25,
-            //   "fitnessZone" : 31.25,
-            //   "officeZone" : 15.625,
-            // }
+            "centerArea" : {
+              "swimming" : 31.25,
+              "fitnessZone" : 31.25,
+              "officeZone" : 15.625,
+            }
         },
         "ratio_area": {
-            "sellArea": 65,
+            "sellArea": 64.22,
             "roadSize": 25,
             "greenArea": 10,
-            // "centerArea" : 78,
+            "centerArea" : 0.78,
         },
 
         "costLand" : 200000000,

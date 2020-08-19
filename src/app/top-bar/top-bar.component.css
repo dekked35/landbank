@@ -23,6 +23,13 @@
     margin-bottom: 0;
 }
 
+.tab-resort{
+  z-index: 1000;
+  position: relative;
+  top: 45px;
+  right: 285px;
+}
+
 .menu_feas ul li{
     display: inline-block;
     font-size: 1rem;
@@ -65,7 +72,7 @@
     }
     .small-size-screen {
         display:inline;
-    
+
     }
     .large-size-screen {
         display:none ;

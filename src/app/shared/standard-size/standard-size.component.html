@@ -1,7 +1,7 @@
 <p-button icon="pi pi-table" [label]="buttonLabel" (click)="overlayPanel.toggle($event)"></p-button>
 <p-overlayPanel #overlayPanel [style]="tableSize">
     <div class="wrap_table_sum">
-        <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'price'">
+        <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'price' && currentProperty !== 'hotel'">
             <tr>
                 <td>{{ nameLabel }}</td>
                 <td>{{ standardLabel }}</td>
@@ -15,6 +15,26 @@
               <td> {{ item.unit }} </td>
           </tr>
         </table>
+        <div *ngIf="currentProperty === 'hotel'" >
+          <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'price'">
+              <tr *ngFor="let item of standardSize" >
+                  <td>
+                      {{ item.name }}
+                  </td>
+                  <td > {{ item.price }} </td>
+                  <td> {{ item.unit }} </td>
+              </tr>
+          </table>
+          <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'size'">
+            <tr *ngFor="let item of standardSize" >
+                <td>
+                    {{ item.name }}
+                </td>
+                <td > {{ item.size }} </td>
+                <td> {{ item.unit }} </td>
+            </tr>
+        </table>
+        </div>
         <div *ngIf="currentProperty === 'village'" >
           <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'size'">
               <tr *ngFor="let item of standardSize" >

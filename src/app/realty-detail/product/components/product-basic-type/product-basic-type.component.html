@@ -20,7 +20,7 @@
 <ng-container *ngIf="currentProperty === 'townhome'">
   <div class="ui-g">
       <div class="ui-g-12 ui-md-12 ui-lg-7">
-          <app-product-basic-setting-townhouse [owner]="'user'" [isCompetitor]='false'></app-product-basic-setting-townhouse>
+          <app-product-basic-setting-townhouse [owner]="'user'"></app-product-basic-setting-townhouse>
       </div>
       <div class="ui-g-12 ui-md-12 ui-lg-5 wrap_graph_product">
           <app-product-basic-summary-townhouse [owner]="'user'" [ownerData]="productData.user"></app-product-basic-summary-townhouse>
@@ -30,7 +30,7 @@
         <!-- <div class="ui-g-12 ui-md-12 ui-lg-2"> </div> -->
         <div class="ui-g-12 ui-md-12 ui-lg-7">
             <!-- <app-product-basic-setting-village [owner]="'competitor'"></app-product-basic-setting-village> -->
-            <app-product-basic-setting-townhouse [owner]="'competitor'" [isCompetitor]='true'></app-product-basic-setting-townhouse>
+            <app-product-basic-setting-townhouse [owner]="'competitor'" ></app-product-basic-setting-townhouse>
         </div>
         <div class="ui-g-12 ui-md-12 ui-lg-5 wrap_graph_product">
             <app-product-basic-summary-townhouse [owner]="'competitor'" [ownerData]="productData.competitor"></app-product-basic-summary-townhouse>
@@ -42,18 +42,18 @@
     <div class="ui-g">
       <div class="ui-g-12 ui-md-12" [ngClass]="{'ui-lg-6': isShowCompetitor, 'ui-lg-12':!isShowCompetitor }">
           <div class="ui-g-12 ui-md-12 ui-lg-12">
-              <app-product-basic-setting-hotel [owner]="'user'"  [isCompetitor]='false'></app-product-basic-setting-hotel>
+              <app-product-basic-setting-hotel [owner]="'user'"  [isCompetitor]="isShowCompetitor" [needToRefresh]="needtoRefresh"></app-product-basic-setting-hotel>
           </div>
           <div class="ui-g-12 ui-md-12 ui-lg-12 ">
-              <app-product-basic-summary-hotel [owner]="'user'"></app-product-basic-summary-hotel>
+              <app-product-basic-summary-hotel [owner]="'user'" [ownerData]="productData.user"></app-product-basic-summary-hotel>
           </div>
       </div>
         <div class="ui-g-12 ui-md-12 ui-lg-6" *ngIf="isShowCompetitor">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
-                <app-product-basic-setting-hotel [owner]="'competitor'" [isCompetitor]='true'></app-product-basic-setting-hotel>
+                <app-product-basic-setting-hotel [owner]="'competitor'" [isCompetitor]="isShowCompetitor"></app-product-basic-setting-hotel>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 ">
-                <app-product-basic-summary-hotel [owner]="'competitor'" ></app-product-basic-summary-hotel>
+                <app-product-basic-summary-hotel [owner]="'competitor'" [ownerData]="productData.competitor"></app-product-basic-summary-hotel>
             </div>
         </div>
     </div>

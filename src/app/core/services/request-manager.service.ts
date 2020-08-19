@@ -164,14 +164,14 @@ export class RequestManagerService {
 
   generateSpeadingInput(tempInput:any) { //speadingData
     tempInput = this.parseObject(tempInput);
-    if(["village", "townhome"].includes(this.propertyType)){
-      tempInput.priceLandBought = +tempInput.priceLandBought
-      tempInput.costConstructionLivingSpace = +tempInput.costConstructionLivingSpace
-      tempInput.costOther = +tempInput.costOther
-      tempInput.costPlan = +tempInput.costPlan
-      tempInput.sellPeriod = +tempInput.sellPeriod
-      tempInput.salaryEmployee = +tempInput.salaryEmployee
-      tempInput.costAdvt = +tempInput.costAdvt
+    if (['village', 'townhome'].includes(this.propertyType)) {
+      tempInput.priceLandBought = +tempInput.priceLandBought;
+      tempInput.costConstructionLivingSpace = +tempInput.costConstructionLivingSpace;
+      tempInput.costOther = +tempInput.costOther;
+      tempInput.costPlan = +tempInput.costPlan;
+      tempInput.sellPeriod = +tempInput.sellPeriod;
+      tempInput.salaryEmployee = +tempInput.salaryEmployee;
+      tempInput.costAdvt = +tempInput.costAdvt;
       tempInput.periodSellStart = this.parseDate(tempInput.periodSellStart);
       tempInput.periodSellEnd = this.parseDate(tempInput.periodSellEnd);
       return tempInput;

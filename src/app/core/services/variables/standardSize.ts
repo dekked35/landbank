@@ -52,6 +52,7 @@ export const standardSizes = {
     },
     'hotel' : {
         'room' : [
+            {name: 'ห้องพัก', type: 'ห้องพัก', unit: 'หน่วย', size: 'ขนาด'},
             {name: 'Pool Villa', type: 'ห้องพัก', unit: 'ตร.ม.', size: 65},
             {name: 'Jacuzzi Villa', type: 'ห้องพัก', unit: 'ตร.ม.', size: 65},
             {name: 'Family Room', type: 'ห้องพัก', unit: 'ตร.ม.', size: 45},
@@ -59,6 +60,7 @@ export const standardSizes = {
             {name: 'Deluxe',  type: 'ห้องพัก', unit: 'ตร.ม.', size: 30},
           ],
         'central' : [
+            {name: 'ส่วนกลาง', type: 'ส่วนกลาง', unit: 'หน่วย', size: 'ขนาด'},
             {name: 'Lobby', type: 'ส่วนกลาง', unit: 'ตร.ม.', size: 150},
             {name: 'Pool',  type: 'ส่วนกลาง', unit: 'ตร.ม.', size: 50},
             {name: 'BOH & Store', type: 'ส่วนกลาง', unit: 'ตร.ม.', size: 150},
@@ -70,10 +72,12 @@ export const standardSizes = {
             {name: 'Restroom', type: 'ส่วนกลาง', unit: 'ตร.ม.', size: 60}
           ],
         'parking' : [
+            {name: 'ที่จอดรถ', type: 'ที่จอดรถ', unit: 'หน่วย', size: 'ขนาด'},
             {name: 'Carpark 1', type: 'ที่จอดรถ', unit: 'ตร.ม.', size: 20},
             {name: 'Carpark 2', type: 'ที่จอดรถ', unit: 'ตร.ม.', size: 40}
           ],
         'outdoor' : [
+            {name: 'พื้นที่ภายนอก', type: 'พื้นที่ภายนอก', unit: 'หน่วย', size: 'ขนาด'},
             {name: 'Garden', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 60},
             {name: 'Entrance Gate', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 10},
             {name: 'Entrance Fence', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 20}

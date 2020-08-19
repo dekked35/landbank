@@ -11,25 +11,25 @@
     <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-lg-12" style="display:inline-block;">
             <div class="ui-g-12 ui-md-4 ui-lg-5 box_layout"  style="float: center;">
-                พื้นที่ที่ใช้ได้ทั้งหมด <span>{{ productData[owner].usedArea | number }}</span> ตร.ว.
+                พื้นที่ที่ใช้ได้ทั้งหมด <span>{{ productData[owner].usedArea | number: '1.0-2' }}</span> ตร.ว.
             </div>
             <div class="ui-g-12 ui-md-4 ui-lg-4 box_layout" style="float: center;">
-                พื้นที่คงเหลือ <span>{{ productData[owner].remainingArea * 4 | number }}</span> ตร.ม.
+                พื้นที่คงเหลือ <span>{{ productData[owner].remainingArea| number: '1.0-2' }}</span> ตร.ว.
             </div>
             <div  style="float: right; text-align: right;">
                 <app-standard-size [standardType]="'size'" [type]="'village'"></app-standard-size>
              </div>
         </div>
-        <div class="ui-g-12 ui-md-2 ui-lg-2">
+        <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[0].ratio !== 0">
             <div class="wrap_product_logo">
                 <img src="../../../../assets/icons/home1.svg">
                 <span>บ้าน 1 ชั้น</span>
             </div>
         </div>
-        <div class="ui-g-12 ui-md-10 ui-lg-10">
+        <div class="ui-g-12 ui-md-10 ui-lg-10" *ngIf="products[0].ratio !== 0">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    สัดส่วน <span> {{products[0].ratio }}</span> %
+                    สัดส่วน <span> {{products[0].ratio | number: '1.0-2'}}</span> %
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
                     คิดเป็น <span> {{ products[0].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ว.
@@ -82,32 +82,15 @@
                         (onSlideEnd)="handleRatioEnd(0, $event, 'cost')"></p-slider>
                 </div>
             </div>
-            <!-- <div class="ui-g-12 ui-md-6 ui-lg-6">
-                <div class="ui-g-6 ui-md-6 ui-lg-6">
-                    <p>สัดส่วน</p>
-                </div>
-                <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
-                    <p> {{ products[0].ratio }} %</p>
-                </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                    <app-custom-slider [(ngModel)]="products[0].ratio"
-                        [maxTotal]="product_limit.ratio.max"
-                        [commonValue]="totalRatio" [min]="product_limit.ratio.min"
-                        [max]="product_limit.ratio.max"
-                        (onChange)="handleRatioChange(0,$event)"
-                        (onSlideEnd)="handleRatioEnd(0, $event)">
-                    </app-custom-slider>
-                </div>
-            </div> -->
         </div>
 
-        <div class="ui-g-12 ui-md-2 ui-lg-2">
+        <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[1].ratio !== 0">
             <div class="wrap_product_logo">
                 <img src="../../../../assets/icons/home2.svg">
                 <span >บ้าน 2 ชั้น</span>
             </div>
         </div>
-        <div class="ui-g-12 ui-md-10 ui-lg-10">
+        <div class="ui-g-12 ui-md-10 ui-lg-10" *ngIf="products[1].ratio !== 0">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
                     สัดส่วน <span> {{products[1].ratio }}</span> %
@@ -180,13 +163,13 @@
             </div> -->
         </div>
 
-        <div class="ui-g-12 ui-md-2 ui-lg-2">
+        <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[2].ratio !== 0">
             <div class="wrap_product_logo">
                 <img src="../../../../assets/icons/home3.svg">
                 <span >บ้าน 3 ชั้น</span>
             </div>
         </div>
-        <div class="ui-g-12 ui-md-10 ui-lg-10">
+        <div class="ui-g-12 ui-md-10 ui-lg-10" *ngIf="products[2].ratio !== 0">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
                     สัดส่วน <span> {{products[2].ratio }}</span> %

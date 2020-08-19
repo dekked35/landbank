@@ -126,7 +126,6 @@ export class AreaComponent implements OnInit {
     ) {
       this.store.select(fromCore.getPage)
       .subscribe(data => {
-        // console.log('is in',this.propertyType,data.page)
         if (data.page !== this.propertyType) {
           const isReloadData = (this.propertyType === '') ? false : true;
           const isNewPage = (this.propertyType !== '' && this.propertyType !== data.page && Object.keys(this.param).length > 0 ) ? true : false;
@@ -208,6 +207,7 @@ export class AreaComponent implements OnInit {
 
   changeModel() {
     this.standardArea = this.defaultsVariableService.getAreaUnit(this.propertyType, this.selectedModel.id);
+    const productData = this.shemaManagerService.getProductSchema(this.propertyType).user.products;
     const newProductData = this.parseObject(this.productData);
     // const newProductData = this.parseObject(this.areaData);
     if(this.selectedModel.id === 4) {
@@ -233,14 +233,20 @@ export class AreaComponent implements OnInit {
       this.productData = newProductData;
       this.store.dispatch(new productAction.SuccessAction(newProductData));
     } else {
-      this.standardSellAreaRatio.typeOne = this.productData.user.products[0].ratio;
-      this.standardSellAreaRatio.typeTwo = this.productData.user.products[1].ratio;
-      this.standardSellAreaRatio.typeThree = this.productData.user.products[2].ratio;
+      this.standardSellAreaRatio.typeOne = productData[0].ratio;
+      this.standardSellAreaRatio.typeTwo = productData[1].ratio;
+      this.standardSellAreaRatio.typeThree = productData[2].ratio;
       if (this.propertyType === 'village') {
         this.standardCenterArea.swimming = this.standardArea.centerArea.swimming;
         this.standardCenterArea.fitnessZone = this.standardArea.centerArea.fitnessZone;
         this.standardCenterArea.officeZone = this.standardArea.centerArea.officeZone;
       }
+      newProductData.user.products.map((element,index) => {
+        element.ratio = productData[index].ratio;
+        return element;
+      });
+      this.productData = newProductData;
+      this.store.dispatch(new productAction.SuccessAction(newProductData));
     }
     this.calculateAreaRatio(null);
   }
@@ -296,7 +302,11 @@ export class AreaComponent implements OnInit {
       totalAreaRatio += +value;
     }
     Object.keys(this.standardArea.percent).forEach(element => {
-      this.standardArea.percent[element] = parseFloat(this.standardArea.percent[element].toString().replace(/,/g, ''))
+      if(this.standardArea.percent[element] === '') {
+        this.standardArea.percent[element] = 0;
+      } else {
+        this.standardArea.percent[element] = parseFloat(this.standardArea.percent[element].toString().replace(/,/g, ''))
+      }
     });
     this.totalAreaRatio = totalAreaRatio;
     this.raminingAreaRatio = 100 - this.totalAreaRatio;
@@ -312,7 +322,11 @@ export class AreaComponent implements OnInit {
     const newProductData = this.parseObject(this.productData);
     newProductData.user.products[index].ratio = +percent;
     newProductData.competitor.products[index].ratio = +percent;
-    const maxProduct = newProductData.user.products.reduce((sum, data) => data.ratio + sum, 0);
+    const maxProduct = newProductData.user.products.reduce((sum, data) => {
+      let changeToNum = data.ratio;
+      changeToNum = typeof changeToNum === 'string' ? parseFloat(changeToNum.toString().replace(/,/g, '')) : changeToNum;
+      return changeToNum + sum;
+    } , 0);
     if(maxProduct > 100) {
       this.displayDialogMsg = 'โปรดระบุสัดส่วนของพื้นที่ขายให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น';
       this.displayDialog = true;
@@ -349,7 +363,7 @@ export class AreaComponent implements OnInit {
     if (this.totalAreaRatio <= 100) {
       this.reloadData(true);
     }
-    this.reloadData(true);
+    // this.reloadData(true);
   }
 
   convertToNum(item: any){
@@ -474,19 +488,8 @@ export class AreaComponent implements OnInit {
     };
     areaData = this.calculatorManagerService.calculateArea(areaData);
     this.store.dispatch(new areaAction.IsLoadingAction(true));
-    // console.log('areaData',areaData)
     let newAreaData = await this.requestManagerService.requestArea(areaData);
     this.standardArea.area = newAreaData.standardArea.area;
-    // let test = Object.values(this.standardArea.area).reduce( (acc: number, cur: number) => acc + cur)
-    // if (typeof test === 'number' && test <= 10000) {
-    //   this.allArea = test;
-    //   this.standardArea.percent.greenArea = 100 - this.standardArea.percent.roadSize - this.standardArea.percent.sellArea;
-    //   this.standardArea.area.greenArea = 10000 - this.standardArea.area.roadSize - this.standardArea.area.sellArea;
-    // }
-    // Remove this after bank remove API.
-    // console.log('Assign : ' +  costLandType);
-    // this.areaData.availableArea = areaData.availableArea;
-    // newAreaData.costLandType = costLandType;
     this.lawAreaUsage = newAreaData.farValue * newAreaData.totalArea *4;
     newAreaData.deposit = newAreaData.deposit ? newAreaData.deposit : this.areaData.deposit;
     newAreaData.rentPerMonth = newAreaData.rentPerMonth ? newAreaData.rentPerMonth : this.areaData.rentPerMonth;

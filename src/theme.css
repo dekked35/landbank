@@ -1485,16 +1485,20 @@ body
   box-shadow: 0 0 0 0.2em #8dcdff;
 }
 body .ui-togglebutton.ui-state-active {
-  background-color: #007ad9;
-  border-color: #007ad9;
+  /* background-color: #007ad9; */
+  /* border-color: #007ad9; */
+  background-color: #ff781f;
+  border-color: #ff781f;
   color: #ffffff;
 }
 body .ui-togglebutton.ui-state-active .ui-button-icon-left {
   color: #ffffff;
 }
 body .ui-togglebutton.ui-state-active:hover {
-  background-color: #116fbf;
-  border-color: #116fbf;
+  /* background-color: #116fbf; */
+  /* border-color: #116fbf; */
+  background-color: #ff781f;
+  border-color: #ff781f;
   color: #ffffff;
 }
 body .ui-togglebutton.ui-state-active:hover .ui-button-icon-left {

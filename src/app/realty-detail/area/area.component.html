@@ -42,6 +42,7 @@
                     ความยาวรั้วโดยประมาณ
                     <span *ngIf="!is_loading"> {{ areaData.fenceLength | number:'1.2-2'}} </span>
                     <span *ngIf="is_loading"> 0</span>
+                    เมตร
                 </figcaption>
             </div>
         </ng-container>
@@ -73,7 +74,7 @@
                 <!-- ค่า OSR <span> {{ areaInput.osrValue }}</span> -->
                 ค่า OSR
                 <input [(ngModel)]="osrValue" size="10" (change)="InputChange($event)" pKeyFilter="int" type="text"
-                    pInputText matInputCommified/> &nbsp;
+                    pInputText inputWithComma/> &nbsp;
                 <p-button icon="pi pi-info-circle" (click)="overlayPanelOSR.toggle($event)"></p-button>
                 <p-overlayPanel #overlayPanelOSR [style]="tableSize">
                     ค่า OSR (Open Space Ratio) หมายถึง อัตราส่วนของที่ว่างต่อพื้นที่อาคารรวม กล่าวคือ หากมีที่ดินอยู่
@@ -88,7 +89,7 @@
                 <img src="../../../assets/icons/icon_allarea.svg"></figure>
             <figcaption>
                 พื้นที่รวม
-                <input [(ngModel)]="totalArea" size="7" (change)="InputChangeTotalArea($event)" pKeyFilter="int" type="text"
+                <input [(ngModel)]="totalArea" size="7" (change)="InputChangeTotalArea($event)" pKeyFilter="num" type="text"
                 pInputText inputWithComma  />
                 ตร.ว.
                 <button pButton type="button" color="ui-button-danger" icon="pi pi-info-circle"
@@ -128,8 +129,8 @@
             <figcaption>
                 <!-- ราคาที่ดิน <span> {{ areaInput.landPrice }}</span> -->
                 ราคาที่ดิน
-                <input [(ngModel)]="landPrice" size="8" (change)="InputChange($event)" pKeyFilter="int" type="text"
-                    pInputText inputWithComma/>
+                <input [(ngModel)]="landPrice" size="8" (change)="InputChange($event)" pKeyFilter="num" type="text"
+                pInputText inputWithComma/>
                 บาท/ตร.ว.
             </figcaption>
             <div class="ui-g-12 ui-md-12 ui-lg-12 font-gray-color text_cover">
@@ -267,10 +268,10 @@
             </div>
 
             <div *ngIf="selectedModel.id === 4" class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
-                สัดส่วนพื้นที่ทั้งหมด <span> {{ totalAreaRatio }} </span> %
+                สัดส่วนพื้นที่ทั้งหมด <span> {{ totalAreaRatio | number: '1.0-2' }} </span> %
             </div>
             <div *ngIf="selectedModel.id === 4" class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
-                สัดส่วนพื้นที่คงเหลือ <span> {{ raminingAreaRatio }} </span> %
+                สัดส่วนพื้นที่คงเหลือ <span> {{ raminingAreaRatio | number: '1.0-2' }} </span> %
             </div>
 
             <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
@@ -286,9 +287,10 @@
                         <img src="../../../assets/icons/icon_sign.svg"></figure>
                     <figcaption>
                         พื้นที่ขาย
-                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.sellArea | number: '1.0-1' }} </span>
-                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.sellArea"
-                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified /> %
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.sellArea | number: '1.0-2' }} </span>
+                        <input *ngIf="selectedModel.id === 4" size="4" [(ngModel)]="standardArea.percent.sellArea"
+                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="text" max="100" min="0"
+                            pInputText inputWithComma /> %
                         คิดเป็น
                         <span> {{ standardArea.area.sellArea | number: '1.0-2' }}</span>
                         ตร.ว.
@@ -296,15 +298,15 @@
                 </div>
 
                 <ng-container *ngIf="propertyType === 'village'">
-                    <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
+                    <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้ (รวม 100%)</span>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
                         <figure>
                             <img src="../../../assets/icons/home1.svg"></figure>
                         <figcaption>
                             บ้าน 1 ชั้น
-                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeOne | number }} </span>
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeOne | number: '1.0-2' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeOne"
-                                (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="num" type="text" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeOne/100 * standardArea.area.sellArea | number: '1.0-2' }}</span>
                             ตร.ว.
@@ -315,9 +317,9 @@
                             <img src="../../../assets/icons/home2.svg"></figure>
                         <figcaption>
                             บ้าน 2 ชั้น
-                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeTwo  | number }} </span>
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeTwo  | number: '1.0-2' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeTwo"
-                            (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                            (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeTwo/100 * standardArea.area.sellArea | number: '1.0-2' }}</span>
                             ตร.ว.
@@ -328,9 +330,9 @@
                             <img src="../../../assets/icons/home3.svg"></figure>
                         <figcaption>
                             บ้าน 3 ชั้น
-                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeThree | number }} </span>
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeThree | number: '1.0-2' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeThree"
-                                (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeThree/100 * standardArea.area.sellArea | number: '1.0-2' }}</span>
                             ตร.ว.
@@ -343,7 +345,7 @@
                             ถนน
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.roadSize| number: '1.0-1' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.roadSize"
-                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardArea.area.roadSize | number: '1.0-2' }}</span>
                             ตร.ว.
@@ -354,9 +356,9 @@
                             <img src="../../../assets/icons/icon_greenarea.svg"></figure>
                         <figcaption>
                             พื้นที่สีเขียว
-                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.greenArea | number: '1.0-1' }} </span>
+                            <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.greenArea | number: '1.0-2' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.greenArea"
-                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น <span> {{ standardArea.area.greenArea | number: '1.0-2' }}</span> ตร.ว.
                         </figcaption>
                     </div>
@@ -366,9 +368,9 @@
                       </figure>
                       <figcaption>
                           พื้นที่ส่วนกลาง
-                          <span > {{ standardArea.percent.centerArea| number: '1.0-1' }} </span>
+                          <span > {{ standardArea.percent.centerArea| number: '1.0-2' }} </span>
                           <!-- <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.centerArea"
-                              (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/>  -->
+                              (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/>  -->
                               % คิดเป็น
                           <span> {{ standardArea.area.centerArea | number: '1.0-2' }}</span>
                           ตร.ว.
@@ -384,7 +386,7 @@
                             <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.swimming" style="margin-right: 5px;"
                                 (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
-                            <span  *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming}}</span>
+                            <span  *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number: '1.0-2'}}</span>
                             <!-- <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span> -->
                             ตร.ม.
                         </figcaption>
@@ -399,7 +401,7 @@
                           <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone | number }} </span> -->
                           <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.fitnessZone" style="margin-right: 5px;"
                               (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
-                          <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone }}</span>
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.fitnessZone | number: '1.0-2'}}</span>
                           <!-- <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.fitnessZone }}</span> -->
                           ตร.ม.
                       </figcaption>
@@ -414,7 +416,7 @@
                           <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone | number }} </span> -->
                           <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardCenterArea.officeZone" style="margin-right: 5px;"
                               (change)="updateCenterAreaRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
-                          <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone }}</span>
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.officeZone | number: '1.0-2' }}</span>
                           <!-- <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span> -->
                           ตร.ม.
                       </figcaption>
@@ -423,7 +425,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="propertyType === 'townhome'">
-                    <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
+                    <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้ (รวม 100%)</span>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
                         <figure>
                             <img src="../../../assets/icons/townhome2.svg"></figure>
@@ -431,7 +433,7 @@
                             อาคารพาณิชย์ 2 ชั้น
                             <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeOne | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeOne"
-                                (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="updateProductRatio(0, standardSellAreaRatio.typeOne)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeOne/100 * standardArea.area.sellArea | number }}</span>
                             ตร.ว.
@@ -444,7 +446,7 @@
                             อาคารพาณิชย์ 3 ชั้น
                             <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeTwo  | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeTwo"
-                            (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                            (change)="updateProductRatio(1, standardSellAreaRatio.typeTwo)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeTwo/100 * standardArea.area.sellArea | number }}</span>
                             ตร.ว.
@@ -457,7 +459,7 @@
                             อาคารพาณิชย์ 4 ชั้น
                             <span *ngIf="selectedModel.id !== 4"> {{ standardSellAreaRatio.typeThree | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardSellAreaRatio.typeThree"
-                                (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="updateProductRatio(2, standardSellAreaRatio.typeThree)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardSellAreaRatio.typeThree/100 * standardArea.area.sellArea | number }}</span>
                             ตร.ว.
@@ -470,7 +472,7 @@
                             ถนน
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.roadSize| number: '1.0-1' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.roadSize"
-                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardArea.area.roadSize | number }}</span>
                             ตร.ว.
@@ -483,11 +485,11 @@
                             พื้นที่สีเขียว
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.greenArea | number: '1.0-1' }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.greenArea"
-                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
                         </figcaption>
                     </div>
-                    <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                       <figure></figure>
                       <figcaption>
                           พื้นที่ส่วนกลาง
@@ -535,7 +537,7 @@
                           <span *ngIf="selectedModel.id === 4"> {{ centerAreaSave.officeZone }}</span>
                           ตร.ม.
                       </figcaption>
-                    </div> -->
+                    </div>
                 </ng-container>
 
             </ng-container>
@@ -558,14 +560,14 @@
                         พื้นที่รวมห้องพัก
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.room | number }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.room"
-                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                         คิดเป็น <span> {{ standardArea.area.room | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
                     <figcaption *ngIf="propertyType === 'communityMall'">
                         พื้นที่รวมร้านค้า
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.room | number }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.room"
-                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                         คิดเป็น
                         <span> {{ standardArea.area.room  | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
@@ -580,7 +582,7 @@
                             ห้องพัก Deluxe
                             <span *ngIf="selectedModel.id !== 4"> {{ standardRoomArea.percent.deluxe | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomArea.percent.deluxe"
-                                (change)="updateProductRoomRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="updateProductRoomRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ (standardArea.area.room * standardRoomArea.percent.deluxe)/100   | number:'1.2-2' }}</span> ตร.ม.
                         </figcaption>
@@ -592,7 +594,7 @@
                             ห้องพัก Super Deluxe
                             <span *ngIf="selectedModel.id !== 4"> {{ standardRoomArea.percent.superDeluxe | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomArea.percent.superDeluxe"
-                                (change)="updateProductRoomRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="updateProductRoomRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ (standardArea.area.room * standardRoomArea.percent.superDeluxe)/100  | number:'1.2-2' }}</span> ตร.ม.
                         </figcaption>
@@ -607,7 +609,7 @@
                             พื้นที่รวมส่วนกลาง
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.central | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.central"
-                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                                (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                             คิดเป็น
                             <span> {{ standardArea.area.central  | number:'1.2-2' }}</span> ตร.ม.
                         </figcaption>
@@ -641,7 +643,7 @@
                         พื้นที่จอดรถในอาคาร
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.parking | number }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.parking"
-                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                         คิดเป็น
                         <span> {{ standardArea.area.parking | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
@@ -654,7 +656,7 @@
                         พื้นที่ภายนอกอาคาร
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.outdoor | number }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.outdoor"
-                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText matInputCommified/> %
+                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                         คิดเป็น
                         <span> {{ standardArea.area.outdoor | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>

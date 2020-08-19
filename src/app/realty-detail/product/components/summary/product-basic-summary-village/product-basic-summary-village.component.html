@@ -16,7 +16,7 @@
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                 สรุปจำนวน
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="ownerData.products[0].quantity !== 0">
                 <div>
                     <figure>
                         <img src="../../../../assets/icons/home1.svg">
@@ -27,7 +27,7 @@
                     </figcaption>
                 </div>
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout ">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout " *ngIf="ownerData.products[1].quantity !== 0">
                 <div>
                     <figure>
                         <img src="../../../../assets/icons/home2.svg">
@@ -38,7 +38,7 @@
                     </figcaption>
                 </div>
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="ownerData.products[2].quantity !== 0">
                 <div>
                     <figure>
                         <img src="../../../../assets/icons/home3.svg">

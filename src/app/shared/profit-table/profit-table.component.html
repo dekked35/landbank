@@ -12,7 +12,7 @@
                     <td>กำไรรวม
                     </td>
                 </tr>
-                <tr>
+                <tr *ngIf="profitData.profitPerItems[0].noItem !== 0">
                     <td class="box_layout">
                         <div class="wrap_propery_logo">
                             <img src="../../../../assets/icons/{{getIcon(0)}}">
@@ -25,7 +25,7 @@
                     <td class="box_layout">
                         <span>{{ profitData.profitPerItems[0].totalProfit | number:'1.2-2'}} </span> บาท</td>
                 </tr>
-                <tr>
+                <tr *ngIf="profitData.profitPerItems[1].noItem !== 0">
                     <td class="box_layout">
                         <div class="wrap_propery_logo">
                             <img src="../../../../assets/icons/{{getIcon(1)}}">
@@ -38,7 +38,7 @@
                     <td class="box_layout">
                         <span>{{ profitData.profitPerItems[1].totalProfit | number:'1.2-2'}} </span> บาท</td>
                 </tr>
-                <tr>
+                <tr *ngIf="profitData.profitPerItems[2].noItem !== 0">
                     <td class="box_layout">
                         <div class="wrap_propery_logo">
                             <img src="../../../../assets/icons/{{getIcon(2)}}">
@@ -67,14 +67,13 @@
                 {{ profitData.totalProfit | number:'1.2-2'}} </span>
              บาท
          </div>
-         <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout">
+         <!-- <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout">
             <label>กำไรสุทธิหลังหักค่าใช้จ่าย</label>
-         </div>
-         <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="text-align: right;">
-            <!-- <span> {{ profitData.netProfit | number:'1.2-2'}}</span> -->
+         </div> -->
+         <!-- <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="text-align: right;">
             <span> {{ netProfit | number:'1.2-2'}}</span>
                บาท
-         </div>
+         </div> -->
          <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
                <span style="color:#929292; font-size:12px;">
                 *หมายเหตุ: โดยเฉลี่ยกำไรต่อหลัง  {{ averageProfit | number:'1.2-2'}} บาท</span>

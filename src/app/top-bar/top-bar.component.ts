@@ -43,7 +43,11 @@ export class TopBarComponent implements OnInit {
       }
   ]
 
+  cities: any[];
+
   currentProperty: string;
+
+  selectedCity1: { name: 'โรงแรม'};
 
   constructor(private store: Store<any>,
     private requestManagerService: RequestManagerService,
@@ -53,12 +57,20 @@ export class TopBarComponent implements OnInit {
     .subscribe(page => {
       this.currentProperty = page.page;
     });
+    this.cities = [
+      {name: 'โรงแรม'},
+      {name: 'รีสอร์ท'}
+  ];
    }
 
   ngOnInit() {}
 
   selectProperty(propertyType: string) {
     this.store.dispatch(new pageAction.PageAction(propertyType));
+  }
+
+  selectPropertyDropdown(){
+    console.log(this.selectedCity1)
   }
 
   showExpension: boolean = false;
