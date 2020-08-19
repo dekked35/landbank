@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener, SimpleChange, OnChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DefaultsVariableService } from '../../../../../core/services/defaults-variable.service';
 import { RequestManagerService } from '../../../../../core/services/request-manager.service';
@@ -20,33 +20,34 @@ const needToConvert = [
   'centralProducts',
   'parkingProducts',
   'outdoorProducts',
-]
+];
 
 @Component({
   selector: 'app-product-basic-setting-hotel',
   templateUrl: './product-basic-setting-hotel.component.html',
   styleUrls: ['./product-basic-setting-hotel.component.css']
 })
-export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
+export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnChanges {
   @Input() owner: string;
   @Input() isCompetitor: boolean;
+  @Input() needToRefresh: boolean;
 
-  ROOM: string = 'room';
-  CENTRAL: string = 'central';
-  PARKING: string = 'parking';
-  OUTDOOR: string = 'outdoor';
+  ROOM = 'room';
+  CENTRAL = 'central';
+  PARKING = 'parking';
+  OUTDOOR = 'outdoor';
 
   settingHeader: string;
-  settingSubHeader: string = '(สัดส่วน % ในโครงการต้องรวมกันได้ 100% เท่านั้น)';
+  settingSubHeader = '(สัดส่วน % ในโครงการต้องรวมกันได้ 100% เท่านั้น)';
 
   roomType: string;
 
-  currentProperty: string = '';
+  currentProperty = '';
   areaData: any;
 
-  enableEdit: boolean = false;
+  enableEdit = false;
   enableEditIndex: number = null;
-  typeEdit: string = '';
+  typeEdit = '';
   // tempEdit: string = 'Deluxe';
   // tempEdit: string = 'Deluxe';
   tempEdit: any;
@@ -54,25 +55,25 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   header = {
     'competitor': 'โครงการคู่แข่ง',
     'user': 'โครงการของเรา'
-  }
+  };
 
-  //productOptions.ts
+  // productOptions.ts
   roomTypeOptions: Array<any> = [];
-  centralTypeOptions: Array<any> = []
-  parkingTypeOptions: Array<any> = []
-  outdoorTypeOptions: Array<any> = []
+  centralTypeOptions: Array<any> = [];
+  parkingTypeOptions: Array<any> = [];
+  outdoorTypeOptions: Array<any> = [];
 
-  //productDefault.ts
-  roomProducts: Array<any> = []
+  // productDefault.ts
+  roomProducts: Array<any> = [];
   centralProducts: Array<any> = [];
   parkingProducts: Array<any> = [];
   outdoorProducts: Array<any> = [];
 
-  //standardSize.ts
-  standardSizeRooms: Array<any> = []
-  standardSizeCentrals: Array<any> = []
-  standardSizeParkings: Array<any> = []
-  standardSizeOutdoors: Array<any> = []
+  // standardSize.ts
+  standardSizeRooms: Array<any> = [];
+  standardSizeCentrals: Array<any> = [];
+  standardSizeParkings: Array<any> = [];
+  standardSizeOutdoors: Array<any> = [];
 
   tempProducts: Array<any> = [];
 
@@ -88,8 +89,9 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   iconItem = { 'width': '24px', 'position': 'absolute', 'top': '1px', 'left': '5px' };
   textItem = { 'font-size': '14px', 'float': 'right', 'margin-top': '4px' };
 
-  displayErrDialog: boolean = false;
-  displayErrDialogMsg: string = '';
+  displayErrDialog = false;
+  displayErrDialogMsg = '';
+  focus = true;
 
   constructor(private store: Store<any>,
     private requestManagerService: RequestManagerService,
@@ -127,9 +129,6 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
     this.subscriptionProduct = this.store.select(fromCore.getProduct)
       .subscribe(data => {
         this.tempProductStore = data.payload;
-        if (this.isCompetitor) {
-          this.roomProducts = data.payload[this.owner].rooms;
-        }
       });
 
     this.subscriptionSpending = this.store.select(fromCore.getSpendings)
@@ -219,11 +218,13 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
     this.enableEdit = false;
     this.enableEditIndex = null;
     const variable = this.getVariable(type);
-    this[variable].splice(index, 1);
+    const test = this.parseObject(this[variable]);
+    test.splice(index, 1);
+    this[variable] = test;
     this.dispatchProduct();
   }
 
-  onChangeDropdown(e, i, type,room, roomProduct) {
+  onChangeDropdown(e, i, type, room, roomProduct) {
     this.typeEdit = type;
     const variable = this.getVariable(type);
     this[variable][i]['name'] = e.value.name;
@@ -342,7 +343,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
         'area': this.areaData.standardArea.percent
       },
       product_input: product
-    }
+    };
     const newProductData = await this.requestManagerService.requestProduct(payload);
     this.store.dispatch(new productAction.SuccessAction(newProductData));
     this.fillInSpeading(newProductData);
@@ -353,10 +354,11 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   }
 
   async fillInSpeading(productData) {
-    const speandingsData = this.calculatorManagerService.calculateProductToSpeading(productData[this.owner], this.parseObject(this.speadingData))
+    // tslint:disable-next-line: max-line-length
+    const speandingsData = this.calculatorManagerService.calculateProductToSpeading(productData[this.owner], this.parseObject(this.speadingData));
     // type == central means that object it's not show icon.
 
-    let payload = {
+    const payload = {
       'propertyType': 'hotel',
       'area_input': {
         ...this.areaData,
@@ -365,18 +367,17 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
       },
       'product_input': productData,
       'spendings_input': this.requestManagerService.generateSpeadingInput(speandingsData)
-    }
+    };
 
     // TODO : Remove this after Bank edit API
     const newSpendingData = await this.requestManagerService.requestSpeading(payload);
-    if (newSpendingData.costPerMonth !== undefined) {
-      newSpendingData.costPerMonths = newSpendingData.costPerMonth
-    }
-    newSpendingData.specialEquipments.map((data) => { if (data.type.search(/Opening/gi) !== -1) { data.cost = newSpendingData.totalCostPerMonth } });
+    // tslint:disable-next-line: max-line-length
+    newSpendingData.specialEquipments.map((data) => { if (data.type.search(/Opening/gi) !== -1) { data.cost = newSpendingData.totalCostPerMonth; } });
     this.fillInImplicitCost(productData, newSpendingData);
   }
 
   async fillInImplicitCost(productData, speadingData) {
+    // tslint:disable-next-line: max-line-length
     const implicitsCost = this.calculatorManagerService.calculateProductToImplicitsCost(productData[this.owner], this.parseObject(this.implicitsCostData));
 
     const payload = {
@@ -389,7 +390,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
       'product_input': productData,
       'spendings_input': this.requestManagerService.generateSpeadingInput(speadingData) ,
       'implicit_costs_input': implicitsCost,
-    }
+    };
     const newImplicitsCost = await this.requestManagerService.requestImplicitsCost(payload);
     this.store.dispatch(new spendingsAction.SuccessAction(speadingData));
     this.fillInRateReturn(productData, speadingData, newImplicitsCost, this.rateReturnData);
@@ -423,78 +424,86 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     // this.innerWidth = window.innerWidth;
-    //{'width':'50px', 'height':'35px'} small size
+    // {'width':'50px', 'height':'35px'} small size
     if (window.innerWidth < 500) {
       this.dropDownSize = { 'width': '50px' };
       this.iconSelectedItem = { 'width': '10px', 'vertical-align': 'middle' };
-      this.textSelectedItem = { 'vertical-align': 'middle', 'font-size': '10px', 'margin-left': '.5em' }
+      this.textSelectedItem = { 'vertical-align': 'middle', 'font-size': '10px', 'margin-left': '.5em' };
       this.iconItem = { 'width': '16px', 'position': 'absolute', 'top': '1px', 'left': '2px' };
       this.textItem = { 'font-size': '10px', 'float': 'right', 'margin-top': '2px' };
     } else {
       this.dropDownSize = { 'width': '170px' };
       this.iconSelectedItem = { 'width': '16px', 'vertical-align': 'middle' };
-      this.textSelectedItem = { 'vertical-align': 'middle', 'font-size': '13.5px', 'margin-left': '.2em' }
+      this.textSelectedItem = { 'vertical-align': 'middle', 'font-size': '13.5px', 'margin-left': '.2em' };
       this.iconItem = { 'width': '24px', 'position': 'absolute', 'top': '1px', 'left': '5px' };
       this.textItem = { 'font-size': '14px', 'float': 'right', 'margin-top': '4px' };
     }
   }
 
-  checkDisplayErrorDialog(){
+  checkDisplayErrorDialog() {
     try {
     const room_used =  this.getTotalArea(this.ROOM) + (this.getTotalArea(this.ROOM) * 0.15);
     const central_used =  this.getTotalArea(this.CENTRAL) + (this.getTotalArea(this.CENTRAL) * 0.2);
     const parking_used =  this.getTotalArea(this.PARKING) + (this.getTotalArea(this.PARKING) * 0.4);
     const outdoor_used =  this.getTotalArea(this.OUTDOOR);
 
-    if(+room_used > +this.areaData.standardArea.area.room) {
+    if (+room_used > +this.areaData.standardArea.area.room) {
       this.displayErrDialog = true;
       this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ห้องพัก โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
-      console.log('Room error ' + room_used + ':' + this.areaData.standardArea.area.room )
+      console.log('Room error ' + room_used + ':' + this.areaData.standardArea.area.room );
       return '';
     }
 
-    if(+central_used > +this.areaData.standardArea.area.central) {
+    if (+central_used > +this.areaData.standardArea.area.central) {
       this.displayErrDialog = true;
       this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ส่วนกลาง โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
-      console.log('central error ' + central_used + ':' + this.areaData.standardArea.area.central )
+      console.log('central error ' + central_used + ':' + this.areaData.standardArea.area.central );
 
       return '';
     }
 
-    if(+parking_used > +this.areaData.standardArea.area.parking) {
+    if (+parking_used > +this.areaData.standardArea.area.parking) {
       this.displayErrDialog = true;
       this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่จอดรถ โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
       return '';
     }
 
-    if(+outdoor_used > +this.areaData.standardArea.area.outdoor) {
+    if (+outdoor_used > +this.areaData.standardArea.area.outdoor) {
       this.displayErrDialog = true;
       this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ภายนอก โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
-      console.log('outdoor error' + outdoor_used + ':' + this.areaData.standardArea.area.outdoor )
+      console.log('outdoor error' + outdoor_used + ':' + this.areaData.standardArea.area.outdoor );
       return '';
     }
     return '';
-  } catch(e) {
+  } catch (e) {
     // TODO: Inital Data issue
     console.log('error');
   }
   }
 
-  convertValue(){
+  convertValue() {
     needToConvert.forEach( path => {
       this[path].map( item => {
-        item.area = parseFloat(item.area.toString().replace(/,/g, ''))
-        item.noRoom = parseFloat(item.noRoom.toString().replace(/,/g, ''))
+        if (typeof item.area !== 'number') {
+          item.area = parseFloat(item.area.toString().replace(/,/g, ''));
+        }
+        if (typeof item.noRoom !== 'number') {
+          item.noRoom = parseFloat(item.noRoom.toString().replace(/,/g, ''));
+        }
         return item;
       });
     });
   }
 
-  checkTrue(value : string) {
-    console.log(value)
+  ngOnChanges() {
+    if (this.needToRefresh) {
+      setTimeout(() => {
+        this.dispatchProduct();
+    }, 1000);
+    }
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriptionArea.unsubscribe();
     this.subscriptionProduct.unsubscribe();
     this.subscriptionSpending.unsubscribe();

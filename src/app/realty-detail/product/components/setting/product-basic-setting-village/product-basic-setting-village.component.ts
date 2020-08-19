@@ -350,12 +350,14 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   }
 
   parseToMillionFormat(value: number) {
-    return +(value + '000000');
+    // return +(value + '000000');
+    return +(value * 1000000);
   }
 
   parseMillionToUnitFormat(value: number) {
-    const stringValue = value + '';
-    return +(stringValue.replace('000000', ''));
+    // const stringValue = value + '';
+    // return +(stringValue.replace('000000', ''));
+    return +(value / 1000000);
   }
 
   parseDate(date: string): string {

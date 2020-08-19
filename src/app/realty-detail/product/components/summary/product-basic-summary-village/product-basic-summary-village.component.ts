@@ -62,7 +62,7 @@ export class ProductBasicSummaryVillageComponent implements OnInit, OnChanges {
   }
 
   checkDataCenter(){
-    if(this.areaData.percent && this.areaData.percent.centerArea === 0 ){
+    if((this.areaData.percent && this.areaData.percent.centerArea === 0) || (this.productData.centerArea === undefined) ){
       this.productData.centerArea = [0, 0, 0];
     }
   }

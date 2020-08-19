@@ -17,6 +17,7 @@ export class ProductBasicTypeComponent implements OnInit, OnChanges {
   areaData:any;
   productData:any;
   isShowCompetitor: boolean;
+  needtoRefresh: boolean;
 
   constructor(private store: Store<any>) {
     this.store.select(fromCore.getPage)
@@ -43,5 +44,10 @@ export class ProductBasicTypeComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.isShowCompetitor = changes.showCompetitor.currentValue;
+    if (this.isShowCompetitor) {
+      this.needtoRefresh = true;
+    } else {
+      this.needtoRefresh = false;
+    }
   }
 }

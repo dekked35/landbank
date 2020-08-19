@@ -25,6 +25,7 @@ export class ImplicitCostComponent implements OnInit {
   spendingsData:any;
   profitData: any;
   implicitsCostData:any;
+  is_loading:boolean;
   is_loading_implicitCost:boolean;
   is_loading_profit: boolean;
   is_loading_rateReturn: boolean;
@@ -54,6 +55,7 @@ export class ImplicitCostComponent implements OnInit {
     this.store.select(fromCore.getSpendings)
     .subscribe(spendings => {
       this.spendingsData =  this.parseObject(spendings.payload);
+      this.is_loading = spendings.isLoading;
     });
 
     this.store.select(fromCore.getImplicitCosts)

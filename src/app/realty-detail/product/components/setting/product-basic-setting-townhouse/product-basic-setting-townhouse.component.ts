@@ -60,18 +60,18 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     },
     width: {
       min: 4,
-      max: 6
+      max: 10
     },
     depth: {
-      min: 9,
-      max: 12
+      min: 4,
+      max: 20
     },
     behindDepth: {
-      min: 3,
+      min: 1.5,
       max: 5
     },
     frontDepth: {
-      min: 6,
+      min: 0,
       max: 8
     },
     area: {

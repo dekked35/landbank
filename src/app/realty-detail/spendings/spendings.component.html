@@ -26,24 +26,24 @@
                   <div class="ui-inputtextBox">
                     {{ areaData.total_land_price | number:'1.2-2' }}
                   </div>
-                  <!-- <input (disabled)='clickChange' [(ngModel)]="spendingsData.priceLandBought" (change)="InputOnchanges($event)" (click)="setChange()"pKeyFilter="int"
+                  <!-- <input (disabled)='clickChange' [(ngModel)]="spendingsData.priceLandBought" (change)="InputOnchanges($event)" pKeyFilter="int"
                      type="text" pInputText inputWithComma/> -->
                </div>
                <div class="form-group">
                   <label>ค่าต่างๆ/1 หลัง</label><span>บาท</span>
-                  <input [(ngModel)]="spendingsData.costOther" (change)="InputOnchanges($event)" (click)="setChange()" pKeyFilter="int"
+                  <input [(ngModel)]="spendingsData.costOther" (change)="InputOnchanges($event)"  pKeyFilter="int"
                      type="text" pInputText inputWithComma />
                </div>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-6 form_expense">
                <div class="form-group">
                   <label>ต้นทุนค่าก่อสร้างพื้นที่ใช้สอย/ตร.ม.</label><span>บาท</span>
-                  <input [(ngModel)]="spendingsData.costConstructionLivingSpace" (change)="InputOnchanges($event)"(click)="setChange()"
+                  <input [(ngModel)]="spendingsData.costConstructionLivingSpace" (change)="InputOnchanges($event)"
                      pKeyFilter="int" type="text" pInputText inputWithComma />
                </div>
                <div class="form-group">
-                  <label>ค่าแบบ</label><span>บาท</span>
-                  <input [(ngModel)]="spendingsData.costPlan" (change)="InputOnchanges($event)" pKeyFilter="int" (click)="setChange()"
+                  <label>ค่าแบบ ({{plan}})</label><span>บาท</span>
+                  <input [(ngModel)]="spendingsData.costPlan" (change)="InputOnchanges($event)" pKeyFilter="int"
                      type="text" pInputText inputWithComma/>
                </div>
             </div>
@@ -122,8 +122,8 @@
                   </div>
                   <div *ngIf="is_loading" class="expense_price"> 0.00 </div>
                </div>
-               <div class="form-group" *ngIf=" this.currentProperty === 'village' ">
-                <label>ค่าพัฒนาพื้นที่ส่วนกลาง</label><span>บาท</span>
+               <div class="form-group">
+                <label>ค่าพัฒนาพื้นที่อำนวยความสะดวกโครงการ</label><span>บาท</span>
                 <div *ngIf="!is_loading" class="expense_price_no_line">
                    <!-- class="expense_price" -->
                    {{ spendingsData.centerCost | number:'1.2-2' }}
@@ -138,12 +138,12 @@
                   <div *ngIf="is_loading" class="expense_price_no_line"> 0.00 </div>
                </div> -->
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 form_expense">
+            <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 form_expense">
                <div class="form-group">
                   <div class="expense_price"></div>
                </div>
                <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout">
-                  <label>ค่าพัฒนาที่ดินทั้งหมด</label>
+                  <label>ค่าใใช้จ่าย พื้นที่ส่วนกลางทั้งหมด</label>
                </div>
                <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
                   <div>
@@ -152,10 +152,10 @@
                      บาท
                   </div>
                </div>
-               <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout">
-                <label>ต้นทุนค่าพัฒนาที่ดินรวมทั้งหมด</label>
+               <div class="ui-g-12 ui-md-8 ui-lg-8 box_layout">
+                <label>ต้นทุนค่าพัฒนาที่ดินรวมกับค่าใช้จ่ายส่วนกลางทั้งหมด</label>
              </div>
-             <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+             <div class="ui-g-12 ui-md-4 ui-lg-4 box_layout" style="text-align: right;">
                 <div>
                    <span *ngIf="!is_loading"> {{ spendingsData.costInProject | number:'1.2-2' }} </span>
                    <span *ngIf="is_loading"> 0.00 </span>
@@ -163,7 +163,7 @@
                 </div>
              </div>
                <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout">
-                  <label>ต้นทุนที่ดินที่พัฒนาแล้ว</label>
+                  <label>สรุปดังนั้นต้นทุนที่ดินที่พัฒนาแล้ว</label>
                </div>
                <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
                   <div>
@@ -172,7 +172,7 @@
                      บาท/ตร.ว.
                   </div>
                </div>
-            </div>
+            </div> -->
          </div>
 
          <!-- TODO : Moving to Components  -->
@@ -208,7 +208,12 @@
                   <input [(ngModel)]="spendingsData.salaryEmployee" (change)="InputOnchanges($event)" type="text" pKeyFilter="int"
                      pInputText inputWithComma />
                </div>
-               <div class="mem_sum"> บาท/เดือน =<span> {{ spendingsData.totalSalary |  number:'1.2-2' }}</span>บาท รวมเงินเดือนทั้งหมดจนจบโครงการ</div>
+               <div class="form-group form_calendar_only" style="margin-top: 10px;width: 100%;">
+                  <div class="mem_sum" style="width: 100%; padding: 0"> รวมเงินเดือนทั้งหมดจนจบโครงการ =<span> {{ spendingsData.totalSalary |  number:'1.2-2' }}</span>
+                    <span *ngIf="is_loading" class="expense_price"> 0.00 </span>บาท
+                  </div>
+               </div>
+               <!-- <div class="mem_sum"> รวมเงินเดือนทั้งหมดจนจบโครงการ = <span> {{ spendingsData.totalSalary |  number:'1.2-2' }}</span>บาท</div> -->
                <div class="form-group form_calendar">
                 <label>ค่าโฆษณา</label>
                 <div>
@@ -217,10 +222,15 @@
                      pInputText inputWithComma style="width: 60%; float: right;" />
                 </div>
               </div>
-              <div class="mem_sum">(ปกติคิดที่ 1% ของมูลค่าโครงการ) =
+              <div class="form-group form_calendar_only" style="margin-top: 10px;width: 100%;">
+                  <div class="mem_sum" style="width: 100%; padding: 0"> (ปกติคิดที่ 1% ของมูลค่าโครงการ) =<span> {{ spendingsData.costAdvtOnePer * percentCostAdvt | number:'1.2-2' }}</span>
+                     <span *ngIf="is_loading" class="expense_price"> 0.00 </span>บาท
+                  </div>
+               </div>
+              <!-- <div class="mem_sum">(ปกติคิดที่ 1% ของมูลค่าโครงการ) =
                  <span *ngIf="!is_loading"> {{ spendingsData.costAdvtOnePer * percentCostAdvt | number:'1.2-2' }}</span>
                  <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
-                 บาท</div>
+                 บาท</div> -->
               <div class="form-group form_calendar">
                 <label>ค่าคอมมิชชั่นเซลล์ต่อหลัง</label>
                 <div>
@@ -228,8 +238,20 @@
                       pInputText inputWithComma/>
                 </div>
               </div>
+              <div class="form-group form_calendar_only" style="margin-top: 10px;width: 100%;">
+                <div class="mem_sum" style="width: 100%; padding: 0"> สรุปค่าใช้จ่ายต่อเดือน =<span *ngIf="!is_loading"> {{ spendingsData.costPerOneMonth | number:'1.2-2' }}</span>
+                  <span *ngIf="is_loading" class="expense_price"> 0.00 </span>บาท</div>
+              </div>
+              <!-- <div class="form-group form_calendar_only" style="margin-top: 10px;">
+                <label>สรุปค่าใช้จ่ายต่อเดือน = </label>
+                <div class="mem_sum">
+                  <span *ngIf="!is_loading"> {{ fixBug | number:'1.2-2' }}</span>
+                  <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
+                </div>
+              </div> -->
               <!-- <div class="mem_sum">สรุปค่าใช้จ่ายต่อเดือน =
                 <span *ngIf="!is_loading"> {{ spendingsData.costPerOneMonth | number:'1.2-2' }}</span>
+                <span *ngIf="!is_loading"> {{ fixBug | number:'1.2-2' }}</span>
                 <span *ngIf="is_loading" class="expense_price"> 0.00 </span>
                 บาท</div> -->
              </div>
@@ -489,7 +511,8 @@
          </div>
          <div class="ui-g-12 ui-md-12 ui-lg-12">
             <div class="wrap_table_sum ">
-               <table class="table_sum_4">
+                <p style="font-size: 16px; padding-left: 30px; margin: 5px 0;">ค่าใช้จ่ายทั่วไป</p>
+                <table class="table_sum_4">
                   <tr>
                      <td>รายการ</td>
                      <td>
@@ -501,43 +524,82 @@
                      </td>
                      <td></td>
                   </tr>
-                  <tr *ngFor="let item of spendingsData.costPerMonths; let i = index">
-                     <td class="box_layout">  <input [(ngModel)]="item.type" type="text" pInputText /></td>
+                  <tr *ngFor="let item of spendingsData.costPerMonths.slice(0,3); let i = index">
+                     <td class="box_layout">
+                      <span>{{ item.type }}</span>
+                      <!-- <input [(ngModel)]="item.type" type="text" pInputText /></td> -->
                      <td class="box_layout">
                         <div>
-                           <!-- <input pKeyFilter="int" [(ngModel)]="item.cost" (change)="InputOnchanges($event)"
-                              type="number" pInputText /> -->
-                            <input [(ngModel)]="item.cost" (change)="InputOnchanges($event)" type="text"
-                              pInputText inputWithComma />
+                          <span>{{ item.cost | number:'1.2-2' }}</span>
+                            <!-- <input [(ngModel)]="item.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma /> -->
                         </div>
                      </td>
                      <td class="box_layout">
                         <div>
-                           <!-- <input pKeyFilter="int" [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="number"
-                              pInputText /> -->
                             <input [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="text"
                               pInputText inputWithComma />
                         </div>
                      </td>
                      <td class="box_layout">
-                        <!-- <span>{{ item.total | number:'1.2-2' }}</span> -->
                         <span>{{ convertToNum(item.cost) * convertToNum(item.no) | number:'1.2-2' }}</span>
                      </td>
-                     <td>
+                     <!-- <td>
                         <div>
                            <button pButton type="button" class="ui-button-danger" (click)="deleteItem(i, 'costPerMonths')"
                               icon="pi pi-times"></button>
                         </div>
+                     </td> -->
+                  </tr>
+               </table>
+               <p style="font-size: 16px; padding-left: 30px; margin-bottom: 5px 0;">ค่าใช้จ่ายในห้องพัก</p>
+                <table class="table_sum_4">
+                  <tr>
+                     <td>รายการ</td>
+                     <td>
+                        <div>ค่าใช้จ่าย <br> (บาท) </div>
                      </td>
+                     <td>จำนวน</td>
+                     <td>
+                        <div>รวม <br> (บาท) </div>
+                     </td>
+                     <td></td>
+                  </tr>
+                  <tr *ngFor="let item of spendingsData.costPerMonths.slice(3); let i = index">
+                    <td class="box_layout">
+                      <span>{{ item.type }}</span>
+                      <!-- <input [(ngModel)]="item.type" type="text" pInputText /></td> -->
+                     <td class="box_layout">
+                        <div>
+                          <span>{{ item.cost | number:'1.2-2' }}</span>
+                            <!-- <input [(ngModel)]="item.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma /> -->
+                        </div>
+                     </td>
+                     <td class="box_layout">
+                        <div>
+                            <input [(ngModel)]="item.no" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma />
+                        </div>
+                     </td>
+                     <td class="box_layout">
+                        <span>{{ convertToNum(item.cost) * convertToNum(item.no) | number:'1.2-2' }}</span>
+                     </td>
+                     <!-- <td>
+                        <div>
+                           <button pButton type="button" class="ui-button-danger" (click)="deleteItem(i, 'costPerMonths')"
+                              icon="pi pi-times"></button>
+                        </div>
+                     </td> -->
                   </tr>
                </table>
             </div>
          </div>
-         <div class="ui-g-12 ui-md-12 ui-lg-12">
+         <!-- <div class="ui-g-12 ui-md-12 ui-lg-12">
             <div style="float: right;">
                <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem('costPerMonths')"></p-button>
             </div>
-         </div>
+         </div> -->
          <div class="ui-lg-4"></div>
          <div class="ui-g-6 ui-md-6 ui-lg-4">
             รวมค่าใช้จ่ายรายเดือน
@@ -575,8 +637,8 @@
                   <tr *ngFor="let item of spendingsData.specialEquipments; let i = index">
                      <td class="box_layout">
                         <div *ngIf="item.type !== 'ค่า Pre-Opening'">
-                           <input [(ngModel)]="item.type" type="text" pInputText />
-                           <!-- <span> {{ item.type }} </span> -->
+                           <!-- <input [(ngModel)]="item.type" type="text" pInputText /> -->
+                           <span> {{ item.type }} </span>
                         </div>
                         <div *ngIf="item.type === 'ค่า Pre-Opening'">
                            <span> {{ item.type }} </span>
@@ -584,13 +646,12 @@
                      </td>
                      <td class="box_layout">
                         <div *ngIf="item.type !== 'ค่า Pre-Opening'">
-                           <!-- <input pKeyFilter="int" [(ngModel)]="item.cost" (change)="InputOnchanges($event)"
-                              type="number" pInputText /> -->
-                            <input [(ngModel)]="item.cost" (change)="InputOnchanges($event)" type="text"
-                              pInputText inputWithComma />
+                            <span> {{ item.cost | number:'1.2-2' }} </span>
+                            <!-- <input [(ngModel)]="item.cost" (change)="InputOnchanges($event)" type="text"
+                              pInputText inputWithComma /> -->
                         </div>
                         <div *ngIf="item.type === 'ค่า Pre-Opening'">
-                           <span> {{ item.cost }} </span>
+                           <span> {{ item.cost | number:'1.2-2'}} </span>
                         </div>
                      </td>
                      <td class="box_layout">
@@ -604,21 +665,21 @@
                      <!-- <td class="box_layout">
                         <span>{{ item.total | number:'1.2-2' }}</span>
                      </td> -->
-                     <td>
+                     <!-- <td>
                         <div *ngIf="item.type !== 'ค่า Pre-Opening'">
                            <button pButton type="button" class="ui-button-danger" (click)="deleteItem(i, 'specialEquipments')"
                               icon="pi pi-times"></button>
                         </div>
-                     </td>
+                     </td> -->
                   </tr>
                </table>
             </div>
          </div>
-         <div class="ui-g-12 ui-md-12 ui-lg-12">
+         <!-- <div class="ui-g-12 ui-md-12 ui-lg-12">
             <div style="float: right;">
                <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem('specialEquipments')"></p-button>
             </div>
-         </div>
+         </div> -->
          <div class="ui-lg-4"> </div>
          <div class="ui-g-6 ui-md-6 ui-lg-4">
             รวมค่าใช้จ่ายอุปกรณ์ทั้งหมด

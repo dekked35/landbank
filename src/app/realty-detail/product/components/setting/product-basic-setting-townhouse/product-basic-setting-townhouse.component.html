@@ -21,12 +21,12 @@
                         <p>ความกว้าง</p>
                     </div>
                     <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
-                      <input [(ngModel)]="ownerProductData.width" type="text"
-                      pKeyFilter="int" pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
+                      <input [(ngModel)]="ownerProductData.width" type="number"
+                      pKeyFilter="num" pInputText class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
                         <!-- <p> {{ ownerProductData.width }} ม.</p> -->
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12">
-                        <p-slider [(ngModel)]="ownerProductData.width" [min]="product_limit.width.min"
+                        <p-slider [(ngModel)]="ownerProductData.width" [min]="product_limit.width.min" [step]="0.5"
                             [max]="product_limit.width.max" (onSlideEnd)="handleRatioEnd(0, $event)"></p-slider>
                     </div>
                 </div>
@@ -35,12 +35,12 @@
                         <p>ความลึก</p>
                     </div>
                     <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
-                      <input [(ngModel)]="ownerProductData.depth" type="text"
-                      pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
+                      <input [(ngModel)]="ownerProductData.depth" type="number"
+                      pKeyFilter="num" pInputText  class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
                         <!-- <p> {{ ownerProductData.depth }} ม.</p> -->
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12">
-                        <p-slider [(ngModel)]="ownerProductData.depth" [min]="product_limit.depth.min"
+                        <p-slider [(ngModel)]="ownerProductData.depth" [min]="product_limit.depth.min" [step]="0.5"
                             [max]="product_limit.depth.max" (onSlideEnd)="handleRatioEnd(0, $event)"></p-slider>
                     </div>
                 </div>
@@ -49,12 +49,12 @@
                         <p>ความลึกที่จอดรถด้านหน้า</p>
                     </div>
                     <div class="ui-g-5 ui-md-5 ui-lg-5 unit_value">
-                      <input [(ngModel)]="ownerProductData.frontDepth" type="text"
-                      pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
+                      <input [(ngModel)]="ownerProductData.frontDepth" type="number"
+                      pInputText pKeyFilter="num" class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
                         <!-- <p> {{ ownerProductData.frontDepth }} ม.</p> -->
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12">
-                        <p-slider [(ngModel)]="ownerProductData.frontDepth" [min]="product_limit.frontDepth.min"
+                        <p-slider [(ngModel)]="ownerProductData.frontDepth" [min]="product_limit.frontDepth.min" [step]="0.5"
                             [max]="product_limit.frontDepth.max" (onSlideEnd)="handleRatioEnd(0, $event)"></p-slider>
                     </div>
                 </div>
@@ -63,12 +63,12 @@
                         <p>ความลึกที่ซักล้างด้านหลัง</p>
                     </div>
                     <div class="ui-g-5 ui-md-5 ui-lg-5 unit_value">
-                      <input [(ngModel)]="ownerProductData.behindDepth" type="text"
-                      pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
+                      <input [(ngModel)]="ownerProductData.behindDepth" type="number"
+                      pInputText pKeyFilter="num" class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
                         <!-- <p> {{ ownerProductData.behindDepth }} ม.</p> -->
                     </div>
                     <div class="ui-g-12 ui-md-12 ui-lg-12">
-                        <p-slider [(ngModel)]="ownerProductData.behindDepth" [min]="product_limit.behindDepth.min"
+                        <p-slider [(ngModel)]="ownerProductData.behindDepth" [min]="product_limit.behindDepth.min" [step]="0.5"
                             [max]="product_limit.behindDepth.max" (onSlideEnd)="handleRatioEnd(0, $event)"></p-slider>
                     </div>
                 </div>
@@ -129,13 +129,13 @@
                 <app-standard-size [standardType]="'size'" [type]="'village'"></app-standard-size>
             </div>
         </div>
-        <div class="ui-g-12 ui-md-2 ui-lg-2">
+        <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[0].ratio !== '0.00'">
             <div class="wrap_product_logo">
                 <img src="../../../../assets/icons/townhome2.svg">
                 <span> อาคารพาณิชย์ 2 ชั้น</span>
             </div>
         </div>
-        <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center">
+        <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center" *ngIf="products[0].ratio !== '0.00'">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
                     สัดส่วน <span> {{products[0].ratio }}</span> %
@@ -220,13 +220,13 @@
             </div> -->
         </div>
 
-        <div class="ui-g-12 ui-md-2 ui-lg-2">
+        <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[1].ratio !== '0.00'">
             <div class="wrap_product_logo">
                 <img src="../../../../assets/icons/townhome3.svg">
                 <span> อาคารพาณิชย์ 3 ชั้น</span>
             </div>
         </div>
-        <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center">
+        <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center" *ngIf="products[1].ratio !== '0.00'">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
                     สัดส่วน <span> {{products[1].ratio }}</span> %
@@ -311,13 +311,13 @@
             </div> -->
         </div>
 
-        <div class="ui-g-12 ui-md-2 ui-lg-2">
+        <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[2].ratio !== '0.00'">
             <div class="wrap_product_logo">
                 <img src="../../../../assets/icons/townhome4.svg">
                 <span> อาคารพาณิชย์ 4 ชั้น</span>
             </div>
         </div>
-        <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center">
+        <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center" *ngIf="products[2].ratio !== '0.00'">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
                     สัดส่วน <span> {{products[2].ratio }}</span> %

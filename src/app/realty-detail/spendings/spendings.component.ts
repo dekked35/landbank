@@ -52,19 +52,14 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   implicitCostData: any;
   rateReturnData: any;
 
-  is_loading: boolean = true;
-  value_again: boolean = false
+  is_loading = true;
 
   priceLandBought: number;
   costOther: number;
   costConstructionLivingSpace: number;
   costPlan: number;
 
-  costRoom: number = 30000;
-  costCentral: number = 25000;
-  costParking: number = 10000;
-  costOutdoor: number = 5000;
-  percentCostAdvt : number = 1;
+  percentCostAdvt = 1;
 
   constructor(
     private store: Store<any>,
@@ -85,6 +80,8 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   subscriptionRateReturn: any;
   count: boolean = false;
   clickChange : boolean = false;
+  fixBug = 0;
+  plan = '';
 
   ngOnInit() {
     this.store.select(fromCore.getArea).subscribe((area) => {
@@ -118,8 +115,26 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       .select(fromCore.getProduct)
       .subscribe((product) => {
         this.productData = product.payload;
+        if (['village', 'townhome'].includes(this.currentProperty)){
+          this.checkPlanModel()
+        }
       });
       this.convertNum();
+  }
+
+  checkPlanModel(){
+    const { user } = this.productData;
+    const newspendingsData = this.parseObject(this.spendingsData)
+    let countPlan = 0;
+    this.plan = '';
+    if(user) {
+      user.products.forEach((element, index) => {
+        if (element.ratio !== 0) {
+          countPlan++;
+        }
+      });
+    }
+    this.plan = countPlan + ' แบบ'
   }
 
   caculateMonthPeriod($event) {
@@ -130,7 +145,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       const a = new Date(this.spendingsData.periodSellStart);
       const b = new Date(this.spendingsData.periodSellEnd);
       if (b > a) {
-        // let months = b.getMonth() - a.getMonth() + (12 * (b.getFullYear() - a.getFullYear()));
         const months = moment(b).diff(moment(a), 'month', true);
         this.spendingsData.sellPeriod = +months.toFixed(0);
       } else {
@@ -143,6 +157,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       +this.spendingsData.sellPeriod *
       +this.spendingsData.salaryEmployee *
       +this.spendingsData.noEmployee;
+
   }
 
   async InputOnchanges($event) {
@@ -159,7 +174,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
           this.spendingsData.costConstructionLivingSpace > 0 &&
           this.spendingsData.costPlan > 0
         ) {
-          const tempSpending = this.parseObjectCheckSpendings(this.spendingsData, this.areaData, this.clickChange,  this.value_again);
+          const tempSpending = this.parseObject(this.spendingsData);
           this.store.dispatch(new spendingsAction.IsLoadingAction(true));
           const payload = this.generatePayload(tempSpending);
           let newSpendingData = await this.requestManagerService.requestSpeading(
@@ -173,6 +188,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
             new spendingsAction.SuccessAction(newSpendingData)
           );
           this.store.dispatch(new spendingsAction.IsLoadingAction(false));
+          this.caculateMonthPeriod(true)
           this.getImplicitsCosts(tempSpending);
           this.getProfit(tempSpending);
           this.getRateReturn(newSpendingData);
@@ -222,9 +238,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       for (const item in this.spendingsData) {
         if (needToConvert.includes(item)) {
           this.spendingsData[item] = parseFloat(this.spendingsData[item].toString().replace(/,/g, ''))
-          if (this.spendingsData.priceLandBought === 35000000 ){
-            this.value_again = true;
-          }
         }
       }
     } else {
@@ -252,7 +265,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   async getImplicitsCosts(tempSpending) {
     let payload = {};
     if (['village', 'townhome'].includes(this.currentProperty)) {
-      payload = this.parseObjectCheckSpendings(tempSpending, this.areaData, this.clickChange, this.value_again);
+      payload = this.parseObject(tempSpending);
     } else {
       payload = this.generateImplicitCostPayload(tempSpending);
     }

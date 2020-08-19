@@ -8,10 +8,15 @@
           <i class="pi pi-angle-down" aria-hidden="true"></i></li>
         <li [ngClass]="{'active': currentProperty=='condo'}" (click)="selectProperty('condo')">คอนโด
           <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='hotel'}" (click)="selectProperty('hotel')">โรงแรม
+        <li [ngClass]="{'active': currentProperty=='hotel'}" *ngIf="currentProperty !== 'resort'" (click)="selectProperty('hotel')">โรงแรม
           <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='communityMall'}" (click)="selectProperty('communityMall')">
-          Community Mall
+        <li [ngClass]="{'active': currentProperty=='resort'}" *ngIf="currentProperty === 'resort'" (click)="selectProperty('hotel')">รีสอร์ท
+          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
+        <li [ngClass]="{'active': currentProperty=='communityMall'}" (click)="selectProperty('communityMall')">Community Mall
+          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
+        <li [ngClass]="{'active': currentProperty=='resort'}" class="tab-resort" *ngIf="currentProperty === 'hotel'"  (click)="selectProperty('resort')">รีสอร์ท
+          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
+        <li [ngClass]="{'active': currentProperty=='hotel'}" class="tab-resort" *ngIf="currentProperty === 'resort'"  (click)="selectProperty('hotel')">โรงแรม
           <i class="pi pi-angle-down" aria-hidden="true"></i></li>
       </ul>
     </div>
