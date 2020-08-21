@@ -6,6 +6,19 @@ import * as areaAction from '../../../../../core/actions/product.actions';
 import * as productAction from '../../../../../core/actions/product.actions';
 import * as fromCore from '../../../../../core/reducers';
 
+const imageType = {
+  village : {
+    0 : 'home1.svg',
+    1 : 'home2.svg',
+    2 : 'home3.svg'
+  },
+  resort : {
+    0 : "room/Pool Villa.svg",
+    1 : "room/Family Room.svg",
+    2 : "room/Jacuzzi Villa.svg",
+  }
+};
+
 @Component({
   selector: 'app-product-basic-summary-village',
   templateUrl: './product-basic-summary-village.component.html',
@@ -16,10 +29,16 @@ export class ProductBasicSummaryVillageComponent implements OnInit, OnChanges {
   @Input() ownerData: any;
   areaData?: any;
 
+  currentProperty: string;
+
   productData: any;
   // ownerData: any;
   is_loading: boolean = true;
   constructor(private store: Store<any>) {
+    this.store.select(fromCore.getPage)
+      .subscribe(page => {
+        this.currentProperty = page.page;
+      });
     this.store.select(fromCore.getProduct)
     .subscribe(product => {
       this.productData = JSON.parse(JSON.stringify(product.payload));
@@ -61,9 +80,14 @@ export class ProductBasicSummaryVillageComponent implements OnInit, OnChanges {
     }
   }
 
+  getImage(index: number){
+    return imageType[this.currentProperty][index];
+  }
+
   checkDataCenter(){
     if((this.areaData.percent && this.areaData.percent.centerArea === 0) || (this.productData.centerArea === undefined) ){
       this.productData.centerArea = [0, 0, 0];
     }
+    console.log(this.ownerData)
   }
 }

@@ -7,7 +7,7 @@ export const defaultAreaRatio = [
         }
     },
     {
-        propertyType : ["condo","hotel","communityMall"],
+        propertyType : ["condo","hotel","communityMall","resort"],
         default : {
             id: 1,
             name: 'แบบที่ 1'

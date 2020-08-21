@@ -153,4 +153,12 @@ export const standardPrices = {
             {name: 'ค่าใช้จ่ายของผู้เข้าพัก', type: 'specialEquipment', unit: 'บาท', price: 300},
         ]
     },
+    "resort" : {
+      "room" : [
+        {type : 'ราคาที่ดินที่ซื้อได้', price: 'ค่าที่ดินทั้งหมด', unit: 'บาท'},
+        {type : 'ต้นทุนค่าก่อสร้างพื้นที่ใช้สอย', price: '10,000', unit: 'บาท/ตร.ม.'},
+        {type : 'ค่าต่างๆ', price: '100,000', unit: 'บาท/1 หลัง'},
+        {type : 'ค่าแบบ', price: '100,000', unit: 'บาท'},
+      ]
+    },
 }

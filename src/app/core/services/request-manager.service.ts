@@ -14,7 +14,8 @@ const API_PROPERTY_MAPPER = {
   "townhome": "townhouse",
   "condo": "condo",
   "hotel": "hotel",
-  "communityMall": "community mall"
+  "communityMall": "community mall",
+  "resort": "village"
 }
 
 @Injectable({

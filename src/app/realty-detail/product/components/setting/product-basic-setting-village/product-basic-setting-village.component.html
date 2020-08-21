@@ -1,4 +1,4 @@
-<div *ngIf="products.length > 0" class="text_cover">
+<div *ngIf="products && products.length > 0" class="text_cover">
     <ng-container *ngIf="!is_loading">
         <p-dialog styleClass="mydialog" header="การแจ้งเตือน" [(visible)]="displayErrDialog">
             <span class="font-red-color"> {{ displayErrDialogMsg }}</span>
@@ -22,8 +22,8 @@
         </div>
         <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[0].ratio !== 0">
             <div class="wrap_product_logo">
-                <img src="../../../../assets/icons/home1.svg">
-                <span>บ้าน 1 ชั้น</span>
+                <img src="../../../../assets/icons/{{getImage(0)}}">
+                <span>{{getWordingType(0)}}</span>
             </div>
         </div>
         <div class="ui-g-12 ui-md-10 ui-lg-10" *ngIf="products[0].ratio !== 0">
@@ -86,8 +86,8 @@
 
         <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[1].ratio !== 0">
             <div class="wrap_product_logo">
-                <img src="../../../../assets/icons/home2.svg">
-                <span >บ้าน 2 ชั้น</span>
+                <img src="../../../../assets/icons/{{getImage(1)}}">
+                <span >{{getWordingType(1)}}</span>
             </div>
         </div>
         <div class="ui-g-12 ui-md-10 ui-lg-10" *ngIf="products[1].ratio !== 0">
@@ -165,8 +165,8 @@
 
         <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[2].ratio !== 0">
             <div class="wrap_product_logo">
-                <img src="../../../../assets/icons/home3.svg">
-                <span >บ้าน 3 ชั้น</span>
+                <img src="../../../../assets/icons/{{getImage(2)}}">
+                <span >{{getWordingType(2)}}</span>
             </div>
         </div>
         <div class="ui-g-12 ui-md-10 ui-lg-10" *ngIf="products[2].ratio !== 0">

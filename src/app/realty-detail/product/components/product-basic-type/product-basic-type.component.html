@@ -1,4 +1,4 @@
-<ng-container *ngIf="currentProperty === 'village'">
+<ng-container *ngIf="currentProperty === 'village'|| currentProperty === 'resort' ">
     <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-lg-6 ">
             <app-product-basic-setting-village [owner]="'user'"></app-product-basic-setting-village>
@@ -38,7 +38,7 @@
     </div>
 </ng-container>
 
-<ng-container *ngIf="currentProperty === 'condo' || currentProperty === 'hotel' || currentProperty === 'communityMall'">
+<ng-container *ngIf="currentProperty === 'condo' || currentProperty === 'hotel' || currentProperty === 'communityMall' ">
     <div class="ui-g">
       <div class="ui-g-12 ui-md-12" [ngClass]="{'ui-lg-6': isShowCompetitor, 'ui-lg-12':!isShowCompetitor }">
           <div class="ui-g-12 ui-md-12 ui-lg-12">

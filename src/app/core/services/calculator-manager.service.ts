@@ -89,7 +89,7 @@ export class CalculatorManagerService {
     // let field = (this.propertyType === "village") ? "size" : "area";
     let field = "size";
     // calculate remainingArea
-    if(this.propertyType === "village" || this.propertyType === "townhome") {
+    if(this.propertyType === "village" || this.propertyType === "townhome" || this.propertyType === "resort") {
       let products = productData.user.products;
       let sumArea = 0;
       for (let i = 0; i < products.length; i++) {

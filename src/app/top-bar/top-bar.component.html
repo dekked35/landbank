@@ -10,7 +10,7 @@
           <i class="pi pi-angle-down" aria-hidden="true"></i></li>
         <li [ngClass]="{'active': currentProperty=='hotel'}" *ngIf="currentProperty !== 'resort'" (click)="selectProperty('hotel')">โรงแรม
           <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='resort'}" *ngIf="currentProperty === 'resort'" (click)="selectProperty('hotel')">รีสอร์ท
+        <li [ngClass]="{'active': currentProperty=='resort'}" *ngIf="currentProperty === 'resort'" (click)="selectProperty('resort')">รีสอร์ท
           <i class="pi pi-angle-down" aria-hidden="true"></i></li>
         <li [ngClass]="{'active': currentProperty=='communityMall'}" (click)="selectProperty('communityMall')">Community Mall
           <i class="pi pi-angle-down" aria-hidden="true"></i></li>

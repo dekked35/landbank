@@ -3,7 +3,7 @@ export const hotel = {
         "townPlanColor": "#ff8407",
         "farValue" : 3,
         "osrValue": 10,
-        "totalArea": 5000,
+        "totalArea": 10000,
         "availableArea" : 5000,  // พื้นที่ที่ใช้ได้ตามกฏหมาย คำนวณตามสูตร ขนาดพื้นที่ (ตร.ว.) × 4 × ค่า Far = พื้นที่ใช้สอยของอาคาร ที่สามารถก่อสร้างได้ (ตร.ม.)
         "landPrice": 250000,   // ดึงจาก API
         "standardArea": {
@@ -182,10 +182,10 @@ export const hotel = {
             }
         ],
 
-        
+
         "totalEquipmentsCost" : 0.0, // รวมค่าใช้จ่ายอุปกรณ์ทั้งหมด
-        "totalCostPerMonthAndPreOpening" : 0.0, // รวมค่าใช้จ่ายรายเดือนและ Pre-Opening 
- 
+        "totalCostPerMonthAndPreOpening" : 0.0, // รวมค่าใช้จ่ายรายเดือนและ Pre-Opening
+
         "costLand" : 0.0, // ค่าที่ดินทั้งหมด
         "costSpecielEquipmentAndPreOpening" : 0.0, // ค่าใช้จ่ายรายเดือน
         "costConstruction" : 0.0, // ค่าก่อสร้าง
@@ -265,12 +265,12 @@ export const hotel = {
         "irrValue" : 0.0,
         "financeCosts" : 0.0, // ต้นทุนทางการเงิน
         "paybackPeriod" : 0.0, // ต้นทุนทางการเงิน
-        "investmentValue" : 0.0, // จำนวน มูลค่าเงินลงทุน	
+        "investmentValue" : 0.0, // จำนวน มูลค่าเงินลงทุน
         "ratioInvestmentValue" : 100, // สัดส่วน มูลค่าเงินลงทุน
-        "privateFund" : 0.0, // จำนวน ส่วนทุน	
+        "privateFund" : 0.0, // จำนวน ส่วนทุน
         "ratioPrivateFund" : 0.0, // สัดส่วน ส่วนทุน
         "interestPrivateFund" : 0.0, // ดอกเบี้ย ส่วนทุน
-        "borrowFund" : 0.0, // จำนวน ส่วนเงินกู้	
+        "borrowFund" : 0.0, // จำนวน ส่วนเงินกู้
         "ratioBorrowFund" : 0.0, // สัดส่วน ส่วนเงินกู้
         "interestBorrowFund" : 0.0, // ดอกเบี้ย ส่วนเงินกู้
         "borrowPeriod" : 4, // ระยะเวลากู้ธนาคาร

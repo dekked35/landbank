@@ -9,7 +9,7 @@
       </div>
    </div>
 
-   <ng-container *ngIf="currentProperty === 'village' || currentProperty === 'townhome'">
+   <ng-container *ngIf="currentProperty === 'village' || currentProperty === 'townhome' || currentProperty === 'resort'">
       <div class="ui-g ui-fluid">
          <div class="ui-g-12 ui-md-12 ui-lg-6">
             <div class="ui-g-12 ui-md-6 ui-lg-6 head_expense">
@@ -509,7 +509,7 @@
                <app-standard-size [standardType]="'price'" [type]="'costPerMonths'"></app-standard-size>
             </div>
          </div>
-         <div class="ui-g-12 ui-md-12 ui-lg-12">
+         <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="spendingsData.costPerMonths && spendingsData.costPerMonths.length > 0" >
             <div class="wrap_table_sum ">
                 <p style="font-size: 16px; padding-left: 30px; margin: 5px 0;">ค่าใช้จ่ายทั่วไป</p>
                 <table class="table_sum_4">

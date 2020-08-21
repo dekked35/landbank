@@ -1,9 +1,9 @@
 export const productOptions = {
     "condo": {
         "room": [
-            // { name: 'Pool Villa', icon: 'pool_villa', value: 'Pool Villa', size: 65 },
-            // { name: 'Jacuzzi Villa', icon: 'jacuzzi', value: 'Jacuzzi Villa', size: 65 },
-            // { name: 'Family Room', icon: 'family', value: 'Family Room', size: 45 },
+            { name: 'Pool Villa', icon: 'pool_villa', value: 'Pool Villa', size: 65 },
+            { name: 'Jacuzzi Villa', icon: 'jacuzzi', value: 'Jacuzzi Villa', size: 65 },
+            { name: 'Family Room', icon: 'family', value: 'Family Room', size: 45 },
             { name: 'Super deluxe', icon: 'super_deluxe', value: 'Super deluxe', size: 30 },
             { name: 'Deluxe', icon: 'deluxe', value: 'Deluxe', size: 25 },
         ],
@@ -30,22 +30,22 @@ export const productOptions = {
     },
     "hotel": {
         "room": [
-            { name: 'Pool Villa', icon: 'pool_villa', value: 'Pool Villa', size: 65 },
-            { name: 'Jacuzzi Villa', icon: 'jacuzzi', value: 'Jacuzzi Villa', size: 65 },
-            { name: 'Family Room', icon: 'family', value: 'Family Room', size: 45 },
+            // { name: 'Pool Villa', icon: 'pool_villa', value: 'Pool Villa', size: 65 },
+            // { name: 'Jacuzzi Villa', icon: 'jacuzzi', value: 'Jacuzzi Villa', size: 65 },
+            // { name: 'Family Room', icon: 'family', value: 'Family Room', size: 45 },
             { name: 'Super deluxe', icon: 'super_deluxe', value: 'Super deluxe', size: 30 },
             { name: 'Deluxe', icon: 'deluxe', value: 'Deluxe', size: 25 },
         ],
         "central": [
             { name: 'Lobby', icon: '', value: 'Lobby', size: 150 },
             { name: 'Pool', icon: '', value: 'Pool', size: 50 },
-            { name: 'BOH & Store', icon: '', value: 'BOH & Store', size: 150 },
+            // { name: 'BOH & Store', icon: '', value: 'BOH & Store', size: 150 },
             { name: 'Restaurant', icon: '', value: 'Restaurant', size: 120 },
             { name: 'Spa', icon: '', value: 'Spa', size: 60 },
             { name: 'Gym', icon: '', value: 'Gym', size: 50 },
-            { name: 'Kitchen', icon: '', value: 'Kitchen', size: 50 },
+            // { name: 'Kitchen', icon: '', value: 'Kitchen', size: 50 },
             { name: 'Kid Club', icon: '', value: 'Kid Club', size: 60 },
-            { name: 'Restroom', icon: '', value: 'Restroom', size: 60 }
+            // { name: 'Restroom', icon: '', value: 'Restroom', size: 60 }
         ],
         "parking": [
             { name: 'Carpark 1', icon: '', value: 'Carpark', size: 20 },
@@ -103,11 +103,11 @@ export const productOptions = {
             { name: 'Lobby', icon: '', value: 'Lobby', size: 150 },
             { name: 'Pool', icon: '', value: 'Pool', size: 50 },
             { name: 'BOH & Store', icon: '', value: 'BOH & Store', size: 150 },
-            { name: 'Restaurant', icon: '', value: 'Restaurant', size: 120 },
-            { name: 'Spa', icon: '', value: 'Spa', size: 60 },
-            { name: 'Gym', icon: '', value: 'Gym', size: 50 },
-            { name: 'Kitchen', icon: '', value: 'Kitchen', size: 50 },
-            { name: 'Kid Club', icon: '', value: 'Kid Club', size: 60 },
+            // { name: 'Restaurant', icon: '', value: 'Restaurant', size: 120 },
+            // { name: 'Spa', icon: '', value: 'Spa', size: 60 },
+            // { name: 'Gym', icon: '', value: 'Gym', size: 50 },
+            // { name: 'Kitchen', icon: '', value: 'Kitchen', size: 50 },
+            // { name: 'Kid Club', icon: '', value: 'Kid Club', size: 60 },
             { name: 'Restroom', icon: '', value: 'Restroom', size: 60 }
         ],
         "parking": [

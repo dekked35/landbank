@@ -1,6 +1,6 @@
 export const areaRatioList = [
   {
-      propertyType : ["village","townhome"],
+      propertyType : ["village","townhome","resort"],
       areaRatio : [
           {
             id: 1,
@@ -45,7 +45,7 @@ export const areaRatioList = [
 
 export const areaUnitList = [
 {
-    propertyType : ["village","townhome"],
+    propertyType : ["village","townhome","resort"],
     areaRatio : [
         {
           id: 1,
