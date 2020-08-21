@@ -111,9 +111,13 @@ export class CalculatorManagerService {
           sumArea += products[i].quantity *  products[i][field] / 4
         }
       }
-      productData.competitor.usedArea = sellArea;
-      productData.competitor.remainingArea =  sellArea - sumArea;
-
+      if(productData.competitor.usedArea){
+        productData.competitor.remainingArea =  productData.competitor.usedArea - sumArea;
+      } else {
+        productData.competitor.usedArea = sellArea;
+        productData.competitor.remainingArea =  sellArea - sumArea;
+      }
+      // console.log(productData.competitor.usedArea)
     }
 
     return productData;

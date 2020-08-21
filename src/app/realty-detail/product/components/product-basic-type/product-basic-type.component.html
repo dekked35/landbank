@@ -1,7 +1,7 @@
 <ng-container *ngIf="currentProperty === 'village'|| currentProperty === 'resort' ">
     <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-lg-6 ">
-            <app-product-basic-setting-village [owner]="'user'"></app-product-basic-setting-village>
+            <app-product-basic-setting-village [owner]="'user'"  [isCompetitor]="isShowCompetitor"></app-product-basic-setting-village>
         </div>
         <div class="ui-g-12 ui-md-12 ui-lg-6 wrap_graph_product">
           <app-product-basic-summary-village [owner]="'user'" [ownerData]="productData.user"></app-product-basic-summary-village>
@@ -9,7 +9,7 @@
     </div>
     <div class="ui-g" *ngIf="isShowCompetitor">
         <div class="ui-g-12 ui-md-12 ui-lg-6">
-            <app-product-basic-setting-village [owner]="'competitor'"></app-product-basic-setting-village>
+            <app-product-basic-setting-village [owner]="'competitor'"  [isCompetitor]="isShowCompetitor"></app-product-basic-setting-village>
         </div>
         <div class="ui-g-12 ui-md-12 ui-lg-6 wrap_graph_product">
             <app-product-basic-summary-village [owner]="'competitor'" [ownerData]="productData.competitor"></app-product-basic-summary-village>

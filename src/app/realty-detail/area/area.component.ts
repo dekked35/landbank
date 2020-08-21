@@ -219,6 +219,15 @@ export class AreaComponent implements OnInit {
 
   changeModel() {
     this.standardArea = this.defaultsVariableService.getAreaUnit(this.propertyType, this.selectedModel.id);
+    if (['village','resort'].includes(this.propertyType)) {
+      const newStandartArea = this.parseObject(this.standardArea)
+      const allSellArea = newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
+      const centerArea: any = Object.values(newStandartArea.centerArea).reduce((t: number, value: number) => t + value, 0);
+      const newRatioCenter = (centerArea *1.25 / 4)  / parseFloat(this.totalArea.toString().replace(/,/g, '')) * 100;
+      newStandartArea.percent.centerArea = newRatioCenter;
+      newStandartArea.percent.sellArea = allSellArea - newRatioCenter;
+      this.standardArea = newStandartArea;
+    }
     const productData = this.shemaManagerService.getProductSchema(this.propertyType).user.products;
     const newProductData = this.parseObject(this.productData);
     // const newProductData = this.parseObject(this.areaData);

@@ -88,6 +88,5 @@ export class ProductBasicSummaryVillageComponent implements OnInit, OnChanges {
     if((this.areaData.percent && this.areaData.percent.centerArea === 0) || (this.productData.centerArea === undefined) ){
       this.productData.centerArea = [0, 0, 0];
     }
-    console.log(this.ownerData)
   }
 }

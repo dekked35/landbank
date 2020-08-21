@@ -151,7 +151,6 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
   productChartMapping(currentProperty:string) : Array<number> {
     let series = [];
     if(['village', 'townhome','resort'].includes(currentProperty)) {
-      console.log(this.chartData)
       series = [this.chartData[0].quantity, this.chartData[1].quantity, this.chartData[2].quantity];
       let empty = series.every((data) => { return +data === 0 });
       if(empty) {

@@ -52,7 +52,7 @@ const imageType = {
 
 export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   @Input() owner: string;
-
+  @Input() isCompetitor: boolean;
   productData: any;
 
   currentProperty: string;
@@ -120,6 +120,8 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   balanceRatio: number;
   displayErrDialog = false;
   displayErrDialogMsg = '';
+
+  setArea: number;
 
 
   setForm: FormGroup;
@@ -243,6 +245,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   async getBasicService() {
   this.convertNum()
+  // this.checkDisplayErrorDialogValue()
   if(this.productData) {
     const payload = {
       'propertyType': this.currentProperty === 'resort' ? "village" : this.currentProperty,
@@ -258,8 +261,11 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     newProductData = this.parsePayloadResponse(newProductData);
     newProductData = this.calculatorManagerService.calculateProduct(this.areaData, newProductData);
     this.store.dispatch(new productAction.SuccessAction(newProductData));
-
     this.store.dispatch(new productAction.IsLoadingAction(false));
+    if(this.owner === 'competitor') {
+      this.setArea = this.productData.competitor.usedArea;
+    }
+    // this.checkDisplayErrorDialog()
     this.fillInSpeading();
   }
   }
@@ -281,6 +287,10 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     productData[oppositeOwner].products[0].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[0].cost);
     productData[oppositeOwner].products[1].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[1].cost);
     productData[oppositeOwner].products[2].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[2].cost);
+    // if(this.owner !== 'user') {
+    productData.competitor.usedArea = this.setArea;
+    // }
+    productData.isCompetitor = this.isCompetitor;
     const product_input = { ...productData };
     return product_input;
   }
@@ -422,20 +432,13 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     }
   }
 
-  parseObjectForProduct(data: any, check ?: boolean) {
+  ngOnChanges(changes: SimpleChanges) {
     try {
-      let test = JSON.parse(JSON.stringify(data))
-      test.map( (num, index) => {
-        if(!check) {
-          num.size = this.setDefaultValue[index];
-        }
-        const numArea = num.size * this.convertRatio[index];
-        num.area = Math.round(numArea);
-        return num;
-      })
-      return test;
+      if(!!changes.firstChange === false) {
+        this.getBasicService();
+      }
     } catch (e) {
-      return data;
+      console.log('error')
     }
   }
 
