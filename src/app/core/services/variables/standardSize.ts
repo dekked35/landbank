@@ -88,5 +88,13 @@ export const standardSizes = {
         'central' : [],
         'parking' : [],
         'outdoor' : []
-    }
+    },
+    'resort' : {
+      'resort' : [
+        {type : 'ที่ดิน', size: 'ขนาด (ตร.ว.)', area: 'พื้นที่ใช้สอย (ตร.ม.)' },
+        {type : 'บ้าน 1 ชั้น', size: '50', area: '110' },
+        {type : 'บ้าน 2 ชั้น', size: '60', area: '180' },
+        {type : 'บ้าน 3 ชั้น', size: '70', area: '200' },
+      ]
+    },
 }

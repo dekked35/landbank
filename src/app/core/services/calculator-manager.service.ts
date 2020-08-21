@@ -89,7 +89,7 @@ export class CalculatorManagerService {
     // let field = (this.propertyType === "village") ? "size" : "area";
     let field = "size";
     // calculate remainingArea
-    if(this.propertyType === "village" || this.propertyType === "townhome") {
+    if(this.propertyType === "village" || this.propertyType === "townhome" || this.propertyType === "resort") {
       let products = productData.user.products;
       let sumArea = 0;
       for (let i = 0; i < products.length; i++) {
@@ -111,9 +111,13 @@ export class CalculatorManagerService {
           sumArea += products[i].quantity *  products[i][field] / 4
         }
       }
-      productData.competitor.usedArea = sellArea;
-      productData.competitor.remainingArea =  sellArea - sumArea;
-
+      if(productData.competitor.usedArea){
+        productData.competitor.remainingArea =  productData.competitor.usedArea - sumArea;
+      } else {
+        productData.competitor.usedArea = sellArea;
+        productData.competitor.remainingArea =  sellArea - sumArea;
+      }
+      // console.log(productData.competitor.usedArea)
     }
 
     return productData;

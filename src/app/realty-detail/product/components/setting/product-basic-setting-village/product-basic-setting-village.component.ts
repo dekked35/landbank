@@ -14,6 +14,36 @@ import * as rateReturnAction from '../../../../../core/actions/rate-return.actio
 
 import * as fromCore from '../../../../../core/reducers';
 
+const villageWord = [
+  'บ้าน 1 ชั้น',
+  'บ้าน 2 ชั้น',
+  'บ้าน 3 ชั้น',
+  'ถนน',
+  'พื้นที่สีเขียว'
+];
+
+const hotelWord = [
+  'Pool Villa',
+  'Family Room',
+  'Jacuzzi Villa',
+  'ส่วนของพื้นที่จอดรถ',
+  'ส่วนของพื้นที่ภายนอกห้องพัก'
+];
+
+
+const imageType = {
+  village : {
+    0 : 'home1.svg',
+    1 : 'home2.svg',
+    2 : 'home3.svg'
+  },
+  resort : {
+    0 : "room/Pool Villa.svg",
+    1 : "room/Family Room.svg",
+    2 : "room/Jacuzzi Villa.svg",
+  }
+};
+
 @Component({
   selector: 'app-product-basic-setting-village',
   templateUrl: './product-basic-setting-village.component.html',
@@ -22,7 +52,7 @@ import * as fromCore from '../../../../../core/reducers';
 
 export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   @Input() owner: string;
-
+  @Input() isCompetitor: boolean;
   productData: any;
 
   currentProperty: string;
@@ -90,6 +120,8 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   balanceRatio: number;
   displayErrDialog = false;
   displayErrDialogMsg = '';
+
+  setArea: number;
 
 
   setForm: FormGroup;
@@ -213,9 +245,10 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   async getBasicService() {
   this.convertNum()
+  // this.checkDisplayErrorDialogValue()
   if(this.productData) {
     const payload = {
-      'propertyType': this.currentProperty,
+      'propertyType': this.currentProperty === 'resort' ? "village" : this.currentProperty,
       'area_input': {
         ...this.areaData,
         'percent': this.areaData.standardArea.percent,
@@ -228,8 +261,11 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     newProductData = this.parsePayloadResponse(newProductData);
     newProductData = this.calculatorManagerService.calculateProduct(this.areaData, newProductData);
     this.store.dispatch(new productAction.SuccessAction(newProductData));
-
     this.store.dispatch(new productAction.IsLoadingAction(false));
+    if(this.owner === 'competitor') {
+      this.setArea = this.productData.competitor.usedArea;
+    }
+    // this.checkDisplayErrorDialog()
     this.fillInSpeading();
   }
   }
@@ -251,19 +287,25 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     productData[oppositeOwner].products[0].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[0].cost);
     productData[oppositeOwner].products[1].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[1].cost);
     productData[oppositeOwner].products[2].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[2].cost);
+    // if(this.owner !== 'user') {
+    productData.competitor.usedArea = this.setArea;
+    // }
+    productData.isCompetitor = this.isCompetitor;
     const product_input = { ...productData };
     return product_input;
   }
 
   parsePayloadResponse(response: any) {
     const productData = JSON.parse(JSON.stringify(response));
-    productData['user'].products[0].cost = this.parseMillionToUnitFormat(response['user'].products[0].cost);
-    productData['user'].products[1].cost = this.parseMillionToUnitFormat(response['user'].products[1].cost);
-    productData['user'].products[2].cost = this.parseMillionToUnitFormat(response['user'].products[2].cost);
-    productData['competitor'].products[0].cost = this.parseMillionToUnitFormat(response['competitor'].products[0].cost);
-    productData['competitor'].products[1].cost = this.parseMillionToUnitFormat(response['competitor'].products[1].cost);
-    productData['competitor'].products[2].cost = this.parseMillionToUnitFormat(response['competitor'].products[2].cost);
-    return productData;
+    if(productData['user'].products){
+      productData['user'].products[0].cost = this.parseMillionToUnitFormat(response['user'].products[0].cost);
+      productData['user'].products[1].cost = this.parseMillionToUnitFormat(response['user'].products[1].cost);
+      productData['user'].products[2].cost = this.parseMillionToUnitFormat(response['user'].products[2].cost);
+      productData['competitor'].products[0].cost = this.parseMillionToUnitFormat(response['competitor'].products[0].cost);
+      productData['competitor'].products[1].cost = this.parseMillionToUnitFormat(response['competitor'].products[1].cost);
+      productData['competitor'].products[2].cost = this.parseMillionToUnitFormat(response['competitor'].products[2].cost);
+      return productData;
+    }
   }
 
   async fillInSpeading() {
@@ -285,7 +327,14 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
       tempInput.priceLandBought = this.areaData.total_land_price;
     }
     const productData = JSON.parse(JSON.stringify(this.productData));
-    const requestProperty = this.currentProperty === 'townhome' ? 'townhouse' : this.currentProperty;
+    let requestProperty = '';
+    if (this.currentProperty === 'townhome') {
+      requestProperty = 'townhouse';
+    } else if (this.currentProperty === 'resort') {
+      requestProperty = 'village';
+    } else {
+      requestProperty = this.currentProperty;
+    }
     const payload = {
       'propertyType': requestProperty,
       'area_input': this.areaData,
@@ -383,20 +432,13 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     }
   }
 
-  parseObjectForProduct(data: any, check ?: boolean) {
+  ngOnChanges(changes: SimpleChanges) {
     try {
-      let test = JSON.parse(JSON.stringify(data))
-      test.map( (num, index) => {
-        if(!check) {
-          num.size = this.setDefaultValue[index];
-        }
-        const numArea = num.size * this.convertRatio[index];
-        num.area = Math.round(numArea);
-        return num;
-      })
-      return test;
+      if(!!changes.firstChange === false) {
+        this.getBasicService();
+      }
     } catch (e) {
-      return data;
+      console.log('error')
     }
   }
 
@@ -422,6 +464,18 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
       arr.size = Math.round(demoArea);
       return arr;
     })
+  }
+
+  getWordingType(index: number){
+    if(this.currentProperty === 'village') {
+      return villageWord[index];
+    } else {
+      return hotelWord[index];
+    }
+  }
+
+  getImage(index: number){
+    return imageType[this.currentProperty][index];
   }
 
   ngOnDestroy() {

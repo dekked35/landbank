@@ -13,29 +13,41 @@ import * as fromCore from '../../core/reducers';
 import * as productAction from '../../core/actions/product.actions';
 import { ActivatedRoute } from '@angular/router';
 
-const needToConvert = [
-  'farValue',
-  'osrValue',
-  'landPrice',
-  'standardArea.percent.sellArea',
-  'standardArea.percent.roadSize',
-  'standardArea.percent.greenArea',
-  'standardArea.percent.room',
-  'standardSellAreaRatio.typeOne',
-  'standardSellAreaRatio.typeTwo',
-  'standardSellAreaRatio.typeThree',
-  'standardRoomArea.percent.deluxe',
-  'standardRoomArea.percent.superDeluxe',
-  'standardArea.percent.central',
-  'standardArea.percent.parking',
-  'standardArea.percent.outdoor'
-];
-
 const ratioConvert = [
   'deposit',
   'rentPerMonth',
   'rentNoYear'
 ];
+
+const villageWord = [
+  'บ้าน 1 ชั้น',
+  'บ้าน 2 ชั้น',
+  'บ้าน 3 ชั้น',
+  'ถนน',
+  'พื้นที่สีเขียว'
+];
+
+const hotelWord = [
+  'Pool Villa',
+  'Family Room',
+  'Jacuzzi Villa',
+  'ส่วนของพื้นที่จอดรถ',
+  'ส่วนของพื้นที่ภายนอกห้องพัก'
+];
+
+
+const imageType = {
+  village : {
+    0 : 'home1.svg',
+    1 : 'home2.svg',
+    2 : 'home3.svg'
+  },
+  resort : {
+    0 : "room/Pool Villa.svg",
+    1 : "room/Family Room.svg",
+    2 : "room/Jacuzzi Villa.svg",
+  }
+};
 
 @Component({
   selector: 'app-area',
@@ -207,6 +219,15 @@ export class AreaComponent implements OnInit {
 
   changeModel() {
     this.standardArea = this.defaultsVariableService.getAreaUnit(this.propertyType, this.selectedModel.id);
+    if (['village','resort'].includes(this.propertyType)) {
+      const newStandartArea = this.parseObject(this.standardArea)
+      const allSellArea = newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
+      const centerArea: any = Object.values(newStandartArea.centerArea).reduce((t: number, value: number) => t + value, 0);
+      const newRatioCenter = (centerArea *1.25 / 4)  / parseFloat(this.totalArea.toString().replace(/,/g, '')) * 100;
+      newStandartArea.percent.centerArea = newRatioCenter;
+      newStandartArea.percent.sellArea = allSellArea - newRatioCenter;
+      this.standardArea = newStandartArea;
+    }
     const productData = this.shemaManagerService.getProductSchema(this.propertyType).user.products;
     const newProductData = this.parseObject(this.productData);
     // const newProductData = this.parseObject(this.areaData);
@@ -517,6 +538,18 @@ export class AreaComponent implements OnInit {
     if (type === 'น้อย') {
       return { 'color': 'red' };
     }
+  }
+
+  getWordingType(index: number){
+    if(this.propertyType === 'village'){
+      return villageWord[index];
+    } else {
+      return hotelWord[index];
+    }
+  }
+
+  getImage(index: number){
+    return imageType[this.propertyType][index]
   }
 
   tableSize: any;

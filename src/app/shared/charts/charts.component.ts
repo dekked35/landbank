@@ -9,6 +9,7 @@ import * as townhomeChart from './data/townhome-chart';
 import * as condoChart from './data/condo-chart';
 import * as hotelChart from './data/hotel-chart';
 import * as communityMallChart from './data/communityMall-chart';
+import * as resortChart from './data/resort-chart'
 import * as fromCore from '../../core/reducers';
 
 const allCharts = allChart.chartsType;
@@ -18,6 +19,7 @@ const appCharts = {
   townhome: townhomeChart.chartsType,
   condo: hotelChart.chartsType,
   hotel: hotelChart.chartsType,
+  resort: resortChart.chartsType,
   communityMall: communityMallChart.chartsType
   // condo: condoChart.chartsType,
   // hotel: hotelChart.chartsType,
@@ -135,7 +137,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
         this.chartData.percent[element] = parseFloat(this.chartData.percent[element].toString().replace(/,/g, ''))
       }
     });
-    if(['village','townhome'].includes(currentProperty)) {
+    if(['village','townhome','resort'].includes(currentProperty)) {
       series = [+this.chartData.percent.sellArea.toFixed(2), +this.chartData.percent.roadSize.toFixed(2), +this.chartData.percent.greenArea.toFixed(2), +this.chartData.percent.centerArea.toFixed(2)];
     } else {
       // condo hotel commall
@@ -148,7 +150,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 
   productChartMapping(currentProperty:string) : Array<number> {
     let series = [];
-    if(['village', 'townhome'].includes(currentProperty)) {
+    if(['village', 'townhome','resort'].includes(currentProperty)) {
       series = [this.chartData[0].quantity, this.chartData[1].quantity, this.chartData[2].quantity];
       let empty = series.every((data) => { return +data === 0 });
       if(empty) {
@@ -169,7 +171,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 
   spendingChartMapping(currentProperty:string) : Array<number> {
     let series = [];
-    if(['village', 'townhome'].includes(currentProperty)) {
+    if(['village', 'townhome','resort'].includes(currentProperty)) {
       if(Object.entries(this.chartData).length === 0 && this.chartData.constructor === Object) {
         series = [0, 0 , 0];
       } else{

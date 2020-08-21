@@ -15,7 +15,8 @@ export class ProfitTableComponent implements OnInit {
   private currentProperty: string;
   totalSarary: number;
   netProfit: number;
-  averageProfit: number
+  averageProfit: number;
+  changeColor: any;
 
   constructor(private store: Store<any>) { }
 
@@ -29,6 +30,11 @@ export class ProfitTableComponent implements OnInit {
       0 : "townhome2.svg",
       1 : "townhome3.svg",
       2 : "townhome4.svg"
+    },
+    resort : {
+      0 : "room/Pool Villa.svg",
+      1 : "room/Family Room.svg",
+      2 : "room/Jacuzzi Villa.svg",
     }
   }
 
@@ -62,6 +68,7 @@ export class ProfitTableComponent implements OnInit {
     let totalSalary = +this.spendingsData.sellPeriod * +this.spendingsData.salaryEmployee * +this.spendingsData.noEmployee;
     this.netProfit = this.profitData.totalProfit - this.spendingsData.costAdvtOnePer - totalSalary;
     this.averageProfit = this.profitData.averageProfitPerHouse ? this.profitData.averageProfitPerHouse : this.profitData.averageProfit;
+    this.changeColor = this.profitData.totalProfit > this.profitData.totalProfitCompetitor ? true : false;
   }
 
 }

@@ -60,13 +60,22 @@
             <div class="expense_price"></div>
          </div>
          <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout">
-            <label>กำไรรวมทั้งโครงการ</label>
+            <label *ngIf="!profitData.isCompetitor" >กำไรรวมทั้งโครงการ</label>
+            <label *ngIf="profitData.isCompetitor" >กำไรรวมทั้งโครงการของเรา</label>
          </div>
          <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="text-align: right;">
-            <span>
+            <span [ngStyle]="{'color': profitData.isCompetitor ? (changeColor ? 'green' : 'red') : null }">
                 {{ profitData.totalProfit | number:'1.2-2'}} </span>
              บาท
          </div>
+         <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout" *ngIf="profitData.isCompetitor">
+          <label>กำไรรวมทั้งโครงการของคู่แข่ง</label>
+       </div>
+       <div class="ui-g-12 ui-md-7 ui-lg-7 box_layout" style="text-align: right;"  *ngIf="profitData.isCompetitor">
+          <span>
+              {{ profitData.totalProfitCompetitor | number:'1.2-2'}} </span>
+           บาท
+       </div>
          <!-- <div class="ui-g-12 ui-md-5 ui-lg-5 box_layout">
             <label>กำไรสุทธิหลังหักค่าใช้จ่าย</label>
          </div> -->

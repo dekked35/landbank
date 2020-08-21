@@ -26,6 +26,11 @@ export class ContructionCostTableComponent implements OnInit {
       0 : "townhome2.svg",
       1 : "townhome3.svg",
       2 : "townhome4.svg"
+    },
+    resort : {
+      0 : "room/Pool Villa.svg",
+      1 : "room/Family Room.svg",
+      2 : "room/Jacuzzi Villa.svg",
     }
   }
 
