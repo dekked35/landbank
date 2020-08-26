@@ -93,7 +93,7 @@
             </div>
         </div> -->
     </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-6" *ngIf="currentProperty === 'village' || currentProperty === 'townhome' || currentProperty === 'resort'">
+    <div class="ui-g-12 ui-md-12 ui-lg-6" *ngIf="currentProperty === 'village' || currentProperty === 'townhome' ">
         <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">
             <figure><img src="../../../assets/icons/icon_profit.svg">
             </figure>
@@ -107,7 +107,7 @@
     </div>
 </ng-container>
 
-<ng-container *ngIf="currentProperty === 'hotel'  || currentProperty === 'communityMall'">
+<ng-container *ngIf="currentProperty === 'hotel'  || currentProperty === 'communityMall' || currentProperty === 'resort'">
     <!-- TODO: need to confirm again. -->
     <div class="ui-g-12 ui-md-12 ui-lg-12">
         <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">

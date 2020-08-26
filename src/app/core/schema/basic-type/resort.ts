@@ -1,224 +1,266 @@
 export const resort = {
-  'area': {
-      'townPlanColor': '#ff8407',
-      'farValue': 3,
-      'osrValue': 10,
-      'availableArea': 5000,
-      'landPrice': 250000,
-      'fenceLength': 0,
-      'totalArea': 10000,
-
-      'standardArea': {
-          'id': 1,
-          'name': 'แบบที่ 1',
-          'score': {
-              'beauty': 'มาก',
-              'density': 'ปานกลาง',
-              'congestion': 'ปานกลาง',
-              'convenientArea': 'น้อย'
+  "area": {
+      "townPlanColor": "#ff8407",
+      "farValue" : 3,
+      "osrValue": 10,
+      "totalArea": 10000,
+      "availableArea" : 5000,  // พื้นที่ที่ใช้ได้ตามกฏหมาย คำนวณตามสูตร ขนาดพื้นที่ (ตร.ว.) × 4 × ค่า Far = พื้นที่ใช้สอยของอาคาร ที่สามารถก่อสร้างได้ (ตร.ม.)
+      "landPrice": 250000,   // ดึงจาก API
+      "standardArea": {
+          "id": 1,
+          "name": 'แบบที่ 1',
+          "score": {
+              "beauty": 'มาก',
+              "density": 'ปานกลาง',
+              "congestion": 'ปานกลาง',
+              "convenientArea": 'น้อย'
           },
-          'percent': {
-              'sellArea': 69,
-              'roadSize': 25,
-              'greenArea': 5,
-              'centerArea': 1,
+          "percent": {
+              "room": 70,
+              "central": 15,
+              "corridor": 0,
+              "parking": 10,
+              "outdoor": 5
           },
-          'area': {
-              'sellArea': 6922,
-              'roadSize': 2500,
-              'greenArea': 500,
-              'centerArea' : 78,
+          "area": {
+              "room": 0,
+              "central": 0,
+              "corridor": 0,
+              "parking": 0,
+              "outdoor": 0
           },
           'centerArea' : {
-            'swimming' : 100,
-            'fitnessZone' : 100,
-            'officeZone' : 50,
+            "lobby": 65,
+            "pool": 50,
+            "boh": 150,
+            "restroom": 60
           }
       },
-      'ratio_area': {
-          'sellArea': 6922,
-          'roadSize': 2500,
-          'greenArea': 500,
-          'centerArea' : 78,
+      "ratio_area" : {
+          "room": 0,
+          "central": 0,
+          "corridor": 0,
+          "parking": 0,
+          "outdoor": 0
       },
-      'costLand' : 0,
-      'costLandType' : '', // not support
-      'deposit': 0,
-      'rentPerMonth' : 0,
-      'rentNoYear' : 0,
+
+      "costLand" : 0, //ค่าที่ดินทั้งหมด แบบซื้อ, รวมค่าที่ดินทั้งหมด แบบเช่า
+      "costLandType" : "buy", // "rent" , "buy", ""
+      "deposit": 500000, //เงินมัดจำ
+      "rentPerMonth" : 100000, // ค่าเช่าต่อเดือน
+      "rentNoYear" : 10, // ค่าเช่าต่อปี
 
   },
-  'product': {
-      'competitor': {
-          'products': [
-              {
-                  'type': 'Pool Villa',
-                  'size': 50,
-                  'area': 110,
-                  'cost': 1,
-                  'ratio': 50,
-                  'quantity': 0
-              },
-              {
-                  'type': 'Family Room',
-                  'size': 50,
-                  'area': 180,
-                  'cost': 2,
-                  'ratio': 25,
-                  'quantity': 0
-              },
-              {
-                  'type': 'Jacuzzi Villa',
-                  'size': 50,
-                  'area': 200,
-                  'cost': 3,
-                  'ratio': 25,
-                  'quantity': 0
-              }
-          ],
-          'totalQuantity': 0,
-          'totalCost': 0.0,
-          'usedArea': 0,
-          'remainingArea': 0
+  "product": {
+      "competitor": {
+          "rooms": [],
+          "totalRoomArea": 0,
+          "roomCorridor": 0,
+          "centrals": [],
+          "totalCentralArea": 0,
+          "centralCorridor": 0,
+          "parking": [],
+          "roadArea": 0,
+          "outdoors": [],
+          "availableArea": 0,
+          "usedArea": 0,
+          "totalCorridor": 0,
+          "totalParkingArea": 0,
+          "totalOutdoorArea": 0,
+          "totalRoomQuantity": 0,
+          "remainingArea": 0
       },
-      'user': {
-        'products': [
-            {
-                'type': 'Pool Villa',
-                'size': 50,
-                'area': 110,
-                'cost': 1,
-                'ratio': 50,
-                'quantity': 0
-            },
-            {
-                'type': 'Family Room',
-                'size': 50,
-                'area': 180,
-                'cost': 2,
-                'ratio': 25,
-                'quantity': 0
-            },
-            {
-                'type': 'Jacuzzi Villa',
-                'size': 50,
-                'area': 200,
-                'cost': 3,
-                'ratio': 25,
-                'quantity': 0
-            }
-        ],
-        'totalQuantity': 0,
-        'totalCost': 0.0,
-        'usedArea': 0,
-        'remainingArea': 0
+      "user" : {
+          "rooms" : [],
+          "totalRoomArea": 0.0, // พื้นที่รวมห้องพัก
+          "roomCorridor": 0.0, // พื้นที่รวมทางเดินส่วนกลาง 15% ของพื้นที่รวมห้องพัก
+          "centrals" : [],
+          "totalCentralArea": 0.0,  // พื้นที่รวมส่วนกลาง
+          "centralCorridor": 0.0, // พื้นที่รวมทางเดินส่วนกลาง 20% ของพื้นที่รวมห้องพัก
+          "parking" : [],
+          "roadArea" : 0.0, // พื้นที่เสียจากถนนขับผ่าน 40%
+          "outdoors" : [],
+          "availableArea" : 0,  // พื้นที่ที่ใช้ได้ตามกฏหมาย คำนวณตามสูตร ขนาดพื้นที่ (ตร.ว.) × 4 × ค่า Far = พื้นที่ใช้สอยของอาคาร ที่สามารถก่อสร้างได้ (ตร.ม.)
+          "usedArea" : 0.0, // พื้นทืที่ใช้ไป
+          "totalCorridor" : 0.0,  // พื้นทืที่รวมทางเดิน
+          "totalParkingArea" : 0.0,  // พื้นที่จอดรถในอาคาร
+          "totalOutdoorArea" : 0.0,  // พื้นที่ภายนอกอาคารไม่ได้คำนวณ
+          "totalRoomQuantity" : 0.0, // จำนวนห้องพักทั้งหมด
+          "remainingArea" : 0.0 , // พื้นที่ว่างคงเหลือ
       }
   },
-  'spendings': {
-      'priceLandBought': 2500000000,
-      'costConstructionLivingSpace': 10000,
-      'costOther': 100000,
-      'costPlan': 300000,
-      'costDevelopRoad': 0.0,
-      'costRoadCover': 0.0,
-      'costTapWater': 0.0,
-      'costWaterTreatment': 0.0,
-      'costElectricity': 0.0,
-      'costFenceAndGuardHouse': 0.0,
-      'costDevelopGreenArea': 0.0,
-      'costDevelopLand': 0.0,
-      'costDevelopDone': 0.0,
-      'costConstruction': 0.0,
-      'costConstructionPerItem': [
+  "spendings": {
+      "rooms" : [],
+      "totalRoomCost" : 0.0, // ต้นทุนก่อสร้างห้องพักทั้งหมด
+      "centrals" : [],
+      "totalCentralCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่ส่วนกลาง
+      "parking" : [],
+      "totalParkingCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่จอดรถ
+      "outdoors" : [],
+      "totalOutDoorCost" : 0.0, // รวมต้นทุนก่อสร้างพื้นที่ภายนอก
+      "costPerMonth" : [
           {
-              'type': 'Pool Villa',
-              'costPerItem': 0.0,
-              'quantity': 0.0,
-              'total': 0.0
+              "type" : "ค่าการตลาด",
+              "cost" : 1000,
+              "no" : 2,
+              "total" : 0.0
           },
           {
-              'type': 'Family Room',
-              'costPerItem': 0.0,
-              'quantity': 0.0,
-              'total': 0.0
+              "type" : "พนักงานทำความสะอาด",
+              "cost" : 15000,
+              "no" : 5,
+              "total" : 0.0
           },
           {
-              'type': 'Jacuzzi Villa',
-              'costPerItem': 0.0,
-              'quantity': 0.0,
-              'total': 0.0
+              "type" : "พนักงานทั่วไป",
+              "cost" : 20000,
+              "no" : 5,
+              "total" : 0.0
+          },
+          {
+              "type" : "ค่าใช้จ่ายของผู้เข้าพัก",
+              "cost" : 300,
+              "no" : 2,
+              "total" : 0.0
           }
       ],
-      'costInProject': 0.0,
-      'periodSellStart': '01/01/2020',
-      'periodSellEnd': '12/31/2022',
-      'sellPeriod': 36,
-      'noEmployee': 5,
-      'totalSalary': 0.0,
-      'salaryEmployee': 15000,
-      'costAdvt': 100000,
-      'costCommission': 10000,
-      'percentCostAdvt': 1,
-  },
-  'implicitCosts': {
-      'sellAreaSize': 0.00,
-      'costLand': 0.00,
-      'costAdvtAndEmployee': 0.00,
-      'costAll': 0.00,
-      'costProject': 0.00
-  },
-  'profit': {
-      'profitPerItems': [
+      "totalCostPerMonth" : 0.0, // รวมค่าใช้จ่ายรายเดือน
+      "specialEquipments" : [
           {
-              'type': 'Pool Villa',
-              'profitPerItem': 0.0,
-              'noItem': 0.0,
-              'totalProfit': 0.0
+              "type" : "ค่ารถยนต์",
+              "cost" : 1000000,
+              "no" : 1,
+              "total" : 0.0
           },
           {
-              'type': 'Family Room',
-              'profitPerItem': 0.0,
-              'noItem': 0.0,
-              'totalProfit': 0.0
+              "type" : "ค่าออกแบบ",
+              "cost" : 1000000,
+              "no" : 1,
+              "total" : 0.0
           },
           {
-              'type': 'Jacuzzi Villa',
-              'profitPerItem': 0.0,
-              'noItem': 0.0,
-              'totalProfit': 0.0
+              "type" : "ค่าอุปกรณ์ครัว",
+              "cost" : 300000,
+              "no" : 1,
+              "total" : 0.0
+          },
+          {
+              "type" : "ค่าอุปกรณ์ห้องพัก",
+              "cost" : 100000,
+              "no" : 1,
+              "total" : 0.0
+          },
+          {
+              "type" : "ค่าอุปกรณ์ส่วนต่าง ๆ",
+              "cost" : 50000,
+              "no" : 1,
+              "total" : 0.0
+          },
+          {
+              "type" : "Contingency",
+              "cost" : 1000000,
+              "no" : 1,
+              "total" : 0.0
+          },
+          {
+              "type" : "ค่า Pre-Opening",
+              "cost" : 0,
+              "no" : 3,
+              "total" : 0.0
           }
       ],
-      'totalProfit': 0.0,
-      'netProfit': 0.0,
-      'averageProfitPerHouse': 0.0
+
+
+      "totalEquipmentsCost" : 0.0, // รวมค่าใช้จ่ายอุปกรณ์ทั้งหมด
+      "totalCostPerMonthAndPreOpening" : 0.0, // รวมค่าใช้จ่ายรายเดือนและ Pre-Opening
+
+      "costLand" : 0.0, // ค่าที่ดินทั้งหมด
+      "costSpecielEquipmentAndPreOpening" : 0.0, // ค่าใช้จ่ายรายเดือน
+      "costConstruction" : 0.0, // ค่าก่อสร้าง
+      "absoluteCost" : 0.0 // มูลค่ารวมทั้งโครงการ
   },
-  'rateReturn' : {
-      'investmentBudget' : 0.0, // งบลงทุน
+  "implicitCosts" : {
+      "sellAreaSize" :  0.0, // พื้นที่ใช้ขาย
+      "costLand" :  0.0, // ต้นทุนที่ดิน
+      "costAdvtAndEmployee" :  0.0, // ค่าการตลาดและพนักงาน
+      "costAll" :  0.0, //  ต้นทุนทั้งหมด
 
-      'incomePerMonth' : 0.0,   // รายได้ต่อเดือนสุทธิ
-      'expensePerMonth' : 0.0, // รายรับต่อเดือน
-
-      'breakEvenPointMonthCash' : 0.0, // จุดคุ้มทุนจำนวนเดือน
-      'breakEvenPointYearCash' : 0.0, // จุดคุ้มทุนจำนวนปี
-      'bankLoad' : 80, // สัดส่วนการกู้ธนาคาร
-      'privateCash' : 20,  // สัดส่วนการเงินส่วนตัว
-      'bankInterest' : 8, // อัตราดอกเบี้ย
-      'returnRate' : 13, // อัตราผลการตอบแทนที่นักลงทุนต้องการ
-      'breakEvenPointMonthBank' : 0.0, // จุดคุ้มทุนจำนวนเดือน
-      'breakEvenPointYearBank' : 0.0, // จุดคุ้มทุนจำนวนปี
-      'cashFlowYear' : 30, // งบกระแสเงินสด (จำนวนปี)
-      'npvValue' : 0.0, // สัดส่วนการเงินส่วนตัว
-      'irrValue' : 0.0,
-      'financeCosts' : 0.0, // ต้นทุนทางการเงิน
-      'paybackPeriod' : 0.0, // ต้นทุนทางการเงิน
-      'investmentValue' : 0.0, // จำนวน มูลค่าเงินลงทุน
-      'ratioInvestmentValue' : 100, // สัดส่วน มูลค่าเงินลงทุน
-      'privateFund' : 0.0, // จำนวน ส่วนทุน
-      'ratioPrivateFund' : 0.0, // สัดส่วน ส่วนทุน
-      'interestPrivateFund' : 0.0, // ดอกเบี้ย ส่วนทุน
-      'borrowFund' : 0.0, // จำนวน ส่วนเงินกู้
-      'ratioBorrowFund' : 0.0, // สัดส่วน ส่วนเงินกู้
-      'interestBorrowFund' : 0.0, // ดอกเบี้ย ส่วนเงินกู้
-      'borrowPeriod' : 4, // ระยะเวลากู้ธนาคาร
+      "occupancy" : 80,
+      "incomes" : [
+          {
+              "type"  : "", // ชนิดของห้อง
+              "name" : "", // ชื่อห้อง
+              "area" : 0.0, // พื้นที่ใช้สอย
+              "noRoom" : 0.0, // จำนวนห้อง
+              "pricePerRoom" : 0, // Input, ค่าบริการต่อห้อง
+              "incomePerDay" : 0 // รายได้ต่อวัน
+          },
+          {
+              "type"  : "", // ชนิดของห้อง
+              "name" : "", // ชื่อห้อง
+              "area" : 0.0, // พื้นที่ใช้สอย
+              "noRoom" : 0.0, // จำนวนห้อง
+              "pricePerRoom" : 0, // Input, ค่าบริการต่อห้อง
+              "incomePerDay" : 0 // รายได้ต่อวัน
+          }
+      ],
+      "totalIncomePerDay" : 0.0,
+      "totalIncomePerMonth" : 0.0,
+      "estimatedIncomePerMonth" : 0.0,
+      "totalIncomePerYear" : 0.0
+  },
+  "profit" : { // ไม่มีส่วนนี้ แต่ใส่ไว้เผื่อมีแก้
+      "profitPerItems" : [
+          {
+              "roomType"  : "", // ชนิดของห้อง
+              "roomName" : "", // ชื่อห้อง
+              "area" : 0.0, // พื้นที่ใช้สอย
+              "noRoom" : 0.0, // จำนวนห้อง
+              "profitPerRoom" : 0, // กำไรต่อห้อง
+          },
+          {
+              "roomType"  : "", // ชนิดของห้อง
+              "roomName" : "", // ชื่อห้อง
+              "area" : 0.0, // พื้นที่ใช้สอย
+              "noRoom" : 0.0, // จำนวนห้อง
+              "profitPerRoom" : 0, // กำไรต่อห้อง
+          },
+          {
+              "roomType"  : "", // ชนิดของห้อง
+              "roomName" : "", // ชื่อห้อง
+              "area" : 0.0, // พื้นที่ใช้สอย
+              "noRoom" : 0.0, // จำนวนห้อง
+              "profitPerRoom" : 0, // กำไรต่อห้อง
+          }
+      ],
+      "totalProfitProject" : 0.0,
+      "netProfitAfterLessCost" : 0.0,
+      "averageProfitPerHouse" : 0.0
+  },
+  "rateReturn" : {
+      "investmentBudget" : 0.0, // งบลงทุน
+      "incomePerMonth" : 0.0,   // รายได้ต่อเดือนสุทธิ
+      "breakEvenPointMonthCash" : 0.0, // จุดคุ้มทุนจำนวนเดือน
+      "breakEvenPointYearCash" : 0.0, // จุดคุ้มทุนจำนวนปี
+      "bankLoad" : 80, // สัดส่วนการกู้ธนาคาร
+      "privateCash" : 20,  // สัดส่วนการเงินส่วนตัว
+      "bankInterest" : 8, // อัตราดอกเบี้ย
+      "returnRate" : 13, // อัตราผลการตอบแทนที่นักลงทุนต้องการ
+      "breakEvenPointMonthBank" : 0.0, // จุดคุ้มทุนจำนวนเดือน
+      "breakEvenPointYearBank" : 0.0, // จุดคุ้มทุนจำนวนปี
+      "cashFlowYear" : 30, // งบกระแสเงินสด (จำนวนปี)
+      "npvValue" : 0.0, // สัดส่วนการเงินส่วนตัว
+      "irrValue" : 0.0,
+      "financeCosts" : 0.0, // ต้นทุนทางการเงิน
+      "paybackPeriod" : 0.0, // ต้นทุนทางการเงิน
+      "investmentValue" : 0.0, // จำนวน มูลค่าเงินลงทุน
+      "ratioInvestmentValue" : 100, // สัดส่วน มูลค่าเงินลงทุน
+      "privateFund" : 0.0, // จำนวน ส่วนทุน
+      "ratioPrivateFund" : 0.0, // สัดส่วน ส่วนทุน
+      "interestPrivateFund" : 0.0, // ดอกเบี้ย ส่วนทุน
+      "borrowFund" : 0.0, // จำนวน ส่วนเงินกู้
+      "ratioBorrowFund" : 0.0, // สัดส่วน ส่วนเงินกู้
+      "interestBorrowFund" : 0.0, // ดอกเบี้ย ส่วนเงินกู้
+      "borrowPeriod" : 4, // ระยะเวลากู้ธนาคาร
   }
-};
+}

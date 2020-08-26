@@ -13,6 +13,7 @@ export class StandardSizeComponent implements OnInit {
 
   @Input() standardType: string; // size , price
   @Input() type : string; // rooms/ centrals/ parkings/ outdoors / Special Equipment / costPerMonth /
+  @Input() owner : string;
 
   buttonLabel: string = "ดูขนาดมาตรฐาน" ; //ดูขนาดมาตรฐาน || ดูราคามาตรฐาน
   standardLabel: string = "Standard Size"; //  Standard Size || Standard Price
@@ -20,7 +21,8 @@ export class StandardSizeComponent implements OnInit {
   showIcon: boolean = false;
   standardSize: Array<any>; // It's can be standard size and standard price
   currentProperty: string;
-
+  competitorColor : {}
+  pic: ''
   tableSize: any ;
 
   constructor(private defaultsVariableService: DefaultsVariableService,
@@ -38,15 +40,18 @@ export class StandardSizeComponent implements OnInit {
       this.buttonLabel = "ดูราคามาตรฐาน";
       this.standardLabel = "Standard Price";
       this.nameLabel = "รายการ";
-    } else {
+    } else if(this.standardType === 'size'){
       this.buttonLabel = "ดูขนาดมาตรฐาน";
       this.standardLabel = "Standard Size";
       this.nameLabel = "พื้นที่ก่อสร้าง";
+    } else {
+      this.buttonLabel = "ดูการคำนวณพื้นที่จอดรถ"
     }
 
     if(['room', 'central', 'parking', 'outdoor'].includes(this.type)){
       this.showIcon = true;
     }
+    this.competitorColor = this.owner === 'competitor' ? { 'background-color' : '#ff781f', 'border': '1px solid #ff781f' } : { }
 
     this.standardSize = this.defaultsVariableService.getStandardData(this.currentProperty, this.standardType, this.type);
   }

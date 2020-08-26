@@ -3,7 +3,7 @@
         <span class="font-red-color"> {{ displayErrDialogMsg }}</span>
     </p-dialog>
 
-    <h3> {{ settingHeader }} <span> {{ settingSubHeader }}</span></h3>
+    <h3 [ngStyle]="competitorColor"> {{ settingHeader }} <span> {{ settingSubHeader }}</span></h3>
     <!-- ส่วนของห้องพัก -->
     <div class="ui-g-12 ui-md-12 ui-lg-12">
         <div class="box_layout" style="float: left;">
@@ -296,8 +296,11 @@
                 พื้นที่คงเหลือ <span> {{ areaData.standardArea.area.parking - getTotalArea(PARKING) - getTotalArea(PARKING) * 0.4 | number }}  </span> ตร.ม.
             </div>
             <div style="float: right;">
-                <app-standard-size [standardType]="'size'" [type]="'parking'"></app-standard-size>
+              <app-standard-size [standardType]="'size'" [type]="'parking'"></app-standard-size>
             </div>
+            <div style="float: right; margin-right: 10px;">
+              <app-standard-size [standardType]="'parkingPic'" [type]="'parking'"></app-standard-size>
+          </div>
         </div>
         <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
             <div class="wrap_table_sum ">

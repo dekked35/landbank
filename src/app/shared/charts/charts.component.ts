@@ -46,6 +46,7 @@ export type ChartOptions = {
 export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() chartType: string;
   @Input() chartData: any;
+  @Input() owner: string;
 
   series: ApexNonAxisChartSeries;
   @ViewChild("chart", { static: false }) chart: ChartComponent;
@@ -97,31 +98,28 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
         }
         break;
       case 'product':
-        let product_series = this.productChartMapping(this.currentProperty);
         if (this.chart !== undefined) {
-          this.series = product_series;
-          this.chart.updateSeries(this.series);
-        }
-        else {
-          chartDefault.series = product_series;
+          chartDefault.series = this.productChartMapping(this.currentProperty);
+          // this.series = product_series;
+          this.chart.updateOptions(chartDefault);
+        } else {
+          chartDefault.series = this.productChartMapping(this.currentProperty);
           this.chartOptions = chartDefault;
         }
 
         break;
       case 'spendings':
-        let spendings_series = this.spendingChartMapping(this.currentProperty);
-        let isDefault_2 = spendings_series.some((data) => { return +data === 0 });
-        if (!isDefault_2) {
+        // let isDefault_2 = spendings_series.some((data) => { return +data === 0 });
+        // if (!isDefault_2) {
           if (this.chart !== undefined) {
-            this.series = spendings_series;
-            this.chart.updateSeries(this.series);
+            chartDefault.series = this.spendingChartMapping(this.currentProperty);
+            // this.series = spendings_series;
+            this.chart.updateOptions(chartDefault);
+            console.log(this.chart)
           } else {
-            chartDefault.series = spendings_series;
+            chartDefault.series = this.spendingChartMapping(this.currentProperty);
             this.chartOptions = chartDefault;
           }
-        } else {
-          this.chartOptions = chartDefault;
-        }
         break;
       default:
         console.log("Chart not found : " + this.chartType);
@@ -137,8 +135,10 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
         this.chartData.percent[element] = parseFloat(this.chartData.percent[element].toString().replace(/,/g, ''))
       }
     });
-    if(['village','townhome','resort'].includes(currentProperty)) {
+    if (['village','townhome'].includes(currentProperty)) {
       series = [+this.chartData.percent.sellArea.toFixed(2), +this.chartData.percent.roadSize.toFixed(2), +this.chartData.percent.greenArea.toFixed(2), +this.chartData.percent.centerArea.toFixed(2)];
+    } else if (currentProperty === 'resort') {
+      series = [+this.chartData.percent.room, +this.chartData.percent.parking, +this.chartData.percent.outdoor, +this.chartData.percent.central];
     } else {
       // condo hotel commall
             series = [+this.chartData.percent.room, +this.chartData.percent.central,
@@ -150,7 +150,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 
   productChartMapping(currentProperty:string) : Array<number> {
     let series = [];
-    if(['village', 'townhome','resort'].includes(currentProperty)) {
+    if(['village', 'townhome'].includes(currentProperty)) {
       series = [this.chartData[0].quantity, this.chartData[1].quantity, this.chartData[2].quantity];
       let empty = series.every((data) => { return +data === 0 });
       if(empty) {
@@ -171,7 +171,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 
   spendingChartMapping(currentProperty:string) : Array<number> {
     let series = [];
-    if(['village', 'townhome','resort'].includes(currentProperty)) {
+    if(['village', 'townhome'].includes(currentProperty)) {
       if(Object.entries(this.chartData).length === 0 && this.chartData.constructor === Object) {
         series = [0, 0 , 0];
       } else{
@@ -185,55 +185,6 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
       series = [ this.chartData.totalCostPerMonthAndPreOpening, this.chartData.totalCostPerMonth, this.chartData.costConstruction ];
     }
     return series;
-  }
-
-  chartMapping(event: string) {
-    let chartDefault = this.getCharts();
-    switch (this.chartType) {
-      case 'area':
-        chartDefault.series = [this.chartData.sellArea, this.chartData.roadSize, this.chartData.greenArea];
-        this.chartOptions = chartDefault;
-
-        break;
-      case 'product':
-        let product_series = [this.chartData[0].quantity, this.chartData[1].quantity, this.chartData[2].quantity];
-        let isDefault = product_series.some((data) => { return +data === 0 });
-        if (!isDefault) {
-          if (this.chart !== undefined) {
-            this.series = [this.chartData[0].quantity, this.chartData[1].quantity, this.chartData[2].quantity];
-            this.chart.updateSeries(this.series);
-          } else {
-            chartDefault.series = [this.chartData[0].quantity, this.chartData[1].quantity, this.chartData[2].quantity];
-            this.chartOptions = chartDefault;
-          }
-        } else {
-          this.chartOptions = chartDefault;
-        }
-        break;
-      case 'spendings':
-        let publicUtility = this.chartData.costTapWater + this.chartData.costWaterTreatment + this.chartData.costElectricity
-          + this.chartData.costFenceAndGuardHouse;
-        let greenArea = this.chartData.costDevelopGreenArea;
-        let roadDevelopment = this.chartData.costDevelopRoad + this.chartData.costRoadCover;
-        let spendings_series = [publicUtility, roadDevelopment, greenArea]
-        let isDefault_2 = spendings_series.some((data) => { return +data === 0 });
-        if (!isDefault_2) {
-          if (this.chart !== undefined) {
-            this.series = [publicUtility, roadDevelopment, greenArea];
-            this.chart.updateSeries(this.series);
-          } else {
-            chartDefault.series = [publicUtility, roadDevelopment, greenArea];
-            this.chartOptions = chartDefault;
-          }
-        } else {
-          this.chartOptions = chartDefault;
-        }
-        break;
-      default:
-        console.log("Chart not found : " + this.chartType);
-        break;
-    }
-
   }
 
   ngOnDestroy() {
