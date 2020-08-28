@@ -157,7 +157,9 @@ export class SpendingsComponent implements OnInit, OnDestroy {
       +this.spendingsData.sellPeriod *
       +this.spendingsData.salaryEmployee *
       +this.spendingsData.noEmployee;
-
+      if (this.spendingsData.costPerMonth !== undefined) {
+        this.spendingsData.costPerMonths = this.spendingsData.costPerMonth;
+      }
   }
 
   async InputOnchanges($event) {

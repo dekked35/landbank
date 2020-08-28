@@ -4,7 +4,7 @@
 
         <div class="ui-g-12 ui-md-6 ui-lg-6" style="align-self: center;text-align:center;">
             <!-- <app-area-chart [chartName]="settingGraph"></app-area-chart> -->
-                <app-charts  *ngIf="!is_loading" [chartType]="'product'" [chartData]="ownerData.products"> </app-charts>
+                <app-charts  *ngIf="!is_loading" [chartType]="'product'" [chartData]="ownerData.products" [owner]="owner"> </app-charts>
                 <!-- <app-charts  *ngIf="is_loading" [chartType]="'product'" [chartData]="ownerData.products"> </app-charts> -->
                 <span *ngIf="is_loading"><app-loading></app-loading></span>
 

@@ -263,6 +263,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     productData[oppositeOwner].products[1].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[1].cost);
     productData[oppositeOwner].products[2].cost = this.parseToMillionFormat(this.productData[oppositeOwner].products[2].cost);
     // let product_input = { ... };
+    productData.isCompetitor = this.isCompetitor;
     return this.parseObject(productData);
   }
 

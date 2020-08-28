@@ -92,7 +92,7 @@ export const hotel = {
         "totalParkingCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่จอดรถ
         "outdoors" : [],
         "totalOutDoorCost" : 0.0, // รวมต้นทุนก่อสร้างพื้นที่ภายนอก
-        "costPerMonths" : [
+        "costPerMonth" : [
             {
                 "type" : "ค่าการตลาด",
                 "cost" : 1000,

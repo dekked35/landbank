@@ -28,11 +28,8 @@ export class CalculatorManagerService {
     let totalArea = +areaData.totalArea;
     if (['village','townhome'].includes(this.propertyType)) {
       areaData.availableArea =  totalArea;
-    // } else if (this.propertyType === 'townhome') {
-    //   areaData.availableArea =  (far * totalArea);
     } else {
       areaData.availableArea = (far * totalArea * 4)
-      // areaData.availableArea = totalArea
     }
     // คำนวณราคาที่ดิน
     let landPrice = +areaData.landPrice;
@@ -43,14 +40,75 @@ export class CalculatorManagerService {
         areaData.costLand = landPrice * totalArea;
       }
     }
-
+    areaData.wording = '';
+    if ([1.5, 2 , 3].includes(areaData.farValue)) {
+      areaData.townPlanColor = '#FFFC10';
+    } else if ([3.5, 4.5].includes(areaData.farValue)) {
+      areaData.townPlanColor = '#FF8407';
+    } else if ([6, 7.5].includes(areaData.farValue)) {
+      areaData.townPlanColor = '#A13101';
+    } else if ([4, 5, 7, 8].includes(areaData.farValue)) {
+      areaData.townPlanColor = '#FF0204';
+    }
+    switch (areaData.farValue) {
+      case 1.5: {
+        areaData.wording = 'ย.1';
+        break;
+      }
+      case 2: {
+        areaData.wording = 'ย.2';
+        break;
+      }
+      case 3: {
+        areaData.wording = 'ย.3';
+        break;
+      }
+      case 3.5: {
+        areaData.wording = 'ย.4';
+        break;
+      }
+      case 4.5: {
+        areaData.wording = 'ย.5';
+        break;
+      }
+      case 6: {
+        areaData.wording = 'ย.7';
+        break;
+      }
+      case 7.5: {
+        areaData.wording = 'ย.8';
+        break;
+      }
+      case 4: {
+        areaData.wording = 'พ.8';
+        break;
+      }
+      case 5: {
+        areaData.wording = 'พ.2';
+        break;
+      }
+      case 7: {
+        areaData.wording = 'พ.3';
+        break;
+      }
+      case 8: {
+        areaData.wording = 'พ.4';
+        break;
+      }
+      default : {
+        areaData.wording = 'ไม่พบในฐานข้อมูล';
+        areaData.townPlanColor = '#FFFFFF';
+        break;
+      }
+    }
 
     return areaData;
 
   }
   // Hot fixed
-  estimateRoomProduct(areaData:any, roomProducts:Array<any>, defaultSetting: any) {
+  estimateRoomProduct(areaData:any, roomProducts:Array<any>, defaultSetting: any, currentProperty?: any) {
     let roomArea = areaData.ratio_area.room;
+    // let roomResortArea = areaData.standardArea.
     let corriArea = roomArea * 0.15; // พื้นที่ทางเดิน
     roomArea = roomArea - corriArea;
     let roomDeluxeArea = 0;
@@ -62,15 +120,40 @@ export class CalculatorManagerService {
       roomDeluxeArea = roomArea * (defaultSetting.percent.deluxe/100);
       roomSuperDeluxeArea = roomArea * (defaultSetting.percent.superDeluxe/100);
     }
-    roomProducts.map((data)=> {
-      if(data.name === "Super deluxe") {
-        data.noRoom = Math.floor(roomSuperDeluxeArea/data.area);
-      }
-      if(data.name === "Deluxe") {
-        data.noRoom = Math.floor(roomDeluxeArea/data.area);
-      }
-    });
-
+    if(currentProperty !== 'resort'){
+      roomProducts = roomProducts.map((data)=> {
+        if(data.name === "Super deluxe") {
+          const x = JSON.parse(JSON.stringify(data));
+          x.noRoom = Math.floor(roomSuperDeluxeArea / data.area);
+          data = x
+        }
+        if(data.name === "Deluxe") {
+          const x = JSON.parse(JSON.stringify(data));
+          x.noRoom = Math.floor(roomDeluxeArea / data.area);
+          data = x
+        }
+        return data;
+      });
+    } else if (currentProperty === 'resort') {
+      roomProducts = roomProducts.map((data)=> {
+        if(data.name === "Pool Villa") {
+          const x = JSON.parse(JSON.stringify(data));
+          x.noRoom = Math.floor(roomArea * 0.5 / data.area);
+          data = x
+        }
+        if(data.name === "Family Room") {
+          const x = JSON.parse(JSON.stringify(data));
+          x.noRoom = Math.floor(roomArea * 0.25 / data.area);
+          data = x
+        }
+        if(data.name === "Jacuzzi Villa") {
+          const x = JSON.parse(JSON.stringify(data));
+          x.noRoom = Math.floor(roomArea * 0.25 / data.area);
+          data = x
+        }
+        return data;
+      });
+    }
     return roomProducts;
   }
 
@@ -89,7 +172,7 @@ export class CalculatorManagerService {
     // let field = (this.propertyType === "village") ? "size" : "area";
     let field = "size";
     // calculate remainingArea
-    if(this.propertyType === "village" || this.propertyType === "townhome" || this.propertyType === "resort") {
+    if(this.propertyType === "village" || this.propertyType === "townhome") {
       let products = productData.user.products;
       let sumArea = 0;
       for (let i = 0; i < products.length; i++) {
@@ -117,7 +200,6 @@ export class CalculatorManagerService {
         productData.competitor.usedArea = sellArea;
         productData.competitor.remainingArea =  sellArea - sumArea;
       }
-      // console.log(productData.competitor.usedArea)
     }
 
     return productData;

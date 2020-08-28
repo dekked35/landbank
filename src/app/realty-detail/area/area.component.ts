@@ -12,6 +12,7 @@ import * as areaAction from '../../core/actions/area.actions';
 import * as fromCore from '../../core/reducers';
 import * as productAction from '../../core/actions/product.actions';
 import { ActivatedRoute } from '@angular/router';
+import { parse } from 'querystring';
 
 const ratioConvert = [
   'deposit',
@@ -97,7 +98,24 @@ export class AreaComponent implements OnInit {
   standardRoomArea: any = {
     percent : {
       deluxe: 80,
-      superDeluxe: 20
+      superDeluxe: 20,
+      poolVilla: 50,
+      familyRoom: 25,
+      jacuzziVilla: 25,
+    },
+    area : {
+      deluxe: 0,
+      superDeluxe: 0
+    }
+  };
+
+  standardRoomAreaFix: any = {
+    percent : {
+      deluxe: 80,
+      superDeluxe: 20,
+      poolVilla: 50,
+      familyRoom: 25,
+      jacuzziVilla: 25,
     },
     area : {
       deluxe: 0,
@@ -118,10 +136,24 @@ export class AreaComponent implements OnInit {
     officeZone: 0,
   };
 
+  standardCenterAreaResort: any = {
+    lobby: 0,
+    pool: 0,
+    boh: 0,
+    restroom: 0
+  };
+
   centerAreaSave: any = {
     swimming: 0,
     fitnessZone: 0,
     officeZone: 0,
+  }
+
+  centerAreaSaveResort: any = {
+    lobby: 0,
+    pool: 0,
+    boh: 0,
+    restroom: 0
   }
 
   displayDialog = false;
@@ -196,6 +228,12 @@ export class AreaComponent implements OnInit {
       this.standardCenterArea.fitnessZone = areaData.standardArea.centerArea.fitnessZone;
       this.standardCenterArea.officeZone = areaData.standardArea.centerArea.officeZone;
     }
+    if(this.propertyType === 'resort') {
+      this.standardCenterAreaResort.lobby = areaData.standardArea.centerArea.lobby;
+      this.standardCenterAreaResort.pool = areaData.standardArea.centerArea.pool;
+      this.standardCenterAreaResort.boh = areaData.standardArea.centerArea.boh;
+      this.standardCenterAreaResort.restroom = areaData.standardArea.centerArea.restroom;
+    }
 
     this.lawAreaUsage = areaData.farValue * areaData.totalArea *4;
     this.farValue = areaData.farValue;
@@ -203,8 +241,6 @@ export class AreaComponent implements OnInit {
     this.totalArea = areaData.totalArea;
     this.landPrice = areaData.landPrice;
     this.availableArea = areaData.availableArea;
-    // this.areaData.costLandType = areaData.costLandType;
-    // this.store.dispatch(new areaAction.IsLoadingAction(false));
 
     this.models = this.defaultsVariableService.getAreaRatio(this.propertyType);
     this.selectedModel = this.defaultsVariableService.getDefaultAreaAtio(this.propertyType);
@@ -219,7 +255,7 @@ export class AreaComponent implements OnInit {
 
   changeModel() {
     this.standardArea = this.defaultsVariableService.getAreaUnit(this.propertyType, this.selectedModel.id);
-    if (['village','resort'].includes(this.propertyType)) {
+    if (['village','townhome'].includes(this.propertyType)) {
       const newStandartArea = this.parseObject(this.standardArea)
       const allSellArea = newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
       const centerArea: any = Object.values(newStandartArea.centerArea).reduce((t: number, value: number) => t + value, 0);
@@ -228,7 +264,19 @@ export class AreaComponent implements OnInit {
       newStandartArea.percent.sellArea = allSellArea - newRatioCenter;
       this.standardArea = newStandartArea;
     }
-    const productData = this.shemaManagerService.getProductSchema(this.propertyType).user.products;
+    //  else if(this.propertyType === 'resort') {
+    //   const newStandartArea = this.parseObject(this.standardArea)
+    //   const allSellArea = newStandartArea.percent.central + newStandartArea.percent.room;
+    //   const centerArea: any = Object.values(newStandartArea.centerArea).reduce((t: number, value: number) => t + value, 0);
+    //   const newRatioCenter = (centerArea *1.25)  / parseFloat(this.areaData.availableArea.toString().replace(/,/g, '')) * 100;
+    //   newStandartArea.percent.central = newRatioCenter;
+    //   newStandartArea.percent.room = allSellArea - newRatioCenter;
+    //   Object.keys(newStandartArea.area).forEach( (item => {
+    //     newStandartArea.area[item] = this.areaData.availableArea * newStandartArea.area[item];
+    //   }) )
+    //   this.standardArea = newStandartArea;
+    // }
+    const productData = this.shemaManagerService.getProductSchema(this.propertyType);
     const newProductData = this.parseObject(this.productData);
     // const newProductData = this.parseObject(this.areaData);
     if(this.selectedModel.id === 4) {
@@ -241,32 +289,40 @@ export class AreaComponent implements OnInit {
         swimming: 0,
         fitnessZone: 0,
         officeZone: 0,
-      }
+      };
+      // this.standardCenterAreaResort = {
+      //   lobby: 0,
+      //   pool: 0,
+      //   boh: 0,
+      //   restroom: 0
+      // };
       this.areaData.standardArea.centerArea = {
         swimming: 0,
         fitnessZone: 0,
         officeZone: 0
+      };
+      if(['village','townhome'].includes(this.propertyType)){
+        newProductData.user.products.map(element => {
+          element.ratio = 0;
+          return element;
+        });
       }
-      newProductData.user.products.map(element => {
-        element.ratio = 0;
-        return element;
-      });
       this.productData = newProductData;
       this.store.dispatch(new productAction.SuccessAction(newProductData));
     } else {
-      this.standardSellAreaRatio.typeOne = productData[0].ratio;
-      this.standardSellAreaRatio.typeTwo = productData[1].ratio;
-      this.standardSellAreaRatio.typeThree = productData[2].ratio;
-      if (this.propertyType === 'village') {
+      if(['village','townhome'].includes(this.propertyType)){
+        this.standardSellAreaRatio.typeOne = productData.user.products[0].ratio;
+        this.standardSellAreaRatio.typeTwo = productData.user.products[1].ratio;
+        this.standardSellAreaRatio.typeThree = productData.user.products[2].ratio;
         this.standardCenterArea.swimming = this.standardArea.centerArea.swimming;
         this.standardCenterArea.fitnessZone = this.standardArea.centerArea.fitnessZone;
         this.standardCenterArea.officeZone = this.standardArea.centerArea.officeZone;
+        newProductData.user.products.map((element,index) => {
+          element.ratio = productData.user.products[index].ratio;
+          return element;
+        });
+        this.productData = newProductData;
       }
-      newProductData.user.products.map((element,index) => {
-        element.ratio = productData[index].ratio;
-        return element;
-      });
-      this.productData = newProductData;
       this.store.dispatch(new productAction.SuccessAction(newProductData));
     }
     this.calculateAreaRatio(null);
@@ -277,7 +333,8 @@ export class AreaComponent implements OnInit {
   }
 
   InputChangeTotalArea($event){
-    if (this.propertyType === 'village'){
+    let fixAvailable = parseFloat(this.farValue.toString().replace(/,/g, '')) * parseFloat(this.totalArea.toString().replace(/,/g, '')) * 4;
+    if (['village','townhome'].includes(this.propertyType)) {
       const newStandartArea = this.parseObject(this.standardArea)
       const allSellArea = newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
       const centerArea: any = Object.values(newStandartArea.centerArea).reduce((t: number, value: number) => t + value, 0);
@@ -286,6 +343,18 @@ export class AreaComponent implements OnInit {
       newStandartArea.percent.sellArea = allSellArea - newRatioCenter;
       this.standardArea = newStandartArea;
     }
+    // else if (this.propertyType === 'resort') {
+    //   const newStandartArea = this.parseObject(this.standardArea)
+    //   const allSellArea = newStandartArea.percent.central + newStandartArea.percent.room;
+    //   const centerArea: any = Object.values(newStandartArea.centerArea).reduce((t: number, value: number) => t + value, 0);
+    //   const newRatioCenter = (centerArea *1.25)  / parseFloat(fixAvailable.toString().replace(/,/g, '')) * 100;
+    //   newStandartArea.percent.central = newRatioCenter;
+    //   newStandartArea.percent.room = allSellArea - newRatioCenter;
+    //   Object.keys(newStandartArea.area).forEach( (item => {
+    //     newStandartArea.area[item] = fixAvailable * newStandartArea.area[item];
+    //   }) )
+    //   this.standardArea = newStandartArea;
+    // }
     this.reloadData(true);
   }
 
@@ -361,14 +430,26 @@ export class AreaComponent implements OnInit {
   updateCenterAreaRatio() {
     const newAreaData = this.parseObject(this.areaData);
     const newStandard = this.parseObject(this.standardArea)
-    this.centerAreaSave = {
-      swimming : parseFloat(this.standardCenterArea.swimming.toString().replace(/,/g, '')) / 4,
-      fitnessZone : parseFloat(this.standardCenterArea.fitnessZone.toString().replace(/,/g, '')) / 4,
-      officeZone : parseFloat(this.standardCenterArea.officeZone.toString().replace(/,/g, '')) / 4
-    };
-    const centerZone = Object.keys(this.centerAreaSave).reduce((sum, data) => this.centerAreaSave[data] + sum, 0) * 1.25;
-    newStandard.area.centerArea = centerZone;
-    newStandard.percent.centerArea = centerZone/ newAreaData.availableArea * 100;
+    if(this.propertyType !== 'resort') {
+      this.centerAreaSave = {
+        swimming : parseFloat(this.standardCenterArea.swimming.toString().replace(/,/g, '')) / 4,
+        fitnessZone : parseFloat(this.standardCenterArea.fitnessZone.toString().replace(/,/g, '')) / 4,
+        officeZone : parseFloat(this.standardCenterArea.officeZone.toString().replace(/,/g, '')) / 4
+      };
+    } else {
+      this.centerAreaSaveResort = {
+        lobby: parseFloat(this.standardCenterAreaResort.lobby.toString().replace(/,/g, '')),
+        pool: parseFloat(this.standardCenterAreaResort.pool.toString().replace(/,/g, '')),
+        boh: parseFloat(this.standardCenterAreaResort.boh.toString().replace(/,/g, '')),
+        restroom: parseFloat(this.standardCenterAreaResort.restroom.toString().replace(/,/g, '')),
+      }
+    }
+    // tslint:disable-next-line: max-line-length
+    const centerZone = this.propertyType !== 'resort' ?
+          Object.keys(this.centerAreaSave).reduce((sum, data) => this.centerAreaSave[data] + sum, 0) * 1.25 :
+          Object.keys(this.centerAreaSaveResort).reduce((sum, data) => this.centerAreaSaveResort[data] + sum, 0) * 1.25 ;
+    newStandard.area[this.propertyType !== 'resort' ? 'centerArea' : 'central'] = centerZone;
+    newStandard.percent[this.propertyType !== 'resort' ? 'centerArea' : 'central'] = centerZone/ newAreaData.availableArea * 100;
     newStandard.centerArea = this.centerAreaSave;
     let totalAreaRatio = 0;
     for (let [key, value] of Object.entries(newStandard.percent)) {
@@ -398,7 +479,9 @@ export class AreaComponent implements OnInit {
     const newProductData = this.parseObject(this.productData);
     let totalAreaRatio = 0;
     for (let [key, value] of Object.entries(percent)) {
-      totalAreaRatio += +value;
+      if(['deluxe','superDeluxe'].includes(key) && this.propertyType === 'hotel'){
+        totalAreaRatio += +parseFloat(value.toString().replace(/,/g, ''));
+      }
     }
 
     if(totalAreaRatio > 100) {
@@ -409,6 +492,7 @@ export class AreaComponent implements OnInit {
       const userRooms = this.calculatorManagerService.estimateRoomProduct(this.areaData, newProductData.user.rooms, this.standardRoomArea);
       newProductData.user.rooms = userRooms;
       newProductData.competitor.rooms = userRooms;
+      console.log(newProductData)
       this.store.dispatch(new productAction.TriggerRoomAction(true));
       this.store.dispatch(new productAction.SuccessAction(newProductData));
       this.store.dispatch(new productAction.TriggerRoomAction(false));

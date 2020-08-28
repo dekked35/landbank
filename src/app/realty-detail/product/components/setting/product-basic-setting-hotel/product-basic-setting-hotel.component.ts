@@ -41,7 +41,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   settingSubHeader = '(สัดส่วน % ในโครงการต้องรวมกันได้ 100% เท่านั้น)';
 
   roomType: string;
-
+  competitorColor = this.isCompetitor ? { 'color' : '#ff781f' } : { }
   currentProperty = '';
   areaData: any;
 
@@ -102,6 +102,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.store.select(fromCore.getPage)
       .subscribe(page => {
         this.currentProperty = page.page;
+        this.initializeProductSchema();
       });
 
 
@@ -120,15 +121,21 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.subscriptionArea = this.store.select(fromCore.getArea)
       .subscribe(area => {
         this.areaData = area.payload;
-        if (this.areaData.ratio_area.room > 0 && ['condo', 'hotel', 'communityMall'].includes(this.currentProperty)) {
-          this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.roomProducts, null);
-          this.dispatchProduct();
+        if (this.areaData.ratio_area.room > 0 && ['condo', 'hotel', 'communityMall','resort'].includes(this.currentProperty)) {
+          if((this.currentProperty === 'resort' && this.roomProducts.length > 0) || this.currentProperty !== 'resort'){
+            this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.roomProducts, null, this.currentProperty);
+            this.dispatchProduct();
+          }
         }
       });
 
     this.subscriptionProduct = this.store.select(fromCore.getProduct)
       .subscribe(data => {
         this.tempProductStore = data.payload;
+        if(this.tempProductStore[this.owner].rooms && this.tempProductStore[this.owner].rooms.length > 0){
+          this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.tempProducts, null, this.currentProperty);
+          // this.dispatchProduct();
+        }
       });
 
     this.subscriptionSpending = this.store.select(fromCore.getSpendings)
@@ -214,7 +221,6 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   }
 
   deleteItem(index, type) {
-    // this.typeEdit = type;
     this.enableEdit = false;
     this.enableEditIndex = null;
     const variable = this.getVariable(type);
@@ -232,13 +238,13 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this[variable][i]['noRoom'] = 1;
   }
 
-  cancleEdit(type) {
-    this.typeEdit = type;
-    const variable = this.getVariable(type);
-    this[variable] = JSON.parse(JSON.stringify(this.tempProducts));
-    this.tempProducts = [];
-    this.enableEdit = false;
-  }
+  // cancleEdit(type) {
+  //   this.typeEdit = type;
+  //   const variable = this.getVariable(type);
+  //   this[variable] = JSON.parse(JSON.stringify(this.tempProducts));
+  //   this.tempProducts = [];
+  //   this.enableEdit = false;
+  // }
 
   getVariable(type: string) {
     if (type === this.ROOM) {
@@ -354,6 +360,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   }
 
   async fillInSpeading(productData) {
+    // console.log('product speading',productData)
     // tslint:disable-next-line: max-line-length
     const speandingsData = this.calculatorManagerService.calculateProductToSpeading(productData[this.owner], this.parseObject(this.speadingData));
     // type == central means that object it's not show icon.

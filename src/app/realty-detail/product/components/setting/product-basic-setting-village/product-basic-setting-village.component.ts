@@ -58,7 +58,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   currentProperty: string;
   areaData: any;
   products: Array<any> = [];
-
+  competitorColor : {};
   is_loading: boolean;
 
   constructor(private store: Store<any>,
@@ -178,7 +178,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
       })
     });
     this.rateControl = new FormControl('', [Validators.max(100), Validators.min(0)]);
-
+    this.competitorColor = this.isCompetitor ? { 'color' : '#ff781f' } : { }
   }
 
   initializeProductSchema() {

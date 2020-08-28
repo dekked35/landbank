@@ -1,6 +1,6 @@
-<p-button icon="pi pi-table" [label]="buttonLabel" (click)="overlayPanel.toggle($event)"></p-button>
+<p-button [style]="competitorColor" [styleClass]="competitorColor" icon="pi pi-table" [label]="buttonLabel" (click)="overlayPanel.toggle($event)"></p-button>
 <p-overlayPanel #overlayPanel [style]="tableSize">
-    <div class="wrap_table_sum">
+    <div class="wrap_table_sum" *ngIf="standardType !== 'parkingPic'">
         <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'price' && currentProperty !== 'hotel'">
             <tr>
                 <td>{{ nameLabel }}</td>
@@ -58,5 +58,8 @@
               </tr>
           </table>
         </div>
+    </div>
+    <div class="wrap_table_sum" *ngIf="standardType === 'parkingPic'">
+      <img src="../../../assets/images/parking.jpg" style="width: 100%">
     </div>
 </p-overlayPanel>
