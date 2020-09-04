@@ -41,8 +41,10 @@ export class ProductBasicSummaryVillageComponent implements OnInit, OnChanges {
       });
     this.store.select(fromCore.getProduct)
     .subscribe(product => {
-      this.productData = JSON.parse(JSON.stringify(product.payload));
-      this.is_loading = product.isLoading;
+      if(product.payload){
+        this.productData = JSON.parse(JSON.stringify(product.payload));
+        this.is_loading = product.isLoading;
+      }
     });
     this.store.select(fromCore.getArea)
     .subscribe(area => {

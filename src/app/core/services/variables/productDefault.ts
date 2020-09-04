@@ -101,6 +101,26 @@ export const productDefault = {
             "area" : 50,
             "noRoom" : 1
         }
+        ],
+        "resort" : [
+          {
+            "type"  : "ห้องพัก",
+            "name" : "Pool Villa",
+            "area" : 65,
+            "noRoom" : 1
+          },
+          {
+            "type"  : "ห้องพัก",
+            "name" : "Family Room",
+            "area" : 45,
+            "noRoom" : 1
+          },
+          {
+            "type"  : "ห้องพัก",
+            "name" : "Jacuzzi Villa",
+            "area" : 65,
+            "noRoom" : 1
+          },
         ]
     },
     "communityMall" : {

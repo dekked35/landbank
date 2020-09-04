@@ -115,7 +115,6 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
             chartDefault.series = this.spendingChartMapping(this.currentProperty);
             // this.series = spendings_series;
             this.chart.updateOptions(chartDefault);
-            console.log(this.chart)
           } else {
             chartDefault.series = this.spendingChartMapping(this.currentProperty);
             this.chartOptions = chartDefault;
@@ -137,10 +136,10 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
     });
     if (['village','townhome'].includes(currentProperty)) {
       series = [+this.chartData.percent.sellArea.toFixed(2), +this.chartData.percent.roadSize.toFixed(2), +this.chartData.percent.greenArea.toFixed(2), +this.chartData.percent.centerArea.toFixed(2)];
-    } else if (currentProperty === 'resort') {
-      series = [+this.chartData.percent.room, +this.chartData.percent.parking, +this.chartData.percent.outdoor, +this.chartData.percent.central];
+    } else if (currentProperty === 'hotel') {
+      series = [+this.chartData.percent.room, +this.chartData.percent.resort, +this.chartData.percent.parking, +this.chartData.percent.outdoor, +this.chartData.percent.central];
     } else {
-      // condo hotel commall
+      // condo commall
             series = [+this.chartData.percent.room, +this.chartData.percent.central,
          +this.chartData.percent.corridor, +this.chartData.percent.parking,
          +this.chartData.percent.outdoor];
@@ -158,12 +157,15 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
       }
     } else {
       // condo
-
-      series = [this.chartData.totalRoomArea, this.chartData.totalCentralArea,
-      this.chartData.totalCorridor,  this.chartData.totalCentralArea, this.chartData.totalOutdoorArea];
-      let empty = series.every((data) => { return +data === 0 });
-      if(empty) {
-        series = [1,0,0,0,0]
+      try {
+        series = [this.chartData.totalRoomArea, this.chartData.totalResortArea, this.chartData.totalCentralArea,
+                this.chartData.totalCorridor,  this.chartData.totalCentralArea, this.chartData.totalOutdoorArea];
+        let empty = series.every((data) => { return +data === 0 });
+        if(empty) {
+          series = [1,0,0,0,0,0]
+        }
+      } catch (e) {
+        series = [1,0,0,0,0,0]
       }
     }
     return series;

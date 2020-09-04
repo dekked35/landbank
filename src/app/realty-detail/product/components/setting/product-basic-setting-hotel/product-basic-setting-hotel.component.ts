@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, HostListener, SimpleChange, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener, SimpleChanges, OnChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DefaultsVariableService } from '../../../../../core/services/defaults-variable.service';
 import { RequestManagerService } from '../../../../../core/services/request-manager.service';
@@ -36,6 +36,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   CENTRAL = 'central';
   PARKING = 'parking';
   OUTDOOR = 'outdoor';
+  RESORT = 'resort';
 
   settingHeader: string;
   settingSubHeader = '(สัดส่วน % ในโครงการต้องรวมกันได้ 100% เท่านั้น)';
@@ -62,18 +63,21 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   centralTypeOptions: Array<any> = [];
   parkingTypeOptions: Array<any> = [];
   outdoorTypeOptions: Array<any> = [];
+  resortTypeOptions: Array<any> = [];
 
   // productDefault.ts
   roomProducts: Array<any> = [];
   centralProducts: Array<any> = [];
   parkingProducts: Array<any> = [];
   outdoorProducts: Array<any> = [];
+  resortProducts: Array<any> = [];
 
   // standardSize.ts
   standardSizeRooms: Array<any> = [];
   standardSizeCentrals: Array<any> = [];
   standardSizeParkings: Array<any> = [];
   standardSizeOutdoors: Array<any> = [];
+  standardSizeResorts: Array<any> = [];
 
   tempProducts: Array<any> = [];
 
@@ -120,20 +124,26 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
 
     this.subscriptionArea = this.store.select(fromCore.getArea)
       .subscribe(area => {
+        console.log('is in area')
         this.areaData = area.payload;
-        if (this.areaData.ratio_area.room > 0 && ['condo', 'hotel', 'communityMall','resort'].includes(this.currentProperty)) {
-          if((this.currentProperty === 'resort' && this.roomProducts.length > 0) || this.currentProperty !== 'resort'){
+        if (this.areaData.ratio_area.room > 0 && ['condo', 'hotel', 'communityMall'].includes(this.currentProperty)) {
             this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.roomProducts, null, this.currentProperty);
+            this.resortProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.resortProducts, null, this.currentProperty)
             this.dispatchProduct();
           }
-        }
       });
 
     this.subscriptionProduct = this.store.select(fromCore.getProduct)
       .subscribe(data => {
+        console.log('is in product')
         this.tempProductStore = data.payload;
-        if(this.tempProductStore[this.owner].rooms && this.tempProductStore[this.owner].rooms.length > 0){
-          this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.tempProducts, null, this.currentProperty);
+        if(this.tempProductStore && this.tempProductStore[this.owner].rooms && this.tempProductStore[this.owner].rooms.length > 0){
+          console.log('tempProduct',this.tempProductStore)
+          // tslint:disable-next-line: max-line-length
+          this.roomProducts = this.tempProductStore[this.owner].rooms;
+          this.resortProducts = this.tempProductStore[this.owner].resort;
+          this.centralProducts = this.tempProductStore[this.owner].centrals.filter( item => item.noRoom > 0);
+          // this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.tempProductStore[this.owner].rooms, null, this.currentProperty);
           // this.dispatchProduct();
         }
       });
@@ -153,9 +163,9 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
         this.rateReturnData = data.payload;
       });
 
-    // if (this.areaData.ratio_area.room > 0) {
-    //   this.dispatchProduct();
-    // }
+    if (this.areaData.ratio_area.room > 0) {
+      this.dispatchProduct();
+    }
   }
 
   delay(ms: number) {
@@ -174,16 +184,19 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.centralProducts = this.defaultsVariableService.getProductDefault(this.currentProperty, this.CENTRAL);
     this.parkingProducts = this.defaultsVariableService.getProductDefault(this.currentProperty, this.PARKING);
     this.outdoorProducts = this.defaultsVariableService.getProductDefault(this.currentProperty, this.OUTDOOR);
+    this.resortProducts = this.defaultsVariableService.getProductDefault(this.currentProperty, this.RESORT);
 
     this.roomTypeOptions = this.defaultsVariableService.getProductOptions(this.currentProperty, this.ROOM);
     this.centralTypeOptions = this.defaultsVariableService.getProductOptions(this.currentProperty, this.CENTRAL);
     this.parkingTypeOptions = this.defaultsVariableService.getProductOptions(this.currentProperty, this.PARKING);
     this.outdoorTypeOptions = this.defaultsVariableService.getProductOptions(this.currentProperty, this.OUTDOOR);
+    this.resortTypeOptions = this.defaultsVariableService.getProductOptions(this.currentProperty, this.RESORT);
 
     this.standardSizeRooms = this.defaultsVariableService.getStandardSize(this.currentProperty, this.ROOM);
     this.standardSizeCentrals = this.defaultsVariableService.getStandardSize(this.currentProperty, this.CENTRAL);
     this.standardSizeParkings = this.defaultsVariableService.getStandardSize(this.currentProperty, this.PARKING);
     this.standardSizeOutdoors = this.defaultsVariableService.getStandardSize(this.currentProperty, this.OUTDOOR);
+    this.standardSizeResorts = this.defaultsVariableService.getStandardSize(this.currentProperty, this.RESORT);
 
     productData = this.calculatorManagerService.calculateProduct(this.areaData, productData);
 
@@ -255,6 +268,8 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
       return 'parkingProducts';
     } else if (type === this.OUTDOOR) {
       return 'outdoorProducts';
+    } else if (type === this.RESORT) {
+      return 'resortProducts'
     }
   }
 
@@ -267,6 +282,8 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
       return 'parkingTypeOptions';
     } else if (type === this.OUTDOOR) {
       return 'outdoorTypeOptions';
+    } else if (type === this.RESORT) {
+      return 'resortTypeOptions';
     }
   }
 
@@ -279,6 +296,8 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
       return JSON.parse(JSON.stringify(this.parkingProducts));
     } else if (type === this.OUTDOOR) {
       return JSON.parse(JSON.stringify(this.outdoorProducts));
+    } else if (type === this.RESORT) {
+      return JSON.parse(JSON.stringify(this.resortProducts));
     }
   }
 
@@ -286,15 +305,15 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     if (type === this.ROOM) {
       return {
         'type': 'ห้องพัก',
-        'name': 'Pool Villa',
-        'area': 65,
+        'name': 'Deluxe',
+        'area': 25,
         'noRoom': 1
       };
     } else if (type === this.CENTRAL) {
       return {
         'type': 'ส่วนกลาง',
         'name': 'Lobby',
-        'area': 150,
+        'area': 80,
         'noRoom': 1
       };
     } else if (type === this.PARKING) {
@@ -310,6 +329,13 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
         'name': 'Garden',
         'area': 60,
         'noRoom': 1
+      };
+    } else if (type === this.RESORT) {
+      return {
+        'type'  : 'ห้องพัก',
+        'name' : 'Pool Villa',
+        'area' : 65,
+        'noRoom' : 1
       };
     }
   }
@@ -379,7 +405,8 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     // TODO : Remove this after Bank edit API
     const newSpendingData = await this.requestManagerService.requestSpeading(payload);
     // tslint:disable-next-line: max-line-length
-    newSpendingData.specialEquipments.map((data) => { if (data.type.search(/Opening/gi) !== -1) { data.cost = newSpendingData.totalCostPerMonth; } });
+    // console.log(newSpendingData)
+    // newSpendingData.specialEquipments.map((data) => { if (data.type.search(/Opening/gi) !== -1) { data.cost = newSpendingData.totalCostPerMonth; } });
     this.fillInImplicitCost(productData, newSpendingData);
   }
 
@@ -502,7 +529,8 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     });
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
     if (this.needToRefresh) {
       setTimeout(() => {
         this.dispatchProduct();

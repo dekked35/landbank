@@ -20,14 +20,16 @@ export const hotel = {
                 "central": 15,
                 "corridor": 5,
                 "parking": 5,
-                "outdoor": 5
+                "outdoor": 5,
+                "resort": 0,
             },
             "area": {
                 "room": 0,
                 "central": 0,
                 "corridor": 0,
                 "parking": 0,
-                "outdoor": 0
+                "outdoor": 0,
+                "resort" : 0,
             }
         },
         "ratio_area" : {
@@ -35,7 +37,8 @@ export const hotel = {
             "central": 0,
             "corridor": 0,
             "parking": 0,
-            "outdoor": 0
+            "outdoor": 0,
+            "resort" : 0,
         },
 
         "costLand" : 0, //ค่าที่ดินทั้งหมด แบบซื้อ, รวมค่าที่ดินทั้งหมด แบบเช่า
@@ -56,6 +59,7 @@ export const hotel = {
             "parking": [],
             "roadArea": 0,
             "outdoors": [],
+            "resort": [],
             "availableArea": 0,
             "usedArea": 0,
             "totalCorridor": 0,
@@ -74,6 +78,7 @@ export const hotel = {
             "parking" : [],
             "roadArea" : 0.0, // พื้นที่เสียจากถนนขับผ่าน 40%
             "outdoors" : [],
+            "resort": [],
             "availableArea" : 0,  // พื้นที่ที่ใช้ได้ตามกฏหมาย คำนวณตามสูตร ขนาดพื้นที่ (ตร.ว.) × 4 × ค่า Far = พื้นที่ใช้สอยของอาคาร ที่สามารถก่อสร้างได้ (ตร.ม.)
             "usedArea" : 0.0, // พื้นทืที่ใช้ไป
             "totalCorridor" : 0.0,  // พื้นทืที่รวมทางเดิน
@@ -85,6 +90,7 @@ export const hotel = {
     },
     "spendings": {
         "rooms" : [],
+        "resort" : [],
         "totalRoomCost" : 0.0, // ต้นทุนก่อสร้างห้องพักทั้งหมด
         "centrals" : [],
         "totalCentralCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่ส่วนกลาง
@@ -116,7 +122,13 @@ export const hotel = {
                 "cost" : 300,
                 "no" : 2,
                 "total" : 0.0
-            }
+            },
+            {
+              "type" : "ค่าน้ำ-ค่าไฟ",
+              "cost" : 3000,
+              "no" : 1,
+              "total" : 0.0
+          }
         ],
         "totalCostPerMonth" : 0.0, // รวมค่าใช้จ่ายรายเดือน
         "specialEquipments" : [

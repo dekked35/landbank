@@ -5,7 +5,10 @@
 
     <h3 [ngStyle]="competitorColor"> {{ settingHeader }} <span> {{ settingSubHeader }}</span></h3>
     <!-- ส่วนของห้องพัก -->
-    <div class="ui-g-12 ui-md-12 ui-lg-12">
+    <div>
+
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="areaData.ratio_area.room > 0" >
         <div class="box_layout" style="float: left;">
             <figure>
                 <img src="../../../../../../assets/icons/icon_hotel.svg">
@@ -15,7 +18,7 @@
             </figcaption>
         </div>
     </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-12">
+    <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="areaData.ratio_area.room > 0">
         <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout"  style="float: center;">
             พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.room  | number }} </span> ตร.ม.
             <!-- พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.room - (areaData.standardArea.area.room * 0.15 ) | number }} </span> ตร.ม. -->
@@ -27,7 +30,7 @@
             <app-standard-size [standardType]="'size'" [type]="'room'"></app-standard-size>
         </div>
     </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-12">
+    <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="areaData.ratio_area.room > 0">
         <div class="wrap_table_sum">
             <table class="table_sum_4" cellspacing="0" cellpadding="0">
                 <tr>
@@ -111,29 +114,160 @@
             </table>
         </div>
     </div>
-    <div class="ui-g-6 ui-md-6 ui-lg-6">
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.room > 0">
         <span style="color:red"> * การเลือกจำนวนห้องพักส่งผลต่อที่จอดรถ</span> <br>
         <span style="color:grey"> หมายเหตุ หากห้องพักมีจำนวนเกิน 70 ห้องขึ้นไป ต้องมีการขอ EIA</span>
     </div>
-    <div class="ui-g-6 ui-md-6 ui-lg-6">
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.room > 0">
         <div style="float: right;">
             <p-button [disabled]="enableEdit && typeEdit !== ROOM" icon="pi pi-plus-circle" label="เพิ่ม" (onClick)="addItem('room')"></p-button>
         </div>
     </div>
-    <div class="ui-g-6 ui-md-6 ui-lg-6">
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.room > 0">
         พื้นที่รวมห้องพัก
     </div>
-    <div class="ui-g-6 ui-md-6 ui-lg-6 ">
+    <div class="ui-g-6 ui-md-6 ui-lg-6 " *ngIf="areaData.ratio_area.room > 0">
         <div class="box_layout" style="float: right;">
             <span>{{ getTotalArea(ROOM) | number:'1.2-2' }} </span> ตร.ม.
         </div>
     </div>
-    <div class="ui-g-6 ui-md-6 ui-lg-6">
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.room > 0">
         พื้นที่ทางเดินส่วนกลาง 15% ของพื้นที่รวมห้องพัก
     </div>
-    <div class="ui-g-6 ui-md-6 ui-lg-6">
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.room > 0">
         <div class="box_layout" style="float: right;">
             <span>{{ getTotalArea(ROOM) * 0.15 | number:'1.2-2' }} </span> ตร.ม.
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="areaData.ratio_area.resort > 0">
+        <div class="box_layout" style="float: left;">
+            <figure>
+                <img src="../../../../../../assets/icons/icon_hotel.svg">
+            </figure>
+            <figcaption style="color: #0060be; font-size:15px;">
+                ส่วนของบ้านพัก
+            </figcaption>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="areaData.ratio_area.resort > 0">
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout"  style="float: center;">
+            พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.resort  | number }} </span> ตร.ม.
+            <!-- พื้นที่ที่ใช้ได้ทั้งหมด <span> {{ areaData.standardArea.area.room - (areaData.standardArea.area.room * 0.15 ) | number }} </span> ตร.ม. -->
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout" style="float: center;">
+            พื้นที่คงเหลือ <span> {{ areaData.standardArea.area.resort - getTotalArea(RESORT) - (getTotalArea(RESORT) * 0.15 ) | number }}  </span> ตร.ม.
+        </div>
+        <div style="float: right; text-align: right;">
+            <app-standard-size [standardType]="'size'" [type]="'resort'"></app-standard-size>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="areaData.ratio_area.resort > 0">
+        <div class="wrap_table_sum">
+            <table class="table_sum_4" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>พื้นที่ก่อสร้าง</td>
+                    <td>
+                        <div> พื้นที่ใช้สอย <br> (ตร.ม.) </div>
+                    </td>
+                    <td>
+                        <div>จำนวนห้อง <br> (ห้อง)</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr *ngFor="let room of resortProducts; let i = index">
+                    <td>
+                        <div *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== RESORT" class="box_layout"
+                            style="text-align: left;">
+                            <figure>
+                                <img src="../../../../../../assets/icons/room/{{room.name}}.svg">
+                            </figure>
+                            <figcaption class="small-figcaption" style="color: #0060be;">
+                                {{ room.name }}
+                            </figcaption>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === RESORT">
+                            <p-dropdown [style]="dropDownSize" [options]="resortTypeOptions" (onChange)="onChangeDropdown($event, i, RESORT)"
+                                optionLabel="name"  [(ngModel)]="tempEdit">
+                                <ng-template let-item pTemplate="selectedItem">
+                                    <img src="../../../../../../assets/icons/room/{{item.label}}.svg"
+                                        [ngStyle]="iconSelectedItem" />
+                                    <span [ngStyle]="textSelectedItem">{{ item.label }}</span>
+                                </ng-template>
+                                <ng-template let-room pTemplate="item">
+                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                        <img src="../../../../../../assets/icons/room/{{room.label}}.svg"
+                                            [ngStyle]="iconItem" />
+                                        <div [ngStyle]="textItem">{{ room.label }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== RESORT">
+                            <span>{{ room.area | number:'1.2-2' }}</span>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === RESORT">
+                            <input [(ngModel)]="room.area" pKeyFilter="int" type="text" pInputText />
+                        </div>
+                        <!-- (change)="onChangeInput($event, i, 'area', ROOM)"  -->
+                    </td>
+                    <td>
+                        <div class="box_layout" *ngIf="!enableEdit || enableEditIndex !== i || typeEdit !== RESORT">
+                            <span>{{ room.noRoom }} </span>
+                        </div>
+                        <div *ngIf="enableEdit && enableEditIndex === i && typeEdit === RESORT">
+                            <input [(ngModel)]="room.noRoom" pKeyFilter="int" type="text" pInputText />
+                        </div>
+
+                        <!-- (change)="onChangeInput($event, i, 'noRoom', ROOM)" -->
+                    </td>
+                    <td>
+                        <div>
+                            <!-- Normal Mode label="กำหนด"-->
+                            <button pButton type="button" class="ui-button-info small-button" *ngIf="!enableEdit"
+                                (click)="enableEditMethod($event, i, RESORT)" icon="pi pi-pencil"
+                                style="margin-right: .2em"></button>
+                                <!-- Edit Mode -->
+                            <button pButton type="button" class="ui-button-success small-button two-button"
+                                *ngIf="enableEdit && enableEditIndex === i && typeEdit === RESORT"
+                                [disabled]="room.area <= 0 || room.noRoom <= 0"
+                                (click)="saveButton(RESORT)" icon="pi pi-save" label="บันทึก"></button>
+                            <button pButton type="button" class="ui-button-danger small-button"
+                                *ngIf="(enableEdit && enableEditIndex === i && typeEdit === RESORT) || !enableEdit"
+                                (click)="deleteItem(i, RESORT)" icon="pi pi-times"></button>
+                            <!-- <button pButton type="button" class="ui-button-warning"
+                            *ngIf="enableEdit && enableEditIndex === i && typeEdit === ROOM" (click)="cancleEdit(ROOM)"
+                            icon="pi pi-times"></button> -->
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.resort > 0">
+        <span style="color:red"> * การเลือกจำนวนห้องพักส่งผลต่อที่จอดรถ</span> <br>
+        <span style="color:grey"> หมายเหตุ หากห้องพักมีจำนวนเกิน 70 ห้องขึ้นไป ต้องมีการขอ EIA</span>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.resort > 0">
+        <div style="float: right;">
+            <p-button [disabled]="enableEdit && typeEdit !== RESORT" icon="pi pi-plus-circle" label="เพิ่ม" (onClick)="addItem('resort')"></p-button>
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.resort > 0">
+        พื้นที่รวมห้องพัก
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6 " *ngIf="areaData.ratio_area.resort > 0">
+        <div class="box_layout" style="float: right;">
+            <span>{{ getTotalArea(RESORT) | number:'1.2-2' }} </span> ตร.ม.
+        </div>
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.resort > 0">
+        พื้นที่ทางเดินส่วนกลาง 15% ของพื้นที่รวมห้องพัก
+    </div>
+    <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="areaData.ratio_area.resort > 0">
+        <div class="box_layout" style="float: right;">
+            <span>{{ getTotalArea(RESORT) * 0.15 | number:'1.2-2' }} </span> ตร.ม.
         </div>
     </div>
 

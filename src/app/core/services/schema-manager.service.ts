@@ -5,7 +5,6 @@ import * as townhomeSchema from '../../core/schema/basic-type/townhome';
 import * as condoSchema from '../../core/schema/basic-type/condo';
 import * as hotelSchema from '../../core/schema/basic-type/hotel';
 import * as communityMallSchema from '../../core/schema/basic-type/communityMall';
-import * as resortSchema from '../../core/schema/basic-type/resort';
 
 const DEFAULT_SCHEMA = {
   "village": villageSchema.village,
@@ -13,7 +12,6 @@ const DEFAULT_SCHEMA = {
   "condo": condoSchema.condo,
   "hotel": hotelSchema.hotel,
   "communityMall": communityMallSchema.communityMall,
-  "resort" : resortSchema.resort
 }
 
 @Injectable({

@@ -178,14 +178,16 @@ export const areaUnitList = [
             central: 15,
             corridor: 0,
             parking: 5,
-            outdoor: 5
+            outdoor: 5,
+            resort: 0
           },
           area: {
             room: 0,
             central: 0,
             corridor: 0,
             parking: 0,
-            outdoor: 0
+            outdoor: 0,
+            resort: 0
           }
         },
         {
@@ -202,14 +204,16 @@ export const areaUnitList = [
             central: 20,
             corridor: 0,
             parking: 10,
-            outdoor: 10
+            outdoor: 10,
+            resort: 0
           },
           area: {
             room: 0,
             central: 0,
             corridor: 0,
             parking: 0,
-            outdoor: 0
+            outdoor: 0,
+            resort: 0
           }
         },
         {
@@ -226,14 +230,16 @@ export const areaUnitList = [
             central: 30,
             corridor: 0,
             parking: 10,
-            outdoor: 10
+            outdoor: 10,
+            resort: 0
           },
           area: {
             room: 0,
             central: 0,
             corridor: 0,
             parking: 0,
-            outdoor: 0
+            outdoor: 0,
+            resort: 0
           }
         },
         {
@@ -250,141 +256,17 @@ export const areaUnitList = [
             central: 30,
             corridor: 0,
             parking: 10,
-            outdoor: 10
+            outdoor: 10,
+            resort: 0
           },
           area: {
             room: 0,
             central: 0,
             corridor: 0,
             parking: 0,
-            outdoor: 0
+            outdoor: 0,
+            resort: 0
           }
         }
       ]
-},
-{
-  propertyType : ["resort"],
-  areaRatio : [
-      {
-        id: 1,
-        name: 'แบบที่ 1',
-        score: {
-          beauty: 'มาก',
-          density: 'ปานกลาง',
-          congestion: 'ปานกลาง',
-          convenientArea: 'น้อย'
-        },
-        percent: {
-          room: 75,
-          central: 15,
-          corridor: 0,
-          parking: 5,
-          outdoor: 5
-        },
-        area: {
-          room: 0,
-          central: 0,
-          corridor: 0,
-          parking: 0,
-          outdoor: 0
-        },
-        centerArea : {
-          lobby: 65,
-          pool: 50,
-          boh: 150,
-          restroom: 60
-        }
-      },
-      {
-        id: 2,
-        name: 'แบบที่ 2',
-        score: {
-          beauty: 'ปานกลาง',
-          density: 'น้อย',
-          congestion: 'ปานกลาง',
-          convenientArea: 'ปานกลาง'
-        },
-        percent: {
-          room: 60,
-          central: 20,
-          corridor: 0,
-          parking: 10,
-          outdoor: 10
-        },
-        area: {
-          room: 0,
-          central: 0,
-          corridor: 0,
-          parking: 0,
-          outdoor: 0
-        },
-        centerArea : {
-          lobby: 65,
-          pool: 50,
-          boh: 150,
-          restroom: 60
-        }
-      },
-      {
-        id: 3,
-        name: 'แบบที่ 3',
-        score: {
-          beauty: 'ปานกลาง',
-          density: 'น้อย',
-          congestion: 'น้อย',
-          convenientArea: 'มาก'
-        },
-        percent: {
-          room: 50,
-          central: 30,
-          corridor: 0,
-          parking: 10,
-          outdoor: 10
-        },
-        area: {
-          room: 0,
-          central: 0,
-          corridor: 0,
-          parking: 0,
-          outdoor: 0
-        },
-        centerArea : {
-          lobby: 65,
-          pool: 50,
-          boh: 150,
-          restroom: 60
-        }
-      },
-      {
-        id: 4,
-        name: 'กำหนดเอง',
-        score: {
-          beauty: 'ปานกลาง',
-          density: 'น้อย',
-          congestion: 'น้อย',
-          convenientArea: 'มาก'
-        },
-        percent: {
-          room: 50,
-          central: 30,
-          corridor: 0,
-          parking: 10,
-          outdoor: 10
-        },
-        area: {
-          room: 0,
-          central: 0,
-          corridor: 0,
-          parking: 0,
-          outdoor: 0
-        },
-        centerArea : {
-          lobby: 0,
-          pool: 0,
-          boh: 0,
-          restroom: 0
-        }
-      }
-    ]
-}
-]
+}]

@@ -313,12 +313,14 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     this.store.dispatch(new spendingsAction.IsLoadingAction(true));
     const payload = this.generateSpeadingPayload(this.speadingData);
     let newSpendingData = await this.requestManagerService.requestSpeading(payload,'productBasic');
-    newSpendingData = this.mappingSpeadingResponse(this.speadingData, this.parseObject(newSpendingData));
-    this.store.dispatch(new spendingsAction.SuccessAction(newSpendingData));
-    this.store.dispatch(new spendingsAction.IsLoadingAction(false));
-    this.fillInImplicitsCost(newSpendingData);
-    this.fillInProfitCost(newSpendingData);
-    this.fillInRateReturn(newSpendingData);
+    if(newSpendingData) {
+      newSpendingData = this.mappingSpeadingResponse(this.speadingData, this.parseObject(newSpendingData));
+      this.store.dispatch(new spendingsAction.SuccessAction(newSpendingData));
+      this.store.dispatch(new spendingsAction.IsLoadingAction(false));
+      this.fillInImplicitsCost(newSpendingData);
+      this.fillInProfitCost(newSpendingData);
+      this.fillInRateReturn(newSpendingData);
+    }
   }
 
   generateSpeadingPayload(speadingData: any) {

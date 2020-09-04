@@ -81,7 +81,15 @@ export const standardSizes = {
             {name: 'Garden', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 60},
             {name: 'Entrance Gate', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 10},
             {name: 'Entrance Fence', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 20}
-          ]
+          ],
+        'resort' : [
+            {name: 'ห้องพัก', type: 'ห้องพัก', unit: 'หน่วย', size: 'ขนาด'},
+            {name: 'Pool Villa', type: 'ห้องพัก', unit: 'ตร.ม.', size: 65},
+            {name: 'Family Room', type: 'ห้องพัก', unit: 'ตร.ม.', size: 45},
+            {name: 'Jacuzzi Villa', type: 'ห้องพัก', unit: 'ตร.ม.', size: 65},
+            // {name: 'Super deluxe', type: 'ห้องพัก', unit: 'ตร.ม.', size: 30},
+            // {name: 'Deluxe',  type: 'ห้องพัก', unit: 'ตร.ม.', size: 30},
+        ]
     },
     'communityMall' : {
         'room' : [],

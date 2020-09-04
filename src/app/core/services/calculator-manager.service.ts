@@ -108,52 +108,52 @@ export class CalculatorManagerService {
   // Hot fixed
   estimateRoomProduct(areaData:any, roomProducts:Array<any>, defaultSetting: any, currentProperty?: any) {
     let roomArea = areaData.ratio_area.room;
-    // let roomResortArea = areaData.standardArea.
+    let resortArea = areaData.ratio_area.resort;
     let corriArea = roomArea * 0.15; // พื้นที่ทางเดิน
+    let corriResort = resortArea * 0.15;
     roomArea = roomArea - corriArea;
+    resortArea = resortArea - corriResort;
     let roomDeluxeArea = 0;
     let roomSuperDeluxeArea = 0;
+    let poolVillaArea = 0;
+    let familyRoomArea = 0;
+    let jacuzziVilla = 0;
+    console.log(defaultSetting)
     if(defaultSetting === null) {
       roomDeluxeArea = roomArea * 0.8;
       roomSuperDeluxeArea = roomArea * 0.2;
+      poolVillaArea = resortArea * 0.5;
+      familyRoomArea = resortArea * 0.25;
+      jacuzziVilla = resortArea * 0.25;
     } else {
-      roomDeluxeArea = roomArea * (defaultSetting.percent.deluxe/100);
-      roomSuperDeluxeArea = roomArea * (defaultSetting.percent.superDeluxe/100);
+      roomDeluxeArea = roomArea * (+defaultSetting.percent.deluxe/100);
+      roomSuperDeluxeArea = roomArea * (+defaultSetting.percent.superDeluxe/100);
+      poolVillaArea = resortArea * (+defaultSetting.percent.poolVilla/100);
+      familyRoomArea = resortArea * (+defaultSetting.percent.familyRoom/100);
+      jacuzziVilla = resortArea * (+defaultSetting.percent.jacuzziVilla/100);
     }
-    if(currentProperty !== 'resort'){
-      roomProducts = roomProducts.map((data)=> {
-        if(data.name === "Super deluxe") {
-          const x = JSON.parse(JSON.stringify(data));
-          x.noRoom = Math.floor(roomSuperDeluxeArea / data.area);
-          data = x
-        }
-        if(data.name === "Deluxe") {
-          const x = JSON.parse(JSON.stringify(data));
-          x.noRoom = Math.floor(roomDeluxeArea / data.area);
-          data = x
-        }
-        return data;
-      });
-    } else if (currentProperty === 'resort') {
-      roomProducts = roomProducts.map((data)=> {
-        if(data.name === "Pool Villa") {
-          const x = JSON.parse(JSON.stringify(data));
-          x.noRoom = Math.floor(roomArea * 0.5 / data.area);
-          data = x
-        }
-        if(data.name === "Family Room") {
-          const x = JSON.parse(JSON.stringify(data));
-          x.noRoom = Math.floor(roomArea * 0.25 / data.area);
-          data = x
-        }
-        if(data.name === "Jacuzzi Villa") {
-          const x = JSON.parse(JSON.stringify(data));
-          x.noRoom = Math.floor(roomArea * 0.25 / data.area);
-          data = x
-        }
-        return data;
-      });
-    }
+    roomProducts = roomProducts.map((data)=> {
+      const x = JSON.parse(JSON.stringify(data));
+      if(data.name === "Super deluxe") {
+        x.noRoom = Math.floor(roomSuperDeluxeArea / data.area);
+      }
+      if(data.name === "Deluxe") {
+        x.noRoom = Math.floor(roomDeluxeArea / data.area);
+      }
+      if(data.name === "Pool Villa") {
+        x.noRoom = Math.floor(poolVillaArea / data.area);
+      }
+      if(data.name === "Family Room") {
+        x.noRoom = Math.floor(familyRoomArea / data.area);
+      }
+      if(data.name === "Jacuzzi Villa") {
+        x.noRoom = Math.floor(jacuzziVilla / data.area);
+      }
+      data = x
+      console.log(data.noRoom)
+      return data;
+    });
+    console.log(roomProducts)
     return roomProducts;
   }
 

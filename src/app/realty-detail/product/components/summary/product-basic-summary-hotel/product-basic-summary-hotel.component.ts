@@ -36,7 +36,6 @@ export class ProductBasicSummaryHotelComponent implements OnInit, OnChanges {
     this.store.select(fromCore.getProduct)
     .subscribe(data => {
       const opposite = this.owner === 'user' ? 'competitor' : 'user';
-      console.log('payload sum',data.payload)
       this.products = data.payload[this.owner];
       // if (data.payload[this.owner].rooms.length === 0) {
       //   this.products = data.payload[opposite];
@@ -47,7 +46,6 @@ export class ProductBasicSummaryHotelComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     try {
       this.products = changes.ownerData.currentValue;
-      console.log(this.products)
       // let newOwnerData = changes.ownerData;
       // this.ownerData = JSON.parse(JSON.stringify(newOwnerData.currentValue));
     } catch (e) {
