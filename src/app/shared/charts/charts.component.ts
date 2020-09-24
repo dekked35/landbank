@@ -17,12 +17,10 @@ const allCharts = allChart.chartsType;
 const appCharts = {
   village: villageChart.chartsType,
   townhome: townhomeChart.chartsType,
-  condo: hotelChart.chartsType,
+  condo: condoChart.chartsType,
   hotel: hotelChart.chartsType,
   resort: resortChart.chartsType,
   communityMall: communityMallChart.chartsType
-  // condo: condoChart.chartsType,
-  // hotel: hotelChart.chartsType,
 }
 
 
@@ -68,13 +66,13 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     // this.chartMapping('init');
     // console.log('product chart init',this.chartData, this.chartType)
-    this.chartMapper(this.chartType);
+    this.chartMapper(this.chartType, this.owner);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     // this.chartMapping('onChange');
     // console.log('product chart onChange',this.chartData, this.chartType)
-    this.chartMapper(this.chartType);
+    this.chartMapper(this.chartType, this.owner);
 
   }
 
@@ -84,8 +82,12 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
     return myChart.chart;
   }
 
-  chartMapper(chartType: string) {
-    let chartDefault = JSON.parse(JSON.stringify(appCharts[this.currentProperty][chartType]));
+  chartMapper(chartType: string, owner?: string) {
+    let word = chartType;
+    if (owner === 'competitor') {
+      word += 'Com';
+    }
+    let chartDefault = JSON.parse(JSON.stringify(appCharts[this.currentProperty][word]));
     switch (chartType) {
       case 'area':
         if (this.chart !== undefined) {
@@ -138,11 +140,15 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
       series = [+this.chartData.percent.sellArea.toFixed(2), +this.chartData.percent.roadSize.toFixed(2), +this.chartData.percent.greenArea.toFixed(2), +this.chartData.percent.centerArea.toFixed(2)];
     } else if (currentProperty === 'hotel') {
       series = [+this.chartData.percent.room, +this.chartData.percent.resort, +this.chartData.percent.parking, +this.chartData.percent.outdoor, +this.chartData.percent.central];
-    } else {
+    } else if (currentProperty === 'communityMall'){
       // condo commall
-            series = [+this.chartData.percent.room, +this.chartData.percent.central,
-         +this.chartData.percent.corridor, +this.chartData.percent.parking,
-         +this.chartData.percent.outdoor];
+      series = [+this.chartData.percent.room,+this.chartData.percent.corridor, +this.chartData.percent.parking, +this.chartData.percent.outdoor];
+    } else if (currentProperty === 'condo') {
+      series = [+this.chartData.percent.room, +this.chartData.percent.resort, +this.chartData.percent.central, +this.chartData.percent.parking, +this.chartData.percent.outdoor];
+    } else {
+      series = [+this.chartData.percent.room, +this.chartData.percent.central,
+        +this.chartData.percent.corridor, +this.chartData.percent.parking,
+        +this.chartData.percent.outdoor];
     }
     return series;
   }
@@ -155,10 +161,15 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
       if(empty) {
         series = [0,0,0]
       }
+    } else if(this.currentProperty === 'communityMall') {
+      series = [this.chartData.availableArea, this.chartData.usedArea,  this.chartData.totalRoomArea, 0, this.chartData.roomCorridor, this.chartData.totalParkingArea, this.chartData.totalOutdoorArea];
+      let empty = series.every((data) => { return +data === 0 });
+      if(empty) {
+        series = [0,0,0]
+      }
     } else {
-      // condo
       try {
-        series = [this.chartData.totalRoomArea, this.chartData.totalResortArea, this.chartData.totalCentralArea,
+        series = [this.chartData.totalRoomArea, this.chartData.totalResortArea ? this.chartData.totalResortArea : 0 , this.chartData.totalCentralArea,
                 this.chartData.totalCorridor,  this.chartData.totalCentralArea, this.chartData.totalOutdoorArea];
         let empty = series.every((data) => { return +data === 0 });
         if(empty) {
@@ -184,7 +195,7 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
         series = [publicUtility, roadDevelopment, greenArea]
       }
     } else {
-      series = [ this.chartData.totalCostPerMonthAndPreOpening, this.chartData.totalCostPerMonth, this.chartData.costConstruction ];
+      series = [ this.chartData.costSpecielEquipmentAndPreOpening, this.chartData.totalCostPerMonth, this.chartData.costConstruction ];
     }
     return series;
   }

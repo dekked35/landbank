@@ -1,11 +1,18 @@
 export const defaultAreaRatio = [
     {
-        propertyType : ["village","townhome"],
+        propertyType : ["village"],
         default : {
           id: 1,
           name: 'แบบที่ 1'
         }
     },
+    {
+      propertyType : ["townhome"],
+      default : {
+        id: 1,
+        name: 'แบบที่ติดถนนใหญ่'
+      }
+  },
     {
         propertyType : ["condo","hotel","communityMall"],
         default : {

@@ -18,6 +18,7 @@ export class ProductComponent implements OnInit {
     this.store.select(fromCore.getPage)
     .subscribe(page => {
       this.currentProperty = page.page;
+      this.showCompetitor = false;
     });
    }
 

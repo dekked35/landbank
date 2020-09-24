@@ -22,6 +22,11 @@ const needToConvert = [
   'outdoorProducts',
 ];
 
+const areaNoRoom = [
+  'area',
+  'noRoom',
+];
+
 @Component({
   selector: 'app-product-basic-setting-hotel',
   templateUrl: './product-basic-setting-hotel.component.html',
@@ -31,6 +36,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   @Input() owner: string;
   @Input() isCompetitor: boolean;
   @Input() needToRefresh: boolean;
+  // @Input() currentProperty: string;
 
   ROOM = 'room';
   CENTRAL = 'central';
@@ -42,7 +48,8 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   settingSubHeader = '(สัดส่วน % ในโครงการต้องรวมกันได้ 100% เท่านั้น)';
 
   roomType: string;
-  competitorColor = this.isCompetitor ? { 'color' : '#ff781f' } : { }
+  competitorColor = {}
+  competitorBackground = {}
   currentProperty = '';
   areaData: any;
 
@@ -80,6 +87,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   standardSizeResorts: Array<any> = [];
 
   tempProducts: Array<any> = [];
+  editProduct: any;
 
   tempProductStore: any;
 
@@ -96,6 +104,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   displayErrDialog = false;
   displayErrDialogMsg = '';
   focus = true;
+  wording: '';
 
   constructor(private store: Store<any>,
     private requestManagerService: RequestManagerService,
@@ -124,27 +133,29 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
 
     this.subscriptionArea = this.store.select(fromCore.getArea)
       .subscribe(area => {
-        console.log('is in area')
         this.areaData = area.payload;
         if (this.areaData.ratio_area.room > 0 && ['condo', 'hotel', 'communityMall'].includes(this.currentProperty)) {
+          // tslint:disable-next-line: max-line-length
             this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.roomProducts, null, this.currentProperty);
-            this.resortProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.resortProducts, null, this.currentProperty)
+            if (this.currentProperty === 'hotel' || this.currentProperty === 'condo') {
+              // tslint:disable-next-line: max-line-length
+              this.resortProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.resortProducts, null, this.currentProperty)
+            }
             this.dispatchProduct();
           }
       });
 
     this.subscriptionProduct = this.store.select(fromCore.getProduct)
       .subscribe(data => {
-        console.log('is in product')
         this.tempProductStore = data.payload;
-        if(this.tempProductStore && this.tempProductStore[this.owner].rooms && this.tempProductStore[this.owner].rooms.length > 0){
-          console.log('tempProduct',this.tempProductStore)
-          // tslint:disable-next-line: max-line-length
+        if (this.tempProductStore && this.tempProductStore[this.owner].rooms && this.tempProductStore[this.owner].rooms.length > 0) {
           this.roomProducts = this.tempProductStore[this.owner].rooms;
           this.resortProducts = this.tempProductStore[this.owner].resort;
           this.centralProducts = this.tempProductStore[this.owner].centrals.filter( item => item.noRoom > 0);
-          // this.roomProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.tempProductStore[this.owner].rooms, null, this.currentProperty);
           // this.dispatchProduct();
+        }
+        if (data.payload && this.currentProperty === 'condo') {
+          this.wording = data.payload.wordingParking;
         }
       });
 
@@ -166,6 +177,9 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     if (this.areaData.ratio_area.room > 0) {
       this.dispatchProduct();
     }
+
+    this.competitorColor = this.owner === 'competitor' ? { 'color' : '#ff781f' } : { }
+    this.competitorBackground = this.owner === 'competitor' ? { 'background-color' : '#FF781F','border' : '1px solid #FF781F' } : { }
   }
 
   delay(ms: number) {
@@ -199,7 +213,6 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.standardSizeResorts = this.defaultsVariableService.getStandardSize(this.currentProperty, this.RESORT);
 
     productData = this.calculatorManagerService.calculateProduct(this.areaData, productData);
-
     this.store.dispatch(new productAction.SuccessAction(productData));
     this.store.dispatch(new spendingsAction.SuccessAction(speadingsData));
     this.store.dispatch(new implicitCostsAction.SuccessAction(implicitCostData));
@@ -214,9 +227,17 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     const variable = this.getTypeTable(type);
     this.tempProducts = this.selectTypeValue(type);
     this.tempEdit = this[variable].find(item => item.name === this.tempProducts[i].name) ;
+    this.editProduct = this.tempProducts[i]
   }
 
-  saveButton(type) {
+  saveButton(type,index) {
+    areaNoRoom.forEach( item => {
+      this.editProduct[item] = parseFloat(this.editProduct[item].toString().replace(/,/g, ''));
+    })
+    const variable = this.getVariable(type);
+    let test = this.parseObject(this[variable])
+    test[index] = this.editProduct;
+    this[variable] = test;
     this.typeEdit = type;
     this.enableEdit = false;
     this.enableEditIndex = null;
@@ -231,6 +252,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.tempProducts = this.parseObject(this[variable]);
     this[variable] = [...this[variable], initValue];
     this.enableEditIndex = this[variable].length - 1;
+    this.editProduct = initValue;
   }
 
   deleteItem(index, type) {
@@ -302,41 +324,99 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   }
 
   getDefaultByType(type: string) {
-    if (type === this.ROOM) {
-      return {
-        'type': 'ห้องพัก',
-        'name': 'Deluxe',
-        'area': 25,
-        'noRoom': 1
-      };
-    } else if (type === this.CENTRAL) {
-      return {
-        'type': 'ส่วนกลาง',
-        'name': 'Lobby',
-        'area': 80,
-        'noRoom': 1
-      };
-    } else if (type === this.PARKING) {
-      return {
-        'type': 'ที่จอดรถ',
-        'name': 'Carpark 1',
-        'area': 20,
-        'noRoom': 5
-      };
-    } else if (type === this.OUTDOOR) {
-      return {
-        'type': 'พื้นที่ภายนอก',
-        'name': 'Garden',
-        'area': 60,
-        'noRoom': 1
-      };
-    } else if (type === this.RESORT) {
-      return {
-        'type'  : 'ห้องพัก',
-        'name' : 'Pool Villa',
-        'area' : 65,
-        'noRoom' : 1
-      };
+    if (this.currentProperty === 'hotel') {
+      switch (type) {
+        case this.ROOM : return {
+          'type': 'ห้องพัก',
+          'name': 'Deluxe',
+          'area': 25,
+          'noRoom': 1
+        };
+        case this.CENTRAL : return {
+          'type': 'ส่วนกลาง',
+          'name': 'Lobby',
+          'area': 80,
+          'noRoom': 1
+        };
+        case this.PARKING : return {
+          'type': 'ที่จอดรถ',
+          'name': 'Carpark 1',
+          'area': 20,
+          'noRoom': 5
+        };
+        case this.OUTDOOR : return {
+          'type': 'พื้นที่ภายนอก',
+          'name': 'Garden',
+          'area': 60,
+          'noRoom': 1
+        };
+        case this.RESORT : return {
+          'type'  : 'ห้องพัก',
+          'name' : 'Pool Villa',
+          'area' : 65,
+          'noRoom' : 1
+        };
+      }
+    } else if (this.currentProperty === 'communityMall'){
+      switch (type) {
+        case this.ROOM : return {
+          'type': 'ร้านค้า',
+          'name': 'Store Booth',
+          'area': 2,
+          'noRoom': 1
+        };
+        case this.CENTRAL : return {
+          'type': 'ส่วนกลาง',
+          'name': 'Back Office',
+          'area': 50,
+          'noRoom': 1
+        };
+        case this.PARKING : return {
+          'type': 'ที่จอดรถ',
+          'name': 'Carpark 1',
+          'area': 20,
+          'noRoom': 1
+        };
+        case this.OUTDOOR : return {
+          'type': 'พื้นที่ภายนอก',
+          'name': 'Garden',
+          'area': 50,
+          'noRoom': 1
+        };
+      }
+    } else {
+      switch (type) {
+        case this.ROOM : return {
+          'type': 'ห้องพัก',
+          'name': '1 Bedroom (A)',
+          'area': 32,
+          'noRoom': 1
+        };
+        case this.CENTRAL : return {
+          'type': 'ส่วนกลาง',
+          'name': 'Lobby',
+          'area': 80,
+          'noRoom': 1
+        };
+        case this.PARKING : return {
+          'type': 'ที่จอดรถ',
+          'name': 'Carpark 1',
+          'area': 20,
+          'noRoom': 5
+        };
+        case this.OUTDOOR : return {
+          'type': 'พื้นที่ภายนอก',
+          'name': 'Garden',
+          'area': 50,
+          'noRoom': 1
+        };
+        case this.RESORT : return {
+          'type'  : 'ห้องพัก',
+          'name' : '1 Bedroom (B)',
+          'area' : 65,
+          'noRoom' : 1
+        };
+      }
     }
   }
 
@@ -347,9 +427,14 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.checkDisplayErrorDialog();
     if (!this.displayErrDialog) {
         productData[this.owner]['rooms'] = this.parseObject(this.roomProducts);
-        productData[this.owner]['centrals'] = this.parseObject(this.centralProducts);
         productData[this.owner]['parking'] = this.parseObject(this.parkingProducts);
         productData[this.owner]['outdoors'] = this.parseObject(this.outdoorProducts);
+        if (this.currentProperty === 'hotel' || this.currentProperty === 'condo') {
+          productData[this.owner]['resort'] = this.parseObject(this.resortProducts);
+        }
+        if(this.currentProperty !== 'communityMall') {
+          productData[this.owner]['centrals'] = this.parseObject(this.centralProducts);
+        }
         try {
           productData[oppositeOwner] = this.tempProductStore[oppositeOwner];
         } catch (e) {
@@ -357,8 +442,13 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
           .subscribe(data => {
             this.tempProductStore = data.payload;
           });
-          productData[oppositeOwner] = this.tempProductStore[oppositeOwner];
-          storeProduct.unsubscribe();
+          try {
+            productData[oppositeOwner] = this.tempProductStore[oppositeOwner];
+            storeProduct.unsubscribe();
+          } catch (e) {
+            productData[oppositeOwner] = productData[this.owner];
+            storeProduct.unsubscribe();
+          }
         }
         this.store.dispatch(new productAction.IsLoadingAction(true));
         this.getProductService(productData);
@@ -368,7 +458,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   async getProductService(product: any) {
     const payload = {
       // propertyType: this.currentProperty,
-      propertyType: 'hotel',
+      propertyType: this.currentProperty,
       area_input: {
         ...this.areaData,
         'percent': this.areaData.standardArea.percent,
@@ -392,7 +482,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     // type == central means that object it's not show icon.
 
     const payload = {
-      'propertyType': 'hotel',
+      'propertyType': this.currentProperty,
       'area_input': {
         ...this.areaData,
         'percent': this.areaData.standardArea.percent,
@@ -415,7 +505,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     const implicitsCost = this.calculatorManagerService.calculateProductToImplicitsCost(productData[this.owner], this.parseObject(this.implicitsCostData));
 
     const payload = {
-      'propertyType': 'hotel',
+      'propertyType': this.currentProperty,
       'area_input': {
         ...this.areaData,
         'percent': this.areaData.standardArea.percent,
@@ -432,7 +522,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
 
   async fillInRateReturn(productData, speadingData, implicitCostData, rateReturnData) {
     const payload = {
-      'propertyType': 'hotel',
+      'propertyType': this.currentProperty,
       'area_input': {
         ...this.areaData,
         'percent': this.areaData.standardArea.percent,
@@ -480,6 +570,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     const central_used =  this.getTotalArea(this.CENTRAL) + (this.getTotalArea(this.CENTRAL) * 0.2);
     const parking_used =  this.getTotalArea(this.PARKING) + (this.getTotalArea(this.PARKING) * 0.4);
     const outdoor_used =  this.getTotalArea(this.OUTDOOR);
+    const resort_used = this.resortProducts ? this.getTotalArea(this.RESORT) + (this.getTotalArea(this.RESORT) * 0.15) : 0
 
     if (+room_used > +this.areaData.standardArea.area.room) {
       this.displayErrDialog = true;
@@ -487,16 +578,19 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
       console.log('Room error ' + room_used + ':' + this.areaData.standardArea.area.room );
       return '';
     }
-
+    if (+resort_used > +this.areaData.standardArea.area.resort && +this.areaData.standardArea.area.resort !== 0) {
+      this.displayErrDialog = true;
+      this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่บ้านพัก โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
+      console.log('Room error ' + room_used + ':' + this.areaData.standardArea.area.room );
+      return '';
+    }
     if (+central_used > +this.areaData.standardArea.area.central) {
       this.displayErrDialog = true;
       this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ส่วนกลาง โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
-      console.log('central error ' + central_used + ':' + this.areaData.standardArea.area.central );
-
       return '';
     }
 
-    if (+parking_used > +this.areaData.standardArea.area.parking) {
+    if (+parking_used > +this.areaData.standardArea.area.parking && this.areaData.standardArea.area.parking !== 0) {
       this.displayErrDialog = true;
       this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่จอดรถ โปรดกำหนดพื้นที่ใหม่อีกครั้ง';
       return '';
@@ -511,7 +605,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     return '';
   } catch (e) {
     // TODO: Inital Data issue
-    console.log('error');
+    console.log('error',e);
   }
   }
 
@@ -530,7 +624,6 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
     if (this.needToRefresh) {
       setTimeout(() => {
         this.dispatchProduct();

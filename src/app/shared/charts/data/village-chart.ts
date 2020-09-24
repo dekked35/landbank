@@ -47,6 +47,30 @@ export const chartsType = {
             }
         }]
     },
+    productCom: {
+      chart: {
+          //width: 380,
+          type: 'pie',
+          fontFamily: "Prompt",
+      },
+      colors:['#ff6600', '#ff781f', '#ff8b3d'],
+      labels: ["บ้าน 1 ชั้น", "บ้าน 2 ชั้น", "บ้าน 3 ชั้น"],
+      series: [1, 0, 0],
+      legend: {
+                  position: 'bottom'
+              },
+      responsive: [{
+          breakpoint: 480,
+          options: {
+              chart: {
+                  width: 250
+              },
+              legend: {
+                  position: 'bottom'
+              }
+          }
+      }]
+  },
     spendings: {
         chart: {
             //width: 380,

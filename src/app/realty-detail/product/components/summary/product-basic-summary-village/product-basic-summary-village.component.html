@@ -22,7 +22,7 @@
                         <img src="../../../../assets/icons/{{getImage(0)}}">
                     </figure>
                     <figcaption>
-                        <span *ngIf="!is_loading && ownerData.products[0]"> {{ ownerData.products[0].quantity | number}} </span>
+                        <span *ngIf="!is_loading && ownerData.products[0]" [ngStyle]="competitorColor"> {{ ownerData.products[0].quantity | number}} </span>
                         <span *ngIf="is_loading"> 0 </span> หลัง
                     </figcaption>
                 </div>
@@ -33,7 +33,7 @@
                         <img src="../../../../assets/icons/{{getImage(1)}}">
                     </figure>
                     <figcaption>
-                        <span *ngIf="!is_loading && ownerData.products[1]"> {{ ownerData.products[1].quantity | number }} </span>
+                        <span *ngIf="!is_loading && ownerData.products[1]" [ngStyle]="competitorColor"> {{ ownerData.products[1].quantity | number }} </span>
                         <span *ngIf="is_loading"> 0 </span> หลัง
                     </figcaption>
                 </div>
@@ -44,20 +44,20 @@
                         <img src="../../../../assets/icons/{{getImage(2)}}">
                     </figure>
                     <figcaption>
-                        <span *ngIf="!is_loading && ownerData.products[2]"> {{ ownerData.products[2].quantity | number}} </span>
+                        <span *ngIf="!is_loading && ownerData.products[2]" [ngStyle]="competitorColor"> {{ ownerData.products[2].quantity | number}} </span>
                         <span *ngIf="is_loading"> 0 </span> หลัง
                     </figcaption>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                 จำนวนหลังที่ได้ทั้งหมด
-                <span *ngIf="!is_loading"> {{ ownerData.totalQuantity | number }} </span>
+                <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ ownerData.totalQuantity | number }} </span>
                 <span *ngIf="is_loading"> 0 </span> หลัง
 
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                 มูลค่าโครงการรวม
-                <span *ngIf="!is_loading"> {{ ownerData.totalCost | number}} </span>
+                <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ ownerData.totalCost | number}} </span>
                 <span *ngIf="is_loading"> 0 </span> บาท
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
@@ -66,19 +66,19 @@
           <div class="ui-g-1"></div>
           <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
             สระว่ายน้ำ
-            <span *ngIf="!is_loading"> {{ productData?.centerArea[0] | number}} </span>
+            <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[0] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท
           </div>
           <div class="ui-g-1"></div>
           <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
             ฟิตเนส
-            <span *ngIf="!is_loading"> {{ productData?.centerArea[1] | number}} </span>
+            <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[1] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท
           </div>
           <div class="ui-g-1"></div>
           <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
             สำนักงาน
-            <span *ngIf="!is_loading"> {{ productData?.centerArea[2] | number}} </span>
+            <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[2] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท
           </div>
         </div>

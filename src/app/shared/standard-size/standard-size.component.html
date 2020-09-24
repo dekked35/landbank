@@ -1,7 +1,7 @@
 <p-button [style]="competitorColor" [styleClass]="competitorColor" icon="pi pi-table" [label]="buttonLabel" (click)="overlayPanel.toggle($event)"></p-button>
 <p-overlayPanel #overlayPanel [style]="tableSize">
     <div class="wrap_table_sum" *ngIf="standardType !== 'parkingPic'">
-        <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'price' && currentProperty !== 'hotel'">
+        <!-- <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'price' && currentProperty !== 'hotel'">
             <tr>
                 <td>{{ nameLabel }}</td>
                 <td>{{ standardLabel }}</td>
@@ -14,8 +14,8 @@
               <td > {{ item.price }} </td>
               <td> {{ item.unit }} </td>
           </tr>
-        </table>
-        <div *ngIf="currentProperty === 'hotel'" >
+        </table> -->
+        <div *ngIf="currentProperty === 'hotel' || currentProperty === 'communityMall'" >
           <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'price'">
               <tr *ngFor="let item of standardSize" >
                   <td>
@@ -45,6 +45,15 @@
                   <td> {{ item.area }} </td>
               </tr>
           </table>
+          <table class="table_sum_3" cellspacing="0" cellpadding="0" *ngIf="standardType === 'price'">
+            <tr *ngFor="let item of standardSize" >
+                <td>
+                    {{ item.type }}
+                </td>
+                <td > {{ item.size }} </td>
+                <td> {{ item.area }} </td>
+            </tr>
+        </table>
         </div>
         <div *ngIf="currentProperty === 'townhome'" >
           <table class="table_sum_4" cellspacing="0" cellpadding="0" *ngIf="standardType === 'size'">

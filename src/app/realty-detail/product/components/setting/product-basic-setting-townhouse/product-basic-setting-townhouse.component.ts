@@ -13,6 +13,19 @@ import * as implicitCostsAction from '../../../../../core/actions/implicit-costs
 import * as rateReturnAction from '../../../../../core/actions/rate-return.actions';
 import * as fromCore from '../../../../../core/reducers';
 
+const imageType = {
+  townhome : {
+    0 : 'townhome2.svg' ,
+    1 : 'townhome3.svg' ,
+    2 : 'townhome4.svg'
+  },
+  townhomeCom : {
+    0 : 'townhome2-2.png' ,
+    1 : 'townhome3-2.png' ,
+    2 : 'townhome4-2.png'
+  },
+};
+
 @Component({
   selector: 'app-product-basic-setting-townhouse',
   templateUrl: './product-basic-setting-townhouse.component.html',
@@ -31,6 +44,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
   productData: any;
   allArea : number;
   allArea4 : number
+  competitorColor : {};
 
   header = {
     'competitor': 'โครงการคู่แข่ง',
@@ -43,6 +57,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     'frontDepth',
     'behindDepth'
   ];
+
+
 
   // convert = [
   //   'area',
@@ -168,7 +184,7 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     // this.calculateSize();
     this.convertNumAndCheckSize();
     this.getBasicService(this.ownerProductData);
-
+    this.competitorColor = this.owner === 'competitor' ? { 'color' : '#ff781f' } : { }
   }
 
   initializeProductSchema() {
@@ -440,6 +456,14 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
     } catch (e) {
       console.log('error');
     }
+  }
+
+  getImage(index: number){
+    let wording = this.currentProperty;
+    if (this.owner === 'competitor') {
+      wording += 'Com';
+    }
+    return imageType[wording][index];
   }
 
   ngOnDestroy(){

@@ -8,8 +8,8 @@ export const chartsType = {
         legend: {
           position: 'bottom'
         },
-        colors: ['#0060be', '#feb019', '#00be6b'],
-        labels: ['พื้นที่รวมห้องพัก', 'พื้นที่รวมส่วนกลาง', 'พื้นที่รวมทางเดิน','พื้นที่จอดรถในอาคาร'],
+        colors: ['#0060be', '#FF0000', '#feb019', '#00be6b', '#6B77E1',  '#81894E'],
+        labels: ['พื้นที่รวมห้องพัก Type A','พื้นที่รวมห้องพัก Type B', 'พื้นที่รวมส่วนกลาง', 'พื้นที่รวมทางเดิน','พื้นที่จอดรถในอาคาร', 'พื้นที่นอกอาคาร'],
         series: [2294, 568, 429.3, 308],
         responsive: [{
           breakpoint: 480,
@@ -29,8 +29,8 @@ export const chartsType = {
             type: 'pie',
             fontFamily: "Prompt",
         },
-        colors:['#0060be', '#094575', '#133d55'],
-        labels: ["บ้าน 1 ชั้น", "บ้าน 2 ชั้น", "บ้าน 3 ชั้น"],
+        colors:['#0060be', '#FF0000', '#FFDA29', '#009499',  '#feb019', '#81894E'],
+        labels: ["พื้นที่รวมห้องพัก Type A","พื้นที่รวมห้องพัก Type B","พื้นที่รวมส่วนกลาง", "พื้นที่รวมทางเดิน", "พื้นที่จอดรถในอาคาร", "พื้นที่ภายนอกอาคารไม่ได้คำนวณ"],
         series: [1, 0, 0],
         legend: {
                     position: 'bottom'
@@ -46,6 +46,30 @@ export const chartsType = {
                 }
             }
         }]
+    },
+    productCom: {
+      chart: {
+          //width: 380,
+          type: 'pie',
+          fontFamily: "Prompt",
+      },
+      colors:['#FF6600', '#FF0000', '#FFDA29', '#009499',  '#feb019', '#81894E'],
+      labels: ["พื้นที่รวมห้องพัก","พื้นที่รวมบ้านพัก","พื้นที่รวมส่วนกลาง", "พื้นที่รวมทางเดิน", "พื้นที่จอดรถในอาคาร", "พื้นที่ภายนอกอาคารไม่ได้คำนวณ"],
+      series: [1, 0, 0, 0, 0],
+      legend: {
+                  position: 'bottom'
+              },
+      responsive: [{
+          breakpoint: 480,
+          options: {
+              chart: {
+                  width: 320
+              },
+              legend: {
+                  position: 'bottom'
+              }
+          }
+      }]
     },
     spendings: {
         chart: {

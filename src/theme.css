@@ -1014,7 +1014,7 @@ body .ui-slider .ui-slider-handle {
   transition: box-shadow 0.2s;
 }
 
-body .competitor .ui-slider .ui-slider-handle {
+body .competitorBack .ui-slider .ui-slider-handle {
   height: 1.3em;
   width: 1.3em;
   background-color: #FF8C00;
@@ -1037,7 +1037,7 @@ body .competitor .ui-slider .ui-slider-handle {
 body .ui-slider .ui-slider-range {
   background-color: #0d70b5;
 }
-body .competitor .ui-slider .ui-slider-range {
+body .competitorBack .ui-slider .ui-slider-range {
   background-color: #ff781f;
 }
 /* body .ui-slider:not(.ui-state-disabled) .ui-slider-handle:hover {
@@ -1420,6 +1420,11 @@ body .ui-button {
   -o-transition: background-color 0.2s, box-shadow 0.2s;
   -webkit-transition: background-color 0.2s, box-shadow 0.2s;
   transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.competitor{
+  background-color : #FF781F !important;
+  border : 1px solid #FF781F !important;
 }
 
 @media (max-width: 767px) {

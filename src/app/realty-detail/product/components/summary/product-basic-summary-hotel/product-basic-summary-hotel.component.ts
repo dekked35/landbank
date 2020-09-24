@@ -18,7 +18,8 @@ export class ProductBasicSummaryHotelComponent implements OnInit, OnChanges {
   products: any ;
   areaData: any;
   conclustionText : string = "สรุปจำนวน";
-  isin: number = 1
+  wording: string = '';
+  competitorColor = {}
   constructor(private store: Store<any>) {}
 
   ngOnInit() {
@@ -35,12 +36,17 @@ export class ProductBasicSummaryHotelComponent implements OnInit, OnChanges {
 
     this.store.select(fromCore.getProduct)
     .subscribe(data => {
-      const opposite = this.owner === 'user' ? 'competitor' : 'user';
-      this.products = data.payload[this.owner];
-      // if (data.payload[this.owner].rooms.length === 0) {
-      //   this.products = data.payload[opposite];
-      // }
+      if (data.payload[this.owner].rooms.length === 0) {
+        this.products = data.payload[this.owner];
+      }
+      if(data.payload){
+        const {wordingParking} = data.payload;
+        if (wordingParking) {
+          this.wording = data.payload.wordingParking;
+        }
+      }
     });
+    this.competitorColor = this.owner === 'competitor' ? { 'color' : '#ff781f' } : { }
   }
 
   ngOnChanges(changes: SimpleChanges) {

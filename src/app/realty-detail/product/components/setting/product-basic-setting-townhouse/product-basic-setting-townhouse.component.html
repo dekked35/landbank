@@ -3,24 +3,24 @@
         <span class="font-red-color"> {{ displayErrDialogMsg }}</span>
     </p-dialog>
 
-    <h3> {{ settingHeader }} <span> {{ settingSubHeader }}</span></h3>
+    <h3 [ngStyle]="competitorColor"> {{ settingHeader }} <span> {{ settingSubHeader }}</span></h3>
 
     <div class="ui-g">
         <div class="ui-g-12 ui-md-12 ui-lg-12">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-12 ui-md-12 ui-lg-12">
                   <div class="ui-g-6 ui-md-6 ui-lg-6">
-                    <h4> ความกว้างและความลึกของอาคารพาณิชย์</h4>
+                    <h4 [ngStyle]="competitorColor"> ความกว้างและความลึกของอาคารพาณิชย์</h4>
                   </div>
                   <div class="ui-g-6 ui-md-6 ui-lg-6" style="float: right; text-align: right;">
-                    <app-standard-size [standardType]="'size'" [type]="'product'"></app-standard-size>
+                    <app-standard-size [standardType]="'size'" [type]="'product'" [owner]="owner"></app-standard-size>
                   </div>
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-6">
                     <div class="ui-g-6 ui-md-6 ui-lg-6">
                         <p>ความกว้าง</p>
                     </div>
-                    <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
+                    <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value" [ngStyle]="competitorColor">
                       <input [(ngModel)]="ownerProductData.width" type="number"
                       pKeyFilter="num" pInputText class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
                         <!-- <p> {{ ownerProductData.width }} ม.</p> -->
@@ -34,7 +34,7 @@
                     <div class="ui-g-6 ui-md-6 ui-lg-6">
                         <p>ความลึก</p>
                     </div>
-                    <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
+                    <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value" [ngStyle]="competitorColor">
                       <input [(ngModel)]="ownerProductData.depth" type="number"
                       pKeyFilter="num" pInputText  class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
                         <!-- <p> {{ ownerProductData.depth }} ม.</p> -->
@@ -48,7 +48,7 @@
                     <div class="ui-g-7 ui-md-7 ui-lg-7">
                         <p>ความลึกที่จอดรถด้านหน้า</p>
                     </div>
-                    <div class="ui-g-5 ui-md-5 ui-lg-5 unit_value">
+                    <div class="ui-g-5 ui-md-5 ui-lg-5 unit_value" [ngStyle]="competitorColor">
                       <input [(ngModel)]="ownerProductData.frontDepth" type="number"
                       pInputText pKeyFilter="num" class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
                         <!-- <p> {{ ownerProductData.frontDepth }} ม.</p> -->
@@ -62,7 +62,7 @@
                     <div class="ui-g-7 ui-md-7 ui-lg-7">
                         <p>ความลึกที่ซักล้างด้านหลัง</p>
                     </div>
-                    <div class="ui-g-5 ui-md-5 ui-lg-5 unit_value">
+                    <div class="ui-g-5 ui-md-5 ui-lg-5 unit_value" [ngStyle]="competitorColor">
                       <input [(ngModel)]="ownerProductData.behindDepth" type="number"
                       pInputText pKeyFilter="num" class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ม.
                         <!-- <p> {{ ownerProductData.behindDepth }} ม.</p> -->
@@ -77,7 +77,7 @@
                     <div class="form-group">
                         <label>พื้นที่ใช้สอยภายใน/1ชั้น</label><span> ตร.ม.</span>
                         <div class="expense_price">
-                            <span style="display: contents"> {{ ownerProductData.depth * ownerProductData.width | number:'1.2-2'}}</span>
+                            <span style="display: contents" [ngStyle]="competitorColor"> {{ ownerProductData.depth * ownerProductData.width | number:'1.2-2'}}</span>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                     <div class="form-group">
                         <label>พื้นที่ที่จอดรถด้านหน้า</label><span> ตร.ม.</span>
                         <div class="expense_price">
-                          <span style="display: contents">{{ ownerProductData.frontDepth * ownerProductData.width | number:'1.2-2' }} </span>
+                          <span style="display: contents" [ngStyle]="competitorColor">{{ ownerProductData.frontDepth * ownerProductData.width | number:'1.2-2' }} </span>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                     <div class="form-group">
                         <label>พื้นที่ที่ซักล้างด้านหลัง</label><span> ตร.ม.</span>
                         <div class="expense_price">
-                            <span style="display: contents"> {{ ownerProductData.behindDepth * ownerProductData.width  | number:'1.2-2'}}</span>
+                            <span style="display: contents" [ngStyle]="competitorColor"> {{ ownerProductData.behindDepth * ownerProductData.width  | number:'1.2-2'}}</span>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                     <div class="form-group">
                         <label>พื้นที่ใช้สอยรวมชั้นที่ 1 </label><span> ตร.ม.</span>
                         <div class="expense_price">
-                            <span style="display: contents">
+                            <span style="display: contents" [ngStyle]="competitorColor">
                                 {{  allArea   | number:'1.2-2'}}</span>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                     <div class="form-group">
                         <label>พื้นที่ใช้สอยรวมชั้นที่ 1 ตารางวา</label><span> ตร.ว.</span>
                         <div class="expense_price">
-                            <span style="display: contents">
+                            <span style="display: contents" [ngStyle]="competitorColor">
                                 {{  allArea4 | number:'1.2-2'}}</span>
                         </div>
                     </div>
@@ -120,28 +120,28 @@
 
         <div class="ui-g-12 ui-md-12 ui-lg-12">
             <div class="ui-g-12 ui-md-4 ui-lg-6 box_layout" style="float: center;">
-                พื้นที่ที่ใช้ได้ทั้งหมด <span>{{  productData[owner].usedArea| number }}</span> ตร.ว.
+                พื้นที่ที่ใช้ได้ทั้งหมด <span [ngStyle]="competitorColor">{{  productData[owner].usedArea| number }}</span> ตร.ว.
             </div>
             <div class="ui-g-12 ui-md-4 ui-lg-6 box_layout" style="float: center;">
-                พื้นที่คงเหลือ <span>{{  productData[owner].remainingArea | number }}</span> ตร.ว.
+                พื้นที่คงเหลือ <span [ngStyle]="competitorColor">{{  productData[owner].remainingArea | number }}</span> ตร.ว.
             </div>
             <div style="float: right; text-align: right;">
-                <app-standard-size [standardType]="'size'" [type]="'village'"></app-standard-size>
+                <app-standard-size [standardType]="'size'" [type]="'village'" [owner]="owner"></app-standard-size>
             </div>
         </div>
         <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[0].ratio !== '0.00'">
             <div class="wrap_product_logo">
-                <img src="../../../../assets/icons/townhome2.svg">
-                <span> อาคารพาณิชย์ 2 ชั้น</span>
+                <img src="../../../../assets/icons/{{getImage(0)}}">
+                <span [ngStyle]="competitorColor"> อาคารพาณิชย์ 2 ชั้น</span>
             </div>
         </div>
         <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center" *ngIf="products[0].ratio !== '0.00'">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    สัดส่วน <span> {{products[0].ratio }}</span> %
+                    สัดส่วน <span [ngStyle]="competitorColor"> {{products[0].ratio }}</span> %
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    คิดเป็น <span> {{ products[0].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ว.
+                    คิดเป็น <span [ngStyle]="competitorColor"> {{ products[0].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ว.
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
@@ -151,7 +151,7 @@
                 <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
                     <!-- <input [(ngModel)]=" products[0].area" type="text"
                       pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" /> ตร.ม. -->
-                    <p> {{ products[0].area | number:'1.2-2' }} ตร.ม.</p>
+                    <p [ngStyle]="competitorColor"> {{ products[0].area | number:'1.2-2' }} ตร.ม.</p>
                 </div>
                 <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ">
                     <p-slider [(ngModel)]="products[0].area" [min]="product_limit.area.min"
@@ -165,7 +165,7 @@
                 <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
                     <!-- <input [(ngModel)]=" products[0].stairArea" type="text"
                     pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" /> ตร.ม. -->
-                    <p> {{ products[0].stairArea | number:'1.2-2' }} ตร.ม.</p>
+                    <p [ngStyle]="competitorColor"> {{ products[0].stairArea | number:'1.2-2' }} ตร.ม.</p>
                 </div>
                 <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                     <p-slider [(ngModel)]="products[0].stairArea" [min]="product_limit.stairArea.min"
@@ -190,7 +190,7 @@
                 <div class="ui-g-6 ui-md-6 ui-lg-7">
                     <p>ราคาขาย</p>
                 </div>
-                <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
+                <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value" [ngStyle]="competitorColor">
                     <input [(ngModel)]=" products[0].cost " type="text"
                       pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" /> ล้านบาท
                     <!-- <p> {{ products[0].cost }} ล้านบาท</p> -->
@@ -222,17 +222,17 @@
 
         <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[1].ratio !== '0.00'">
             <div class="wrap_product_logo">
-                <img src="../../../../assets/icons/townhome3.svg">
-                <span> อาคารพาณิชย์ 3 ชั้น</span>
+                <img src="../../../../assets/icons/{{getImage(1)}}">
+                <span [ngStyle]="competitorColor"> อาคารพาณิชย์ 3 ชั้น</span>
             </div>
         </div>
         <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center" *ngIf="products[1].ratio !== '0.00'">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    สัดส่วน <span> {{products[1].ratio }}</span> %
+                    สัดส่วน <span [ngStyle]="competitorColor"> {{products[1].ratio }}</span> %
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    คิดเป็น <span> {{ products[1].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ว.
+                    คิดเป็น <span [ngStyle]="competitorColor"> {{ products[1].ratio/100 * productData[owner].usedArea  | number:'1.2-2' }} </span> ตร.ว.
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
@@ -242,7 +242,7 @@
                 <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
                   <!-- <input [(ngModel)]="products[1].area" type="text"
                       pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ตร.ม. -->
-                    <p> {{ products[1].area | number:'1.2-2' }} ตร.ม.</p>
+                    <p [ngStyle]="competitorColor"> {{ products[1].area | number:'1.2-2' }} ตร.ม.</p>
                 </div>
                 <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ">
                     <p-slider [(ngModel)]="products[1].area" [min]="product_limit.area.min"
@@ -256,7 +256,7 @@
                 <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
                   <!-- <input [(ngModel)]="products[1].stairArea" type="text"
                       pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ตร.ม. -->
-                      <p> {{ products[1].stairArea | number:'1.2-2' }} ตร.ม.</p>
+                      <p [ngStyle]="competitorColor"> {{ products[1].stairArea | number:'1.2-2' }} ตร.ม.</p>
                 </div>
                 <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                     <p-slider [(ngModel)]="products[1].stairArea" [min]="product_limit.stairArea.min"
@@ -281,7 +281,7 @@
                 <div class="ui-g-6 ui-md-6 ui-lg-7">
                     <p>ราคาขาย</p>
                 </div>
-                <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
+                <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value" [ngStyle]="competitorColor">
                   <input [(ngModel)]="products[1].cost" type="text"
                       pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ล้านบาท
                     <!-- <p> {{ products[1].cost }} ล้านบาท</p> -->
@@ -313,17 +313,17 @@
 
         <div class="ui-g-12 ui-md-2 ui-lg-2" *ngIf="products[2].ratio !== '0.00'">
             <div class="wrap_product_logo">
-                <img src="../../../../assets/icons/townhome4.svg">
-                <span> อาคารพาณิชย์ 4 ชั้น</span>
+                <img src="../../../../assets/icons/{{getImage(2)}}">
+                <span [ngStyle]="competitorColor"> อาคารพาณิชย์ 4 ชั้น</span>
             </div>
         </div>
         <div class="ui-g-12 ui-md-10 ui-lg-10 slider_center" *ngIf="products[2].ratio !== '0.00'">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    สัดส่วน <span> {{products[2].ratio }}</span> %
+                    สัดส่วน <span [ngStyle]="competitorColor"> {{products[2].ratio }}</span> %
                 </div>
                 <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: center;">
-                    คิดเป็น <span> {{ products[2].ratio/100 * productData[owner].usedArea  | number:'1.2-2'}} </span> ตร.ว.
+                    คิดเป็น <span [ngStyle]="competitorColor"> {{ products[2].ratio/100 * productData[owner].usedArea  | number:'1.2-2'}} </span> ตร.ว.
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
@@ -333,7 +333,7 @@
                 <div class="ui-g-6 ui-md-6 ui-lg-6 unit_value">
                   <!-- <input [(ngModel)]="products[2].area" type="text"
                       pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ตร.ม. -->
-                    <p> {{ products[2].area | number:'1.2-2' }} ตร.ม.</p>
+                    <p [ngStyle]="competitorColor"> {{ products[2].area | number:'1.2-2' }} ตร.ม.</p>
                 </div>
                 <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ">
                     <p-slider [(ngModel)]="products[2].area" [min]="product_limit.area.min"
@@ -347,7 +347,7 @@
                 <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
                   <!-- <input [(ngModel)]="products[2].stairArea" type="text"
                       pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ตร.ม. -->
-                    <p> {{ products[2].stairArea | number:'1.2-2' }} ตร.ม.</p>
+                    <p [ngStyle]="competitorColor"> {{ products[2].stairArea | number:'1.2-2' }} ตร.ม.</p>
                 </div>
                 <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
                     <p-slider [(ngModel)]="products[2].stairArea" [min]="product_limit.stairArea.min"
@@ -372,7 +372,7 @@
               <div class="ui-g-6 ui-md-6 ui-lg-7">
                   <p>ราคาขาย</p>
               </div>
-              <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value">
+              <div class="ui-g-6 ui-md-6 ui-lg-5 unit_value" [ngStyle]="competitorColor">
                 <input [(ngModel)]="products[2].cost" type="text"
                     pInputText inputWithComma class="input-slider-60" (change)="handleRatioEnd(0, $event)" />ล้านบาท
                   <!-- <p> {{ products[2].cost }} ล้านบาท</p> -->

@@ -57,7 +57,8 @@ html {
 }
 
 .font-red-color {
-  color:#C01120 !important;
+  /* color:#C01120 !important; */
+  color:red !important;
 }
 
 
@@ -175,6 +176,10 @@ figure {
   color: #0060be;
   font-weight: 600;
   padding-left: 10px;
+}
+
+.profit-label{
+  font-size: 20px;
 }
 
 .box_layout label {

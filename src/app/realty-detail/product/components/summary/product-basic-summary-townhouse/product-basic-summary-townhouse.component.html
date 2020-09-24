@@ -8,7 +8,7 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-9">
             <!-- <app-area-chart [chartName]="settingGraph"></app-area-chart> -->
-                <app-charts [chartType]="'product'" [chartData]="ownerData.products"> </app-charts>
+                <app-charts [chartType]="'product'" [chartData]="ownerData.products" [owner]="owner"> </app-charts>
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-12">
             <div class="ui-g-12 ui-md-12 ui-lg-12">
@@ -20,38 +20,38 @@
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="ownerData.products[0].quantity !== 0">
                 <div>
                     <figure>
-                        <img src="../../../../assets/icons/townhome2.svg">
+                        <img src="../../../../assets/icons/{{getImage(0)}}">
                     </figure>
                     <figcaption>
-                        <span> {{ ownerData.products[0].quantity | number:'1.0-0'  }} </span> หลัง
+                        <span [ngStyle]="competitorColor"> {{ ownerData.products[0].quantity | number:'1.0-0'  }} </span> หลัง
                     </figcaption>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout " *ngIf="ownerData.products[1].quantity !== 0">
                 <div>
                     <figure>
-                        <img src="../../../../assets/icons/townhome3.svg">
+                        <img src="../../../../assets/icons/{{getImage(1)}}">
                     </figure>
                     <figcaption>
-                        <span> {{ ownerData.products[1].quantity | number:'1.0-0' }} </span> หลัง
+                        <span [ngStyle]="competitorColor"> {{ ownerData.products[1].quantity | number:'1.0-0' }} </span> หลัง
                     </figcaption>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="ownerData.products[2].quantity !== 0">
                 <div>
                     <figure>
-                        <img src="../../../../assets/icons/townhome4.svg">
+                        <img src="../../../../assets/icons/{{getImage(2)}}">
                     </figure>
                     <figcaption>
-                        <span> {{ ownerData.products[2].quantity | number:'1.0-0'  }} </span> หลัง
+                        <span [ngStyle]="competitorColor"> {{ ownerData.products[2].quantity | number:'1.0-0'  }} </span> หลัง
                     </figcaption>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                จำนวนหลังที่ได้ทั้งหมด <span> {{ ownerData.totalQuantity | number:'1.0-0'  }} </span> หลัง
+                จำนวนหลังที่ได้ทั้งหมด <span [ngStyle]="competitorColor"> {{ ownerData.totalQuantity | number:'1.0-0'  }} </span> หลัง
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                มูลค่าโครงการรวม  <span> {{ ownerData.totalCost | number}} </span> บาท
+                มูลค่าโครงการรวม  <span [ngStyle]="competitorColor"> {{ ownerData.totalCost | number}} </span> บาท
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
               พื้นที่ส่วนกลาง
@@ -59,19 +59,19 @@
           <div class="ui-g-1"></div>
           <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
             สระว่ายน้ำ
-            <span *ngIf="!is_loading"> {{ productData?.centerArea[0] | number}} </span>
+            <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[0] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท
           </div>
           <div class="ui-g-1"></div>
           <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
             ฟิตเนส
-            <span *ngIf="!is_loading"> {{ productData?.centerArea[1] | number}} </span>
+            <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[1] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท
           </div>
           <div class="ui-g-1"></div>
           <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
             สำนักงาน
-            <span *ngIf="!is_loading"> {{ productData?.centerArea[2] | number}} </span>
+            <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[2] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท
           </div>
         </div>

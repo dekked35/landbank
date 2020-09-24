@@ -33,9 +33,14 @@ const hotelWord = [
 
 const imageType = {
   village : {
-    0 : 'home1.svg',
-    1 : 'home2.svg',
+    0 : 'home1.svg' ,
+    1 : 'home2.svg' ,
     2 : 'home3.svg'
+  },
+  villageCom : {
+    0 : 'home1-1.png',
+    1 : 'home2-2.png',
+    2 : 'home3-3.png'
   },
   resort : {
     0 : "room/Pool Villa.svg",
@@ -178,7 +183,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
       })
     });
     this.rateControl = new FormControl('', [Validators.max(100), Validators.min(0)]);
-    this.competitorColor = this.isCompetitor ? { 'color' : '#ff781f' } : { }
+    this.competitorColor = this.owner === 'competitor' ? { 'color' : '#ff781f' } : { }
   }
 
   initializeProductSchema() {
@@ -477,7 +482,11 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   }
 
   getImage(index: number){
-    return imageType[this.currentProperty][index];
+    let wording = this.currentProperty;
+    if (this.owner === 'competitor') {
+      wording += 'Com';
+    }
+    return imageType[wording][index];
   }
 
   ngOnDestroy() {

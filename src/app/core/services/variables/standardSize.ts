@@ -53,11 +53,9 @@ export const standardSizes = {
     'hotel' : {
         'room' : [
             {name: 'ห้องพัก', type: 'ห้องพัก', unit: 'หน่วย', size: 'ขนาด'},
-            {name: 'Pool Villa', type: 'ห้องพัก', unit: 'ตร.ม.', size: 65},
-            {name: 'Jacuzzi Villa', type: 'ห้องพัก', unit: 'ตร.ม.', size: 65},
-            {name: 'Family Room', type: 'ห้องพัก', unit: 'ตร.ม.', size: 45},
-            {name: 'Super deluxe', type: 'ห้องพัก', unit: 'ตร.ม.', size: 30},
-            {name: 'Deluxe',  type: 'ห้องพัก', unit: 'ตร.ม.', size: 30},
+            {name: '1 Bedroom', type: 'ห้องพัก', unit: 'ตร.ม.', size: 32},
+            {name: '2 Bedroom', type: 'ห้องพัก', unit: 'ตร.ม.', size: 35},
+            {name: '3 Bedroom', type: 'ห้องพัก', unit: 'ตร.ม.', size: 55},
           ],
         'central' : [
             {name: 'ส่วนกลาง', type: 'ส่วนกลาง', unit: 'หน่วย', size: 'ขนาด'},
@@ -92,10 +90,32 @@ export const standardSizes = {
         ]
     },
     'communityMall' : {
-        'room' : [],
+        'room' : [
+            {name: 'พื้นที่ให้เช่า', type: 'ห้องพัก', unit: 'หน่วย', size: 'ขนาด'},
+            {name: 'Store Booth', type: 'ห้องพัก', unit: 'ตร.ม.', size: 50 },
+            {name: 'Small Store', type: 'ห้องพัก', unit: 'ตร.ม.', size: 10 },
+            {name: 'Restaurant', type: 'ห้องพัก', unit: 'ตร.ม.', size: 60 },
+            {name: 'IT Store', type: 'ห้องพัก', unit: 'ตร.ม.', size: 30 },
+            {name: 'Electronics Store', type: 'ห้องพัก', unit: 'ตร.ม.', size: 40 },
+            {name: 'Gym', type: 'ห้องพัก', unit: 'ตร.ม.', size: 90 },
+            {name: 'Spa', type: 'ห้องพัก', unit: 'ตร.ม.', size: 60 },
+            {name: 'Cinema', type: 'ห้องพัก', unit: 'ตร.ม.', size: 120 },
+            {name: 'Food Court', type: 'ห้องพัก', unit: 'ตร.ม.', size: 100 },
+            {name: 'General Store', type: 'ห้องพัก', unit: 'ตร.ม.', size: 50 },
+            {name: 'Learning Store', type: 'ห้องพัก', unit: 'ตร.ม.', size: 60 },
+        ],
         'central' : [],
-        'parking' : [],
-        'outdoor' : []
+        'parking' : [
+          {name: 'ที่จอดรถ', type: 'ที่จอดรถ', unit: 'หน่วย', size: 'ขนาด'},
+          {name: 'Carpark 1', type: 'ที่จอดรถ', unit: 'ตร.ม.', size: 20},
+          {name: 'Carpark 2', type: 'ที่จอดรถ', unit: 'ตร.ม.', size: 40}
+        ],
+        'outdoor' : [
+          {name: 'พื้นที่ภายนอก', type: 'พื้นที่ภายนอก', unit: 'หน่วย', size: 'ขนาด'},
+          {name: 'Garden', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 50},
+          {name: 'Entrance Gate', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 10},
+          {name: 'Entrance Fence', type: 'พื้นที่ภายนอก', unit: 'ตร.ม.', size: 20}
+        ],
     },
     'resort' : {
       'resort' : [

@@ -1,6 +1,6 @@
 export const communityMall = {
     "area": {
-        "townPlanColor": "#ff8407",
+        "townPlanColor": "",
         "farValue" : 3,
         "osrValue": 10,
         "totalArea": 5000,
@@ -16,15 +16,15 @@ export const communityMall = {
                 "convenientArea": 'น้อย'
             },
             "percent": {
-                "room": 70,
-                "central": 15,
-                "corridor": 5,
-                "parking": 5,
-                "outdoor": 5
+                "room": 75,
+                // "central": 15,
+                "corridor": 10,
+                "parking": 10,
+                "outdoor": 10
             },
             "area": {
                 "room": 0,
-                "central": 0,
+                // "central": 0,
                 "corridor": 0,
                 "parking": 0,
                 "outdoor": 0
@@ -32,12 +32,12 @@ export const communityMall = {
         },
         "ratio_area" : {
             "room": 0,
-            "central": 0,
+            // "central": 0,
             "corridor": 0,
             "parking": 0,
             "outdoor": 0
         },
-        
+
         "costLand" : 0,
         "costLandType" : "buy", // "rent" , "buy", ""
         "deposit": 500000, //เงินมัดจำ
@@ -85,13 +85,13 @@ export const communityMall = {
     "spendings": {
         "rooms" : [],
         "totalRoomCost" : 0.0, // ต้นทุนก่อสร้างห้องพักทั้งหมด
-        "centrals" : [],
-        "totalCentralCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่ส่วนกลาง
+        // "centrals" : [],
+        // "totalCentralCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่ส่วนกลาง
         "parking" : [],
         "totalParkingCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่จอดรถ
         "outdoors" : [],
         "totalOutDoorCost" : 0.0, // รวมต้นทุนก่อสร้างพื้นที่ภายนอก
-        "costPerMonths" : [
+        "costPerMonth" : [
             {
                 "type" : "ค่าการตลาด",
                 "cost" : 1000,
@@ -181,10 +181,10 @@ export const communityMall = {
             }
         ],
 
-        
+
         "totalEquipmentsCost" : 0.0, // รวมค่าใช้จ่ายอุปกรณ์ทั้งหมด
-        "totalCostPerMonthAndPreOpening" : 0.0, // รวมค่าใช้จ่ายรายเดือนและ Pre-Opening 
- 
+        "totalCostPerMonthAndPreOpening" : 0.0, // รวมค่าใช้จ่ายรายเดือนและ Pre-Opening
+
         "costLand" : 0.0, // ค่าที่ดินทั้งหมด
         "costSpecielEquipmentAndPreOpening" : 0.0, // ค่าใช้จ่ายรายเดือน
         "costConstruction" : 0.0, // ค่าก่อสร้าง
@@ -220,7 +220,7 @@ export const communityMall = {
         "estimatedIncomePerMonth" : 0.0,
         "totalIncomePerYear" : 0.0
     },
-    "profit" : { // ยังไม่แน่นอน รอ confirm 
+    "profit" : { // ยังไม่แน่นอน รอ confirm
         "profitPerItems" : [
             {
                 "roomType"  : "", // ชนิดของห้อง
@@ -267,14 +267,14 @@ export const communityMall = {
         "financeCosts" : 0.0, // ต้นทุนทางการเงิน -> ลบออก
         "paybackPeriod" : 0.0, // ต้นทุนทางการเงิน
 
-        "investmentValue" : 0.0, // จำนวน มูลค่าเงินลงทุน	
+        "investmentValue" : 0.0, // จำนวน มูลค่าเงินลงทุน
         "ratioInvestmentValue" : 100, // สัดส่วน มูลค่าเงินลงทุน
-        "privateFund" : 0.0, // จำนวน ส่วนทุน	
+        "privateFund" : 0.0, // จำนวน ส่วนทุน
         "ratioPrivateFund" : 0.0, // สัดส่วน ส่วนทุน  -> ลบออก
         "interestPrivateFund" : 0.0, // ดอกเบี้ย ส่วนทุน -> ลบออก
-        "borrowFund" : 0.0, // จำนวน ส่วนเงินกู้	
+        "borrowFund" : 0.0, // จำนวน ส่วนเงินกู้
         "ratioBorrowFund" : 0.0, // สัดส่วน ส่วนเงินกู้ -> ลบออก
-        "interestBorrowFund" : 0.0, // ดอกเบี้ย ส่วนเงินกู้ -> ลบออก 
+        "interestBorrowFund" : 0.0, // ดอกเบี้ย ส่วนเงินกู้ -> ลบออก
         "wacc" : 0.0, // ต้นทุนทางการเงินเฉลี่ย
         "borrowPeriod" : 4, // ระยะเวลากู้ธนาคาร
     }

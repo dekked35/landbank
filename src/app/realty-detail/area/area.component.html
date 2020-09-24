@@ -109,7 +109,7 @@
             <figcaption>
                 <!-- <input [(ngModel)]="availableArea" (change)="InputChange($event)" size="10" pKeyFilter="int" type="text"
                     pInputText /> -->
-                    พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ lawAreaUsage | number }}</span>
+                    พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ areaData.lawAreaUsage | number }}</span>
                     <!-- พื้นที่ที่ใช้ได้ตามกฏหมาย <span> {{ availableArea | number }}</span> -->
 
                 <!-- <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
@@ -135,9 +135,9 @@
                 pInputText inputWithComma/>
                 บาท/ตร.ว.
             </figcaption>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 font-gray-color text_cover">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 font-red-color text_cover">
               *หมายเหตุ: <br>
-              <p style="color : red">
+              <p class="font-red-color">
              - ราคาขายที่ดินไม่ควรตั้งต่ำกว่าราคานี้และโดยปกติแล้วค่านี้ ไม่ควรต่ำกว่า 10,000 บาท </p>
            </div>
         </div>
@@ -145,19 +145,15 @@
 
         <!--  ค่าที่ดินทั้งหมด -->
         <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' || propertyType === 'condo' ">
-            <div class="ui-g-12 ui-md-6 ui-lg-6 box_layout">
+            <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout">
                 <figure></figure>
                 <figcaption>
                     ค่าที่ดินทั้งหมด <span> {{ areaData.costLand | number:'1.2-2'}}</span> บาท
                 </figcaption>
-
-                <!-- <span style="padding-left: 20px;"> -->
-                <!-- <input [(ngModel)]="areaData.costLand" pKeyFilter="int" size="10" type="int" pInputText /> -->
-                <!-- </span> -->
             </div>
         </ng-container>
         <ng-container *ngIf="propertyType === 'hotel' || propertyType === 'communityMall'">
-            <div class="ui-g-12 ui-md-6 ui-lg-6">
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
                 ค่าที่ดินทั้งหมด
                 <span style="padding-left: 20px;">
                     <p-radioButton name="costLandType" label="ซื้อ" [value]="'buy'" [(ngModel)]="areaData.costLandType"
@@ -192,6 +188,15 @@
                 </span>
             </div>
         </ng-container>
+        <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout">
+            <figure>
+                <img src="../../../assets/icons/icon_greenarea.svg"></figure>
+            <figcaption>
+                <!-- ราคาที่ดิน <span> {{ areaInput.landPrice }}</span> -->
+                พื้นที่ว่างปราศจากที่ปกคลุม
+                <span> {{ areaData.emptyArea | number:'1.2-2'}}</span> ตร.ม.
+            </figcaption>
+        </div>
     </div>
 
     <div class="ui-g text_cover">
@@ -269,6 +274,22 @@
                 <p-checkbox  name="selectedHotel" label="Resort" [value]="'resort'" [(ngModel)]="selectedHotel" inputId="resort"
                 (click)="clickAddItem('resort')"></p-checkbox >
             </div>
+            <div *ngIf="selectedModel.id === 4 && propertyType === 'communityMall'" class="ui-g-12 ui-md-12 ui-lg-12">
+              <p-radioButton name="community" label="ตึก" [value]="true" [(ngModel)]="selectedCommunity"
+                        ></p-radioButton> &nbsp;&nbsp;
+              <p-radioButton name="community" label="ห้องเช่า" [value]="false" [(ngModel)]="selectedCommunity"
+                  ></p-radioButton>
+            </div>
+            <div *ngIf="selectedModel.id === 4 && propertyType === 'condo'" class="ui-g-12 ui-md-12 ui-lg-12">
+              <p-checkbox  name="selectedCondo" label="Type A" [value]="'typeA'" [(ngModel)]="selectedCondo" inputId="typeA"
+                   (click)="clickAddItem('typeA')"  ></p-checkbox > &nbsp;&nbsp;
+              <p-checkbox  name="selectedCondo" label="Type B" [value]="'typeB'" [(ngModel)]="selectedCondo" inputId="typeB"
+                  (click)="clickAddItem('typeB')"></p-checkbox >
+              <!-- <p-radioButton name="condoType" label="Type A" [value]="true" [(ngModel)]="selectedTypeCondo"
+                  (click)="changeTypeCondo()" ></p-radioButton> &nbsp;&nbsp;
+              <p-radioButton name="condoType" label="Type B" [value]="false" [(ngModel)]="selectedTypeCondo"
+                  (click)="changeTypeCondo()" ></p-radioButton> -->
+            </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12">
                 เลือกสัดส่วนของคุณต้องการ <br>
                 <p-selectButton [options]="models" [(ngModel)]="selectedModel" (click)="changeModel()"
@@ -339,7 +360,7 @@
                             ตร.ว.
                         </figcaption>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  >
                         <figure>
                             <img src="../../../assets/icons/icon_road.svg"></figure>
                         <figcaption>
@@ -377,8 +398,6 @@
                           ตร.ว.
                       </figcaption>
                     </div>
-                    <button pButton type="button" color="ui-button-danger" icon="pi pi-info-circle"
-                    (click)="check()">check</button>
                     <span style="padding-left: 25px; display: block;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
                         <figure>
@@ -468,7 +487,7 @@
                             ตร.ว.
                         </figcaption>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="selectedModel.id !== 1">
                         <figure>
                             <img src="../../../assets/icons/icon_road.svg"></figure>
                         <figcaption>
@@ -481,7 +500,7 @@
                             ตร.ว.
                         </figcaption>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="selectedModel.id !== 1">
                         <figure>
                             <img src="../../../assets/icons/icon_greenarea.svg"></figure>
                         <figcaption>
@@ -546,14 +565,12 @@
             </ng-container>
 
             <ng-container *ngIf="propertyType === 'condo' || propertyType === 'hotel' || propertyType === 'communityMall'">
-
+              <div *ngIf="propertyType !== 'condo'" >
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  *ngIf="(propertyType === 'hotel' && selectedHotel.includes('hotel')) || propertyType !== 'hotel'">
                     <figure>
                         <img src="../../../assets/icons/icon_hotel.svg">
                     </figure>
-                    <button pButton type="button" color="ui-button-danger" icon="pi pi-info-circle"
-                    (click)="check()">check</button>
-                    <figcaption *ngIf="propertyType === 'condo' || propertyType === 'hotel'">
+                    <figcaption *ngIf="propertyType === 'hotel'">
                         พื้นที่รวมห้องพัก
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.room | number: '1.2-2' }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.room"
@@ -561,7 +578,7 @@
                         คิดเป็น <span> {{ standardArea.area.room | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
                     <figcaption *ngIf="propertyType === 'communityMall'">
-                        พื้นที่รวมร้านค้า
+                        พื้นที่ให้เช่า
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.room | number }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.room"
                             (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
@@ -569,6 +586,21 @@
                         <span> {{ standardArea.area.room  | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
                 </div>
+              </div>
+              <div *ngIf="propertyType === 'condo' && selectedCondo.includes('typeA')" >
+                <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_hotel.svg">
+                    </figure>
+                    <figcaption>
+                        พื้นที่ห้องพัก Type A
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.room | number: '1.2-2' }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.room"
+                            (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                        คิดเป็น <span> {{ standardArea.area.room | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div>
+              </div>
 
                 <ng-container *ngIf="propertyType === 'hotel' && selectedHotel.includes('hotel')">
                     <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนของห้องพักได้ดังนี้</span>
@@ -597,6 +629,40 @@
                         </figcaption>
                     </div>
                 </ng-container>
+
+                <ng-container *ngIf="propertyType === 'condo' && selectedCondo.includes('typeA') ">
+                  <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนของห้องพักได้ดังนี้ (รวม 100%)</span>
+                  <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                      <figcaption>
+                          1 Bedroom
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCondo.percentA.bedRoom1 | number }} </span>
+                          <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCondo.percentA.bedRoom1"
+                              (change)="updateProductRoomRatioCondo($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                          คิดเป็น
+                          <span> {{ (standardArea.area.room * standardRoomAreaCondo.percentA.bedRoom1)/100   | number:'1.2-2' }}</span> ตร.ม.
+                      </figcaption>
+                  </div>
+                  <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                      <figcaption>
+                          2 Bedroom
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCondo.percentA.bedRoom2 | number }} </span>
+                          <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCondo.percentA.bedRoom2"
+                              (change)="updateProductRoomRatioCondo($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                          คิดเป็น
+                          <span> {{ (standardArea.area.room * standardRoomAreaCondo.percentA.bedRoom2)/100  | number:'1.2-2' }}</span> ตร.ม.
+                      </figcaption>
+                  </div>
+                  <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                      <figcaption>
+                          3 Bedroom
+                          <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCondo.percentA.bedRoom3 | number }} </span>
+                          <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCondo.percentA.bedRoom3"
+                              (change)="updateProductRoomRatioCondo($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                          คิดเป็น
+                          <span> {{ (standardArea.area.room * standardRoomAreaCondo.percentA.bedRoom3)/100   | number:'1.2-2' }}</span> ตร.ม.
+                      </figcaption>
+                  </div>
+              </ng-container>
 
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="propertyType === 'hotel' && selectedModel.id === 4 && selectedHotel.includes('resort')" >
                   <figure>
@@ -643,18 +709,62 @@
                         <span> {{ (standardArea.area.resort * standardRoomArea.percent.jacuzziVilla)/100   | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
                 </div>
+              </div>
+
+              <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="propertyType === 'condo' && selectedModel.id === 4 && selectedCondo.includes('typeB')" >
+                  <figure>
+                      <img src="../../../assets/icons/icon_hotel.svg">
+                  </figure>
+                  <figcaption>
+                      พื้นที่ห้องพัก Type B
+                      <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.resort | number: '1.2-2' }} </span>
+                      <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.resort"
+                          (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                      คิดเป็น <span> {{ standardArea.area.resort | number:'1.2-2' }}</span> ตร.ม.
+                  </figcaption>
+                  <p style="padding-left: 25px; padding-top: 10px">สามารถแบ่งสัดส่วนของห้องพักได้ดังนี้</p>
+                  <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                    <figcaption>
+                        1 Bedroom
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCondo.percentB.bedRoom1 | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCondo.percentB.bedRoom1"
+                            (change)="updateProductRoomRatioCondo($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                        คิดเป็น
+                        <span> {{ (standardArea.area.resort * standardRoomAreaCondo.percentB.bedRoom1)/100   | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
                 </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                    <figcaption>
+                        2 Bedroom
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCondo.percentB.bedRoom2 | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCondo.percentB.bedRoom2"
+                            (change)="updateProductRoomRatioCondo($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                        คิดเป็น
+                        <span> {{ (standardArea.area.resort * standardRoomAreaCondo.percentB.bedRoom2)/100  | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                    <figcaption>
+                        3 Bedroom
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCondo.percentB.bedRoom3 | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCondo.percentB.bedRoom3"
+                            (change)="updateProductRoomRatioCondo($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                        คิดเป็น
+                        <span> {{ (standardArea.area.resort * standardRoomAreaCondo.percentB.bedRoom3)/100   | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div>
+              </div>
 
                 <!-- <ng-container *ngIf="propertyType === 'hotel' && selectedModel.id === 4 && selectedHotel.includes('resort')">
 
                 </ng-container> -->
 
-                <ng-container  *ngIf="propertyType === 'condo' || propertyType === 'hotel' || propertyType === 'communityMall' ">
+                <ng-container  *ngIf="propertyType === 'condo' || propertyType === 'hotel' ">
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                         <figure>
                             <img src="../../../assets/icons/icon_pool.svg"></figure>
                         <figcaption>
-                            พื้นที่รวมส่วนกลาง
+                            พื้นที่ให้เช่า
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.central | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.central"
                                 (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
@@ -663,8 +773,8 @@
                         </figcaption>
                     </div>
                     <span style="padding-left: 25px; display: block;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;"  >
-                      <div *ngFor="let item of standardCentralProduct">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;"  *ngIf="propertyType === 'hotel'" >
+                      <div *ngFor="let item of standardCentralProduct.hotel">
                         <figure>
                           <img src="../../../assets/icons/central/{{item.name}}.svg">
                         </figure>
@@ -679,6 +789,54 @@
                         </figcaption>
                       </div>
                     </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;"  *ngIf="propertyType === 'condo'">
+                      <div *ngFor="let item of standardCentralProduct.condo">
+                        <div *ngIf="['Lobby','BOH & Store','Lobby lounge','Restroom lobby'].includes(item.name)">
+                          <div *ngIf="item.name === 'Restroom lobby' && !selectedTypeCondo" >
+                            <figure>
+                              <img src="../../../assets/icons/central/{{item.name}}.svg">
+                            </figure>
+                            <figcaption style="padding-left: 20px;">
+                                <p style="width: 120px; display: inline-block;">{{item.name}}</p>
+                                <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
+                                <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="item.noRoom" style="margin-right: 5px;"
+                                    (change)="updateProductResortRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                                <span  *ngIf="selectedModel.id !== 4"> {{ item.noRoom | number: '1.0-2'}}</span>
+                                <!-- <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span> -->
+                                ห้อง
+                            </figcaption>
+                          </div>
+                          <div *ngIf="item.name !== 'Restroom lobby' && selectedTypeCondo" >
+                            <figure>
+                              <img src="../../../assets/icons/central/{{item.name}}.svg">
+                            </figure>
+                            <figcaption style="padding-left: 20px;">
+                                <p style="width: 120px; display: inline-block;">{{item.name}}</p>
+                                <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
+                                <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="item.noRoom" style="margin-right: 5px;"
+                                    (change)="updateProductResortRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                                <span  *ngIf="selectedModel.id !== 4"> {{ item.noRoom | number: '1.0-2'}}</span>
+                                <!-- <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span> -->
+                                ห้อง
+                            </figcaption>
+                          </div>
+                        </div>
+                        <div *ngIf="!['Lobby','BOH & Store','Lobby lounge','Restroom lobby'].includes(item.name)">
+                          <figure>
+                            <img src="../../../assets/icons/central/{{item.name}}.svg">
+                          </figure>
+                          <figcaption style="padding-left: 20px;">
+                              <p style="width: 120px; display: inline-block;">{{item.name}}</p>
+                              <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
+                              <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="item.noRoom" style="margin-right: 5px;"
+                                  (change)="updateProductResortRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                              <span  *ngIf="selectedModel.id !== 4"> {{ item.noRoom | number: '1.0-2'}}</span>
+                              <!-- <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span> -->
+                              ห้อง
+                          </figcaption>
+                        </div>
+                      </div>
+                    </div>
                 </ng-container>
 
                 <div *ngIf="selectedModel.id === 4" class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
@@ -688,17 +846,32 @@
                     <p-radioButton name="parking" label="ไม่มี" [value]="false" [(ngModel)]="selectedParking"
                         (click)="clickParkingRatio()"></p-radioButton>
                 </div>
+                <div *ngIf="selectedModel.id === 4 && propertyType === 'condo'" class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    ประเภทที่จอดรถ &nbsp;
+                    <p-radioButton name="inParking" label="ในกรุงเทพ" [value]="true" [(ngModel)]="selectedTypeParking"
+                    (click)="changeParkingWord()" ></p-radioButton> &nbsp;&nbsp;
+                    <p-radioButton name="inParking" label="นอกกรุงเทพ" [value]="false" [(ngModel)]="selectedTypeParking"
+                    (click)="changeParkingWord()"   ></p-radioButton>
+                </div>
                 <div *ngIf="selectedParking" class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                     <figure>
                         <img src="../../../assets/icons/icon_map_car.svg"></figure>
-                    <figcaption>
-                        พื้นที่จอดรถในอาคาร
+                    <figcaption *ngIf="propertyType === 'condo'" >
+                        พื้นที่จอดรถ{{getWording(selectedTypeParking)}}
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.parking | number }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.parking"
                             (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                         คิดเป็น
                         <span> {{ standardArea.area.parking | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
+                    <figcaption *ngIf="propertyType !== 'condo'">
+                      พื้นที่จอดรถในอาคาร
+                      <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.parking | number }} </span>
+                      <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.parking"
+                          (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                      คิดเป็น
+                      <span> {{ standardArea.area.parking | number:'1.2-2' }}</span> ตร.ม.
+                  </figcaption>
                 </div>
 
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
@@ -720,7 +893,7 @@
                 <span class="font-red-color"> {{ displayDialogMsg }}</span>
             </p-dialog>
 
-            <div class="ui-g-12 ui-md-12 ui-lg-12 font-gray-color">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 font-red-color">
                 *หมายเหตุ: สัดส่วนเป็นการคำนวณเกิดจากการคำนวณจากข้อมูลในระบบของกลุ่มนักพัฒนา
             </div>
         </div>

@@ -9,17 +9,28 @@ export const productDefault = {
         "room" : [
           {
             "type"  : "ห้องพัก",
-            "name" : "Deluxe",
-            "area" : 25,
-            "noRoom" : 10
+            "name" : "1 Bedroom (A)",
+            "area" : 32,
+            "noRoom" : 0
           },
           {
             "type"  : "ห้องพัก",
-            "name" : "Super deluxe",
-            "area" : 30,
-            "noRoom" : 5
-          }
-          ],
+            "name" : "2 Bedroom (A)",
+            "area" : 55,
+            "noRoom" : 0,
+          },
+          {
+            "type"  : "ห้องพัก",
+            "name" : "3 Bedroom (A)",
+            "area" : 75,
+            "noRoom" : 0,
+          },
+        ],
+        "resort" : [
+          { "type" : "บ้านพัก", "name" : '1 Bedroom (B)', "area" : 35, "noRoom" : 0 },
+          { "type" : "บ้านพัก", "name" : '2 Bedroom (B)', "area" : 60, "noRoom" : 0 },
+          { "type" : "บ้านพัก", "name" : '3 Bedroom (B)', "area" : 80, "noRoom" : 0 },
+        ],
         "central" : [
             {
               "type"  : "ส่วนกลาง",

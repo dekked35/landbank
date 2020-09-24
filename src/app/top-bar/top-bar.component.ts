@@ -66,7 +66,9 @@ export class TopBarComponent implements OnInit {
   ngOnInit() {}
 
   selectProperty(propertyType: string) {
-    this.store.dispatch(new pageAction.PageAction(propertyType));
+    if (this.currentProperty !== propertyType) {
+      this.store.dispatch(new pageAction.PageAction(propertyType));
+    }
   }
 
   selectPropertyDropdown(){

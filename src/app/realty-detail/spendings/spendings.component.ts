@@ -51,6 +51,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   spendingsData: any;
   implicitCostData: any;
   rateReturnData: any;
+  wording: string = '';
 
   is_loading = true;
 
@@ -118,13 +119,18 @@ export class SpendingsComponent implements OnInit, OnDestroy {
         if (['village', 'townhome'].includes(this.currentProperty)){
           this.checkPlanModel()
         }
+        if (product.payload) {
+          const {wordingParking} = product.payload;
+          if (wordingParking) {
+            this.wording = product.payload.wordingParking;
+          }
+        }
       });
       this.convertNum();
   }
 
   checkPlanModel(){
     const { user } = this.productData;
-    const newspendingsData = this.parseObject(this.spendingsData)
     let countPlan = 0;
     this.plan = '';
     if(user) {
@@ -153,6 +159,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
     } else {
       this.spendingsData.sellPeriod = 0;
     }
+    console.log(this.spendingsData)
     this.spendingsData.totalSalary =
       +this.spendingsData.sellPeriod *
       +this.spendingsData.salaryEmployee *

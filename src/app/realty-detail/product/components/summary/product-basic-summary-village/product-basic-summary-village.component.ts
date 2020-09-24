@@ -12,6 +12,11 @@ const imageType = {
     1 : 'home2.svg',
     2 : 'home3.svg'
   },
+  villageCom : {
+    0 : 'home1-1.png',
+    1 : 'home2-2.png',
+    2 : 'home3-3.png'
+  },
   resort : {
     0 : "room/Pool Villa.svg",
     1 : "room/Family Room.svg",
@@ -30,7 +35,7 @@ export class ProductBasicSummaryVillageComponent implements OnInit, OnChanges {
   areaData?: any;
 
   currentProperty: string;
-
+  competitorColor : {};
   productData: any;
   // ownerData: any;
   is_loading: boolean = true;
@@ -69,6 +74,7 @@ export class ProductBasicSummaryVillageComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.settingHeader = this.header[this.owner];
     this.settingGraph = this.graphs[this.owner];
+    this.competitorColor = this.owner === 'competitor' ? { 'color' : '#ff781f' } : { }
   }
 
    // TODO: User state store instead.
@@ -83,7 +89,11 @@ export class ProductBasicSummaryVillageComponent implements OnInit, OnChanges {
   }
 
   getImage(index: number){
-    return imageType[this.currentProperty][index];
+    let wording = this.currentProperty;
+    if (this.owner === 'competitor') {
+      wording += 'Com';
+    }
+    return imageType[wording][index];
   }
 
   checkDataCenter(){

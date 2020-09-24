@@ -21,6 +21,7 @@ import { ProductBasicSettingTownhouseComponent } from './realty-detail/product/c
 import { ProductBasicSummaryTownhouseComponent } from './realty-detail/product/components/summary/product-basic-summary-townhouse/product-basic-summary-townhouse.component';
 import { ProductBasicSummaryHotelComponent } from './realty-detail/product/components/summary/product-basic-summary-hotel/product-basic-summary-hotel.component';
 import { ProductBasicSettingHotelComponent } from './realty-detail/product/components/setting/product-basic-setting-hotel/product-basic-setting-hotel.component';
+import { ProductBasicSettingCommunityComponent } from './realty-detail/product/components/setting/product-basic-setting-community/product-basic-setting-community.component';
 import { StoreModule } from '@ngrx/store';
 import { coreReducers, metaReducers } from './core/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -52,6 +53,7 @@ import {NumberCommaDirective} from './shared/number-comma.directive'
     ProductBasicSummaryTownhouseComponent,
     ProductBasicSummaryHotelComponent,
     ProductBasicSettingHotelComponent,
+    ProductBasicSettingCommunityComponent,
     ProductBasicTypeComponent,
     ChartsComponent,
     LoadingComponent,

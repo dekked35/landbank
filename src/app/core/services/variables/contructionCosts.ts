@@ -1,11 +1,12 @@
 export const contructionCosts = {
     "condo" : {
         "room": [
-            { name: 'Pool Villa', cost: 30000 },
-            { name: 'Jacuzzi Villa', cost: 30000 },
-            { name: 'Family Room', cost: 30000 },
-            { name: 'Super deluxe', cost: 30000 },
-            { name: 'Deluxe', cost: 30000 },
+            { name: '1 Bedroom (A)', cost: 20000 },
+            { name: '2 Bedroom (A)', cost: 30000 },
+            { name: '3 Bedroom (A)', cost: 40000 },
+            { name: '1 Bedroom (B)', cost: 30000 },
+            { name: '2 Bedroom (B)', cost: 40000 },
+            { name: '3 Bedroom (B)', cost: 50000},
             { name: 'corridor', cost: 10000 },
         ],
         "central": [
@@ -65,11 +66,17 @@ export const contructionCosts = {
     },
     "communityMall" : {
         "room": [
-            { name: 'Pool Villa', cost: 30000 },
-            { name: 'Jacuzzi Villa', cost: 30000 },
-            { name: 'Family Room', cost: 30000 },
-            { name: 'Super deluxe', cost: 30000 },
-            { name: 'Deluxe', cost: 30000 },
+            {name: 'Store Booth', cost: 10000},
+            {name: 'Small Store', cost: 20000},
+            {name: 'Restaurant', cost: 8000},
+            {name: 'IT Store', cost: 10000},
+            {name: 'Electronics Store', cost: 10000},
+            {name: 'Gym', cost: 20000},
+            {name: 'Spa', cost: 10000},
+            {name: 'Cinema', cost: 30000},
+            {name: 'Food Court' ,cost: 20000},
+            {name: 'General Store', cost: 5000 },
+            {name: 'Learning Store', cost: 10000},
             { name: 'corridor', cost: 10000 },
         ],
         "central": [

@@ -1,6 +1,6 @@
 export const hotel = {
     "area": {
-        "townPlanColor": "#ff8407",
+        "townPlanColor": "",
         "farValue" : 3,
         "osrValue": 10,
         "totalArea": 10000,

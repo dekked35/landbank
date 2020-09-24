@@ -1,6 +1,6 @@
 export const village = {
     'area': {
-        'townPlanColor': '#ff8407',
+        'townPlanColor': '',
         'farValue': 3,
         'osrValue': 10,
         'availableArea': 5000,

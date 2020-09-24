@@ -59,7 +59,6 @@
                     <p-slider [(ngModel)]="products[0].size"
                         [min]="product_limit.size.min"
                         [max]="product_limit.size.max"
-                        [class]="this.owner === 'competitor' ? 'competitor' : ' '"
                         (onSlideEnd)="handleRatioEnd(0, $event, 'size')"></p-slider>
                 </div>
             </div>

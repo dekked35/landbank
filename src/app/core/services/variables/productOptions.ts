@@ -1,11 +1,20 @@
 export const productOptions = {
+    "village": {
+
+    },
+    "townhome": {
+
+    },
     "condo": {
         "room": [
-            { name: 'Pool Villa', icon: 'pool_villa', value: 'Pool Villa', size: 65 },
-            { name: 'Jacuzzi Villa', icon: 'jacuzzi', value: 'Jacuzzi Villa', size: 65 },
-            { name: 'Family Room', icon: 'family', value: 'Family Room', size: 45 },
-            { name: 'Super deluxe', icon: 'super_deluxe', value: 'Super deluxe', size: 30 },
-            { name: 'Deluxe', icon: 'deluxe', value: 'Deluxe', size: 25 },
+            { name: '1 Bedroom (A)', icon: 'pool_villa', value: '1 Bedroom (A)', size: 32 },
+            { name: '2 Bedroom (A)', icon: 'jacuzzi', value: '2 Bedroom (A)', size: 55 },
+            { name: '3 Bedroom (A)', icon: 'family', value: '3 Bedroom (A)', size: 75 },
+        ],
+        "resort": [
+          { name: '1 Bedroom (B)', icon: 'pool_villa', value: '1 Bedroom (B)', size: 35 },
+          { name: '2 Bedroom (B)', icon: 'jacuzzi', value: '2 Bedroom (B)', size: 60 },
+          { name: '3 Bedroom (B)', icon: 'family', value: '3 Bedroom (B)', size: 80 },
         ],
         "central": [
             { name: 'Lobby', icon: '', value: 'Lobby', size: 150 },
@@ -14,7 +23,7 @@ export const productOptions = {
             { name: 'Restaurant', icon: '', value: 'Restaurant', size: 120 },
             { name: 'Spa', icon: '', value: 'Spa', size: 60 },
             { name: 'Gym', icon: '', value: 'Gym', size: 50 },
-            { name: 'Kitchen', icon: '', value: 'Kitchen', size: 50 },
+            { name: 'Lobby lounge', icon: '', value: 'Lobby lounge', size: 50 },
             { name: 'Kid Club', icon: '', value: 'Kid Club', size: 60 },
             { name: 'Restroom', icon: '', value: 'Restroom', size: 60 }
         ],
@@ -64,8 +73,8 @@ export const productOptions = {
     },
     "communityMall": {
         "room": [
-            { name: 'Store Booth', value: 'Store Booth', size: 2 },
-            { name: 'Clothing Store', value: 'Super deluxe', size: 45 },
+            { name: 'Store Booth', value: 'Store Booth', size: 50 },
+            { name: 'Small Store', value: 'Small Store', size: 10 },
             { name: 'Restaurant', value: 'Restaurant', size: 60 },
             { name: 'IT Store', value: 'Supermarket', size: 30 },
             { name: 'Electronics Store', value: 'Electronics Store', size: 40 },

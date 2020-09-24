@@ -5,10 +5,37 @@ export const standardPrices = {
         {type : 'ต้นทุนค่าก่อสร้างพื้นที่ใช้สอย', price: '10,000', unit: 'บาท/ตร.ม.'},
         {type : 'ค่าต่างๆ', price: '100,000', unit: 'บาท/1 หลัง'},
         {type : 'ค่าแบบ', price: '100,000', unit: 'บาท'},
+      ],
+      "price" : [
+        {type : 'รายการ',size: 'ดูขนาดมาตรฐาน', area: 'บาท'},
+        {type : 'ค่าพัฒนาถนน',size: '12,500,000', area: 'บาท'},
+        {type : 'ค่าถม 1 เมตร',size: '5,000,000', area: 'บาท'},
+        {type : 'ค่าน้ำประปา',size: '760,000', area: 'บาท'},
+        {type : 'ค่าระบบบำบัดน้ำเสีย',size: '2,500,000', area: 'บาท'},
+        {type : 'ค่าไฟฟ้า',size: '2,500,000', area: 'บาท'},
+        {type : 'ค่ารั้วและป้อมยาม',size: '1,198,909', area: 'บาท'},
+        {type : 'ค่าพัฒนาพื้นที่สีเขียว',size: '12,000,000', area: 'บาท'},
+        {type : 'ค่าพัฒนาพื้นที่อำนวยความสะดวกโครงการ',size: '5,312,500', area: 'บาท'},
       ]
     },
     "townhome" : {
-
+      "room" : [
+        {type : 'ราคาที่ดินที่ซื้อได้', price: 'ค่าที่ดินทั้งหมด', unit: 'บาท'},
+        {type : 'ต้นทุนค่าก่อสร้างพื้นที่ใช้สอย', price: '10,000', unit: 'บาท/ตร.ม.'},
+        {type : 'ค่าต่างๆ', price: '100,000', unit: 'บาท/1 หลัง'},
+        {type : 'ค่าแบบ', price: '100,000', unit: 'บาท'},
+      ],
+      "price" : [
+        {type : 'รายการ',size: 'ดูขนาดมาตรฐาน', area: 'บาท'},
+        {type : 'ค่าพัฒนาถนน',size: '12,500,000', area: 'บาท'},
+        {type : 'ค่าถม 1 เมตร',size: '5,000,000', area: 'บาท'},
+        {type : 'ค่าน้ำประปา',size: '760,000', area: 'บาท'},
+        {type : 'ค่าระบบบำบัดน้ำเสีย',size: '2,500,000', area: 'บาท'},
+        {type : 'ค่าไฟฟ้า',size: '2,500,000', area: 'บาท'},
+        {type : 'ค่ารั้วและป้อมยาม',size: '1,198,909', area: 'บาท'},
+        {type : 'ค่าพัฒนาพื้นที่สีเขียว',size: '12,000,000', area: 'บาท'},
+        {type : 'ค่าพัฒนาพื้นที่อำนวยความสะดวกโครงการ',size: '5,312,500', area: 'บาท'},
+      ]
     },
     "condo" : {
         "room" : [
@@ -109,11 +136,18 @@ export const standardPrices = {
     },
     "communityMall" : {
         "room" : [
-            {name: 'Pool Villa', type: 'ห้องพัก', unit: 'บาท', price: 30000},
-            {name: 'Jacuzzi Villa', type: 'ห้องพัก', unit: 'บาท', price: 30000},
-            {name: 'Family Room', type: 'ห้องพัก', unit: 'บาท', price: 30000},
-            {name: 'Super deluxe', type: 'ห้องพัก', unit: 'บาท', price: 30000},
-            {name: 'Deluxe',  type: 'ห้องพัก', unit: 'บาท', price: 10000},
+            {name: 'พื้นที่ให้เช่า', type: 'ห้องพัก', unit: 'หน่วย', price: 'ราคา'},
+            {name: 'Store Booth', type: 'ห้องพัก', unit: 'ตร.ม.', price: '10,000' },
+            {name: 'Small Store', type: 'ห้องพัก', unit: 'ตร.ม.', price: '8,000' },
+            {name: 'Restaurant', type: 'ห้องพัก', unit: 'ตร.ม.', price: '15,000' },
+            {name: 'IT Store', type: 'ห้องพัก', unit: 'ตร.ม.', price: '8,000' },
+            {name: 'Electronics Store', type: 'ห้องพัก', unit: 'ตร.ม.', price: '8,000' },
+            {name: 'Gym', type: 'ห้องพัก', unit: 'ตร.ม.', price: '15,000' },
+            {name: 'Spa', type: 'ห้องพัก', unit: 'ตร.ม.', price: '15,000' },
+            {name: 'Cinema', type: 'ห้องพัก', unit: 'ตร.ม.', price: '25,000' },
+            {name: 'Food Court', type: 'ห้องพัก', unit: 'ตร.ม.', price: '25,000' },
+            {name: 'General Store', type: 'ห้องพัก', unit: 'ตร.ม.', price: '10,000' },
+            {name: 'Learning Store', type: 'ห้องพัก', unit: 'ตร.ม.', price: '10,000' },
           ],
         "central" : [
             {name: 'Lobby', type: 'ส่วนกลาง', unit: 'บาท', price: 25000},
