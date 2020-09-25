@@ -112,6 +112,8 @@ export class CalculatorManagerService {
     let bedRoom1B = 0;
     let bedRoom2B = 0;
     let bedRoom3B = 0;
+    let storeBooth = 0;
+    let smallBooth = 0;
     if(defaultSetting === null) {
       roomDeluxeArea = roomArea * 0.8;
       roomSuperDeluxeArea = roomArea * 0.2;
@@ -124,8 +126,10 @@ export class CalculatorManagerService {
       bedRoom1B = resortArea * 0.5;
       bedRoom2B = resortArea * 0.25;
       bedRoom3B = resortArea * 0.25;
+      storeBooth = roomArea * 0.5;
+      smallBooth = roomArea * 0.5;
     } else {
-      if(defaultSetting.percentA.bedRoom1){
+      if(defaultSetting.percentA){
         bedRoom1A = roomArea * (+defaultSetting.percentA.bedRoom1/100);
         bedRoom2A = roomArea * (+defaultSetting.percentA.bedRoom2/100);
         bedRoom3A = roomArea * (+defaultSetting.percentA.bedRoom3/100);
@@ -138,6 +142,8 @@ export class CalculatorManagerService {
         poolVillaArea = resortArea * (+defaultSetting.percent.poolVilla/100);
         familyRoomArea = resortArea * (+defaultSetting.percent.familyRoom/100);
         jacuzziVilla = resortArea * (+defaultSetting.percent.jacuzziVilla/100);
+        storeBooth = roomArea * (+defaultSetting.percent.storeBooth/100);
+        smallBooth = roomArea * (+defaultSetting.percent.smallBooth/100);
       }
     }
     roomProducts = roomProducts.map((data)=> {
@@ -174,6 +180,12 @@ export class CalculatorManagerService {
       }
       if(data.name === "3 Bedroom (B)") {
         x.noRoom = Math.floor(bedRoom3B / data.area);
+      }
+      if(data.name === "Store Booth") {
+        x.noRoom = Math.floor(storeBooth / data.area);
+      }
+      if(data.name === "Small Store") {
+        x.noRoom = Math.floor(smallBooth / data.area);
       }
       data = x
       return data;
