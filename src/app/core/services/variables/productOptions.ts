@@ -75,25 +75,16 @@ export const productOptions = {
         "room": [
             { name: 'Store Booth', value: 'Store Booth', size: 50 },
             { name: 'Small Store', value: 'Small Store', size: 10 },
+        ],
+        "central": [
             { name: 'Restaurant', value: 'Restaurant', size: 60 },
             { name: 'IT Store', value: 'Supermarket', size: 30 },
-            { name: 'Electronics Store', value: 'Electronics Store', size: 40 },
             { name: 'Gym', value: 'Gym', size: 90 },
             { name: 'Spa', value: 'Spa', size: 60 },
             { name: 'Cinema', value: 'Cinema', size: 120 },
             { name: 'Food Court', value: 'Food Court', size: 100 },
             { name: 'General Store', value: 'General Store', size: 50 },
             { name: 'Learning Store', value: 'Learning Store', size: 60 },
-        ],
-        "central": [
-            { name: 'Lobby', value: 'Lobby', size: 120 },
-            { name: 'Back Office', value: 'Back Office', size: 100 },
-            { name: 'Toilet', value: 'Pool', size: 40 },
-            { name: 'Garden', value: 'Garden', size: 20 },
-            { name: 'Showroom', value: 'Showroom', size: 20 },
-            { name: 'Meeting room', value: 'Meeting room', size: 30 },
-            { name: 'Kid Club', value: 'Kid Club', size: 60 },
-            { name: 'Restroom', icon: '', value: 'Restroom', size: 60 }
         ],
         "parking": [
             { name: 'Carpark 1', value: 'Carpark', size: 20 },

@@ -25,7 +25,7 @@ export const areaRatioList = [
     areaRatio : [
       {
         id: 1,
-        name: 'แบบที่ติดถนนใหญ่'
+        name: 'แบบที่ 1 ติดถนนใหญ่'
       },
       {
         id: 2,
@@ -196,10 +196,10 @@ export const areaUnitList = [
           centerArea: 'น้อย'
         },
         percent: {
-          sellArea: 99.22875,
+          sellArea: 100,
           roadSize: 0,
           greenArea: 0,
-          centerArea: 0.77125,
+          centerArea: 0,
         },
         area: {
           sellArea: 0,
@@ -208,9 +208,9 @@ export const areaUnitList = [
           centerArea: 0,
         },
         centerArea : {
-          swimming : 100,
-          fitnessZone : 100,
-          officeZone : 50,
+          swimming : 0,
+          fitnessZone : 0,
+          officeZone : 0,
         }
       },
       {
@@ -300,7 +300,7 @@ export const areaUnitList = [
     ]
 },
 {
-    propertyType : ["condo","hotel"],
+    propertyType : ["condo","hotel","communityMall"],
     areaRatio : [
         {
           id: 1,
@@ -407,113 +407,4 @@ export const areaUnitList = [
           }
         }
       ]
-},
-{
-  propertyType : ["communityMall"],
-  areaRatio : [
-      {
-        id: 1,
-        name: 'แบบที่ 1',
-        score: {
-          beauty: 'มาก',
-          density: 'ปานกลาง',
-          congestion: 'ปานกลาง',
-          convenientArea: 'น้อย'
-        },
-        percent: {
-          room: 80,
-          // central: 15,
-          corridor: 0,
-          parking: 10,
-          outdoor: 10,
-          resort: 0
-        },
-        area: {
-          room: 0,
-          // central: 0,
-          corridor: 0,
-          parking: 0,
-          outdoor: 0,
-          resort: 0
-        }
-      },
-      {
-        id: 2,
-        name: 'แบบที่ 2',
-        score: {
-          beauty: 'ปานกลาง',
-          density: 'น้อย',
-          congestion: 'ปานกลาง',
-          convenientArea: 'ปานกลาง'
-        },
-        percent: {
-          room: 60,
-          // central: 20,
-          corridor: 0,
-          parking: 20,
-          outdoor: 20,
-          resort: 0
-        },
-        area: {
-          room: 0,
-          // central: 0,
-          corridor: 0,
-          parking: 0,
-          outdoor: 0,
-          resort: 0
-        }
-      },
-      {
-        id: 3,
-        name: 'แบบที่ 3',
-        score: {
-          beauty: 'ปานกลาง',
-          density: 'น้อย',
-          congestion: 'น้อย',
-          convenientArea: 'มาก'
-        },
-        percent: {
-          room: 70,
-          // central: 30,
-          corridor: 0,
-          parking: 15,
-          outdoor: 15,
-          resort: 0
-        },
-        area: {
-          room: 0,
-          // central: 0,
-          corridor: 0,
-          parking: 0,
-          outdoor: 0,
-          resort: 0
-        }
-      },
-      {
-        id: 4,
-        name: 'กำหนดเอง',
-        score: {
-          beauty: 'ปานกลาง',
-          density: 'น้อย',
-          congestion: 'น้อย',
-          convenientArea: 'มาก'
-        },
-        percent: {
-          room: 50,
-          // central: 30,
-          corridor: 0,
-          parking: 25,
-          outdoor: 25,
-          resort: 0
-        },
-        area: {
-          room: 0,
-          // central: 0,
-          corridor: 0,
-          parking: 0,
-          outdoor: 0,
-          resort: 0
-        }
-      }
-    ]
 }]

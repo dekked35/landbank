@@ -10,7 +10,7 @@ export const defaultAreaRatio = [
       propertyType : ["townhome"],
       default : {
         id: 1,
-        name: 'แบบที่ติดถนนใหญ่'
+        name: 'แบบที่ 1 ติดถนนใหญ่'
       }
   },
     {

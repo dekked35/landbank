@@ -429,11 +429,9 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
         productData[this.owner]['rooms'] = this.parseObject(this.roomProducts);
         productData[this.owner]['parking'] = this.parseObject(this.parkingProducts);
         productData[this.owner]['outdoors'] = this.parseObject(this.outdoorProducts);
+        productData[this.owner]['centrals'] = this.parseObject(this.centralProducts);
         if (this.currentProperty === 'hotel' || this.currentProperty === 'condo') {
           productData[this.owner]['resort'] = this.parseObject(this.resortProducts);
-        }
-        if(this.currentProperty !== 'communityMall') {
-          productData[this.owner]['centrals'] = this.parseObject(this.centralProducts);
         }
         try {
           productData[oppositeOwner] = this.tempProductStore[oppositeOwner];

@@ -181,6 +181,16 @@ export class AreaComponent implements OnInit {
       { name: "Restroom lobby", type: "ส่วนกลาง", area: 22, noRoom: 0 },
       { name: "Restroom", type: "ส่วนกลาง", area: 107, noRoom: 0 },
     ],
+    communityMall: [
+      { name: 'Restaurant', type: "ส่วนกลาง", area: 60, noRoom: 0 },
+      { name: 'IT Store', type: "ส่วนกลาง", area: 30, noRoom: 0 },
+      { name: 'Gym', type: "ส่วนกลาง", area: 90, noRoom: 0 },
+      { name: 'Spa', type: "ส่วนกลาง", area: 60, noRoom: 0 },
+      { name: 'Cinema', type: "ส่วนกลาง", area: 120, noRoom: 0 },
+      { name: 'Food Court', type: "ส่วนกลาง", area: 100, noRoom: 0 },
+      { name: 'General Store', type: "ส่วนกลาง", area: 50, noRoom: 0 },
+      { name: 'Learning Store', type: "ส่วนกลาง", area: 60, noRoom: 0 },
+  ],
   };
 
   standardCenterAreaResort: any = {
@@ -335,7 +345,6 @@ export class AreaComponent implements OnInit {
       this.propertyType,
       this.selectedModel.id
     );
-    console.log(this.standardArea)
     if (["village", "townhome"].includes(this.propertyType)) {
       const newStandartArea = this.parseObject(this.standardArea);
       const allSellArea =
@@ -455,16 +464,20 @@ export class AreaComponent implements OnInit {
       this.standardSellAreaRatio.typeOne = product.user.products[0].ratio;
       this.standardSellAreaRatio.typeTwo = product.user.products[1].ratio;
       this.standardSellAreaRatio.typeThree = product.user.products[2].ratio;
-    } else if (["hotel", "condo"].includes(this.propertyType)) {
+    } else if (["hotel", "condo","communityMall"].includes(this.propertyType)) {
       if (product && product.user && product.user.centrals) {
-        const newStandardCentral = this.parseObject(
+        let newStandardCentral = this.parseObject(
           this.standardCentralProduct[this.propertyType]
-        );
+          );
+        newStandardCentral = newStandardCentral.map( (item) => {
+          item.noRoom = 0
+          return item;
+        });
         product.user.centrals.forEach((element) => {
-          const index = this.standardCentralProduct[
-            this.propertyType
-          ].findIndex((item) => item.name === element.name);
-          newStandardCentral[index].noRoom = element.noRoom;
+          const index = newStandardCentral.findIndex((item) => item.name === element.name);
+          if(index !== -1) {
+            newStandardCentral[index].noRoom = element.noRoom;
+          }
         });
         this.standardCentralProduct[this.propertyType] = newStandardCentral;
       }
@@ -676,7 +689,6 @@ export class AreaComponent implements OnInit {
       newProductData.competitor.rooms = userRooms;
       newProductData.user.resort = userResort;
       newProductData.competitor.resort = userResort;
-      console.log(newProductData)
       this.store.dispatch(new productAction.SuccessAction(newProductData));
       // this.reloadData(true);
     }

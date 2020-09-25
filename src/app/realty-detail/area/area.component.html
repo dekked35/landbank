@@ -511,7 +511,7 @@
                             คิดเป็น <span> {{ standardArea.area.greenArea | number }}</span> ตร.ว.
                         </figcaption>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="selectedModel.id !== 1">
                       <figure></figure>
                       <figcaption>
                           พื้นที่ส่วนกลาง
@@ -521,8 +521,8 @@
                           ตร.ว.
                       </figcaption>
                     </div>
-                    <span style="padding-left: 25px; display: block;">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                    <span style="padding-left: 25px; display: block;" *ngIf="selectedModel.id !== 1">สามารถแบ่งสัดส่วนพื้นที่ขายได้ดังนี้</span >
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;" *ngIf="selectedModel.id !== 1">
                       <figure></figure>
                       <figcaption>
                           <p style="width: 60px; display: inline-block;">สระว่ายน้ำ</p>
@@ -534,7 +534,7 @@
                           ตร.ม.
                       </figcaption>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;" *ngIf="selectedModel.id !== 1">
                       <figure></figure>
                       <figcaption>
                         <p style="width: 60px; display: inline-block;">ฟิตเนส</p>
@@ -547,7 +547,7 @@
                           ตร.ม.
                       </figcaption>
                     </div>
-                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;">
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;" *ngIf="selectedModel.id !== 1">
                       <figure></figure>
                       <figcaption>
                         <p style="width: 60px; display: inline-block;">สำนักงาน</p>
@@ -759,12 +759,12 @@
 
                 </ng-container> -->
 
-                <ng-container  *ngIf="propertyType === 'condo' || propertyType === 'hotel' ">
+                <ng-container >
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                         <figure>
                             <img src="../../../assets/icons/icon_pool.svg"></figure>
                         <figcaption>
-                            พื้นที่ให้เช่า
+                            {{propertyType !== 'communityMall' ? 'พื้นที่ให้เช่า' : 'พื้นที่ส่วนกลาง'}}
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.central | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.central"
                                 (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
@@ -835,6 +835,22 @@
                               ห้อง
                           </figcaption>
                         </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout"  style="padding-left: 25px;"  *ngIf="propertyType === 'communityMall'" >
+                      <div *ngFor="let item of standardCentralProduct.communityMall">
+                        <figure>
+                          <img src="../../../assets/icons/central/{{item.name}}.svg">
+                        </figure>
+                        <figcaption style="padding-left: 20px;">
+                            <p style="width: 100px; display: inline-block;">{{item.name}}</p>
+                            <!-- <span *ngIf="selectedModel.id !== 4"> {{ standardCenterArea.swimming | number }} </span> -->
+                            <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="item.noRoom" style="margin-right: 5px;"
+                                (change)="updateProductResortRatio()" pKeyFilter="num" type="num" pInputText inputWithComma/>
+                            <span  *ngIf="selectedModel.id !== 4"> {{ item.noRoom | number: '1.0-2'}}</span>
+                            <!-- <span  *ngIf="selectedModel.id === 4"> {{ centerAreaSave.swimming}}</span> -->
+                            ห้อง
+                        </figcaption>
                       </div>
                     </div>
                 </ng-container>

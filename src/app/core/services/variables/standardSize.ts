@@ -104,7 +104,17 @@ export const standardSizes = {
             {name: 'General Store', type: 'ห้องพัก', unit: 'ตร.ม.', size: 50 },
             {name: 'Learning Store', type: 'ห้องพัก', unit: 'ตร.ม.', size: 60 },
         ],
-        'central' : [],
+        'central' : [
+            {name: 'พื้นที่ส่วนกลาง', type: 'พื้นที่ส่วนกลาง', unit: 'หน่วย', size: 'ขนาด'},
+            {name: 'Restaurant', type: 'พื้นที่ส่วนกลาง', unit: 'ตร.ม.', size: 60 },
+            {name: 'IT Store', type: 'พื้นที่ส่วนกลาง', unit: 'ตร.ม.', size: 30 },
+            {name: 'Gym', type: 'พื้นที่ส่วนกลาง', unit: 'ตร.ม.', size: 90 },
+            {name: 'Spa', type: 'พื้นที่ส่วนกลาง', unit: 'ตร.ม.', size: 60 },
+            {name: 'Cinema', type: 'พื้นที่ส่วนกลาง', unit: 'ตร.ม.', size: 120 },
+            {name: 'Food Court', type: 'พื้นที่ส่วนกลาง', unit: 'ตร.ม.', size: 100 },
+            {name: 'General Store', type: 'พื้นที่ส่วนกลาง', unit: 'ตร.ม.', size: 50 },
+            {name: 'Learning Store', type: 'พื้นที่ส่วนกลาง', unit: 'ตร.ม.', size: 60 },
+        ],
         'parking' : [
           {name: 'ที่จอดรถ', type: 'ที่จอดรถ', unit: 'หน่วย', size: 'ขนาด'},
           {name: 'Carpark 1', type: 'ที่จอดรถ', unit: 'ตร.ม.', size: 20},

@@ -140,9 +140,9 @@ export const productDefault = {
             { "type"  : "ร้านค้า", "name" : "Small Store", "area" : 10, "noRoom" : 10  }
           ],
         "central" : [
-            { "type"  : "ส่วนกลาง", "name" : "Back Office", "area" : 50, "noRoom" : 3 },
-            {  "type"  : "ส่วนกลาง", "name" : "Toilet", "area" : 30, "noRoom" : 2 },
-            {  "type"  : "ส่วนกลาง", "name" : "Restroom",  "area" : 80, "noRoom" : 6  }
+            { "type"  : "ส่วนกลาง", "name" : "Restaurant", "area" : 60, "noRoom" : 3 },
+            {  "type"  : "ส่วนกลาง", "name" : "IT Store", "area" : 30, "noRoom" : 2 },
+            {  "type"  : "ส่วนกลาง", "name" : "Gym",  "area" : 90, "noRoom" : 2  }
         ],
         "parking": [
             { "type"  : "ที่จอดรถ",  "name" : "Carpark 1", "area" : 20, "noRoom" : 5 }
