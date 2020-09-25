@@ -755,9 +755,33 @@
                 </div>
               </div>
 
-                <!-- <ng-container *ngIf="propertyType === 'hotel' && selectedModel.id === 4 && selectedHotel.includes('resort')">
-
-                </ng-container> -->
+              <ng-container *ngIf="propertyType === 'communityMall'">
+                <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนของพื้นที่ให้เช่าได้ดังนี้</span>
+                <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                    <!-- <figure>
+                        <img src="../../../assets/icons/room/Deluxe.svg"></figure> -->
+                    <figcaption>
+                        Store Booth
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCommu.percent.storeBooth | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCommu.percent.storeBooth"
+                            (change)="updateProductRoomRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                        คิดเป็น
+                        <span> {{ (standardArea.area.room * standardRoomAreaCommu.percent.storeBooth)/100   | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
+                    <!-- <figure>
+                        <img src="../../../assets/icons/room/Super deluxe.svg"></figure> -->
+                    <figcaption>
+                        Small Booth
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCommu.percent.smallBooth | number }} </span>
+                        <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCommu.percent.smallBooth"
+                            (change)="updateProductRoomRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                        คิดเป็น
+                        <span> {{ (standardArea.area.room * standardRoomAreaCommu.percent.smallBooth)/100  | number:'1.2-2' }}</span> ตร.ม.
+                    </figcaption>
+                </div>
+            </ng-container>
 
                 <ng-container >
                     <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">

@@ -146,6 +146,13 @@ export class AreaComponent implements OnInit {
     },
   };
 
+  standardRoomAreaCommu: any = {
+    percent : {
+      storeBooth: 50,
+      smallBooth: 50
+    }
+  }
+
   // Hot fix.
   standardSellAreaRatio: any = {
     typeOne: 0,
@@ -629,6 +636,31 @@ export class AreaComponent implements OnInit {
       newProductData.competitor.rooms = userRooms;
       newProductData.user.resort = userResort;
       newProductData.competitor.resort = userResort;
+      this.store.dispatch(new productAction.SuccessAction(newProductData));
+      // this.reloadData(true);
+    }
+  }
+
+  updateProductRoomRatioCommu($event) {
+    const percent = this.standardRoomAreaCommu.percent;
+    const newProductData = this.parseObject(this.productData);
+    let totalAreaRatio = 0;
+    for (let [key, value] of Object.entries(percent)) {
+        totalAreaRatio += +value;
+    }
+    if (totalAreaRatio > 100) {
+      this.displayDialogMsg =
+        "โปรดระบุสัดส่วนของพื้นที่ให้เช่าให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น";
+      this.displayDialog = true;
+    } else {
+      this.displayDialog = false;
+      const userRooms = this.calculatorManagerService.estimateRoomProduct(
+        this.areaData,
+        newProductData.user.rooms,
+        this.standardRoomAreaCommu
+      );
+      newProductData.user.rooms = userRooms;
+      newProductData.competitor.rooms = userRooms;
       this.store.dispatch(new productAction.SuccessAction(newProductData));
       // this.reloadData(true);
     }
