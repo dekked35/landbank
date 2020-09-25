@@ -22,16 +22,17 @@ export const incomePrices = {
         "room": [
           { name: 'Store Booth', price: 1000},
           { name: 'Small Store', price: 2000},
+          { name: 'corridor', price: 1000 },
+        ],
+        "central": [
           { name: 'Restaurant', price: 800},
           { name: 'IT Store', price: 1000},
-          { name: 'Electronics Store', price: 1000},
           { name: 'Gym', price: 2000},
           { name: 'Spa', price: 1000},
           { name: 'Cinema', price: 3000},
           { name: 'Food Court' ,price: 2000},
           { name: 'General Store', price: 500 },
           { name: 'Learning Store', price: 1000},
-          { name: 'corridor', price: 1000 },
         ]
     },
     "resort" : {

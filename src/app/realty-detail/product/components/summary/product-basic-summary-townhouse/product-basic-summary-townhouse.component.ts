@@ -32,6 +32,7 @@ export class ProductBasicSummaryTownhouseComponent implements OnInit, OnChanges 
   competitorColor : {};
   productData: any;
   currentProperty: string;
+  isEmpty: boolean = false;
   is_loading: boolean = true;
 
 
@@ -80,8 +81,9 @@ export class ProductBasicSummaryTownhouseComponent implements OnInit, OnChanges 
   }
 
   checkDataCenter(){
-    if(this.areaData.percent && this.areaData.percent.centerArea === 0 ){
-      this.productData.centerArea = [0, 0, 0];
+    if(this.areaData.percent){
+      // this.productData.centerArea = [0, 0, 0];
+      this.isEmpty = this.productData.centerArea.every( (item) => item === 0)
     }
   }
 

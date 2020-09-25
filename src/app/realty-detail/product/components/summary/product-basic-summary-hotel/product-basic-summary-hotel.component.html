@@ -32,17 +32,15 @@
             ตร.ม.
          </div>
       </div>
-      <div *ngIf="currentProperty !== 'communityMall'" >
-        <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
-           <label>พื้นที่รวมส่วนกลาง</label>
-        </div>
-        <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
-           <div>
-              <span  [ngStyle]="competitorColor">
-                 {{ products.totalCentralArea | number:'1.2-2' }} </span>
-              ตร.ม.
-           </div>
-        </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
+          <label>พื้นที่รวมส่วนกลาง</label>
+      </div>
+      <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout" style="text-align: right;">
+          <div>
+            <span  [ngStyle]="competitorColor">
+                {{ products.totalCentralArea | number:'1.2-2' }} </span>
+            ตร.ม.
+          </div>
       </div>
       <div class="ui-g-6 ui-md-6 ui-lg-6 box_layout">
          <label>พื้นที่รวมทางเดิน</label>

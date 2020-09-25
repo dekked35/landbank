@@ -139,10 +139,10 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
     if (['village','townhome'].includes(currentProperty)) {
       series = [+this.chartData.percent.sellArea.toFixed(2), +this.chartData.percent.roadSize.toFixed(2), +this.chartData.percent.greenArea.toFixed(2), +this.chartData.percent.centerArea.toFixed(2)];
     } else if (currentProperty === 'hotel') {
-      series = [+this.chartData.percent.room, +this.chartData.percent.resort, +this.chartData.percent.parking, +this.chartData.percent.outdoor, +this.chartData.percent.central];
+      series = [+this.chartData.percent.room, +this.chartData.percent.resort, +this.chartData.percent.central, +this.chartData.percent.corridor, +this.chartData.percent.parking, +this.chartData.percent.outdoor];
     } else if (currentProperty === 'communityMall'){
       // condo commall
-      series = [+this.chartData.percent.room,+this.chartData.percent.corridor, +this.chartData.percent.parking, +this.chartData.percent.outdoor];
+      series = [+this.chartData.percent.room, +this.chartData.percent.central, +this.chartData.percent.parking, +this.chartData.percent.outdoor];
     } else if (currentProperty === 'condo') {
       series = [+this.chartData.percent.room, +this.chartData.percent.resort, +this.chartData.percent.central, +this.chartData.percent.parking, +this.chartData.percent.outdoor];
     } else {

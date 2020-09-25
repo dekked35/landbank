@@ -53,23 +53,23 @@
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                 มูลค่าโครงการรวม  <span [ngStyle]="competitorColor"> {{ ownerData.totalCost | number}} </span> บาท
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="!isEmpty" >
               พื้นที่ส่วนกลาง
           </div>
           <div class="ui-g-1"></div>
-          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
+          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout" *ngIf="productData?.centerArea[0] !== 0" >
             สระว่ายน้ำ
             <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[0] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท
           </div>
           <div class="ui-g-1"></div>
-          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
+          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout" *ngIf="productData?.centerArea[1] !== 0" >
             ฟิตเนส
             <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[1] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท
           </div>
           <div class="ui-g-1"></div>
-          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout">
+          <div class="ui-g-11 ui-md-11 ui-lg-11 box_layout" *ngIf="productData?.centerArea[2] !== 0" >
             สำนักงาน
             <span *ngIf="!is_loading" [ngStyle]="competitorColor"> {{ productData?.centerArea[2] | number}} </span>
             <span *ngIf="is_loading"> 0 </span> บาท

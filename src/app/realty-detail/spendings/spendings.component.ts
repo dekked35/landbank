@@ -159,7 +159,6 @@ export class SpendingsComponent implements OnInit, OnDestroy {
     } else {
       this.spendingsData.sellPeriod = 0;
     }
-    console.log(this.spendingsData)
     this.spendingsData.totalSalary =
       +this.spendingsData.sellPeriod *
       +this.spendingsData.salaryEmployee *

@@ -17,10 +17,10 @@ export const communityMall = {
             },
             "percent": {
                 "room": 75,
-                // "central": 15,
+                "central": 15,
                 "corridor": 10,
-                "parking": 10,
-                "outdoor": 10
+                "parking": 5,
+                "outdoor": 5
             },
             "area": {
                 "room": 0,
@@ -32,7 +32,7 @@ export const communityMall = {
         },
         "ratio_area" : {
             "room": 0,
-            // "central": 0,
+            "central": 0,
             "corridor": 0,
             "parking": 0,
             "outdoor": 0
@@ -85,8 +85,8 @@ export const communityMall = {
     "spendings": {
         "rooms" : [],
         "totalRoomCost" : 0.0, // ต้นทุนก่อสร้างห้องพักทั้งหมด
-        // "centrals" : [],
-        // "totalCentralCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่ส่วนกลาง
+        "centrals" : [],
+        "totalCentralCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่ส่วนกลาง
         "parking" : [],
         "totalParkingCost" : 0.0, // ต้นทุนก่อสร้างพื้นที่จอดรถ
         "outdoors" : [],
