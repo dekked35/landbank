@@ -28,8 +28,8 @@ export const productOptions = {
             { name: 'Restroom', icon: '', value: 'Restroom', size: 60 }
         ],
         "parking": [
-            { name: 'Carpark 1', icon: '', value: 'Carpark', size: 20 },
-            { name: 'Carpark 2', icon: '', value: 'Carpark', size: 40 }
+            { name: 'Carpark 1', icon: '', value: 'Carpark', size: 5 },
+            { name: 'Carpark 2', icon: '', value: 'Carpark', size: 10 }
         ],
         "outdoor": [
             { name: 'Garden', icon: '', value: 'Garden', size: 60 },
@@ -57,8 +57,8 @@ export const productOptions = {
             { name: 'Restroom', icon: '', value: 'Restroom', size: 60 }
         ],
         "parking": [
-            { name: 'Carpark 1', icon: '', value: 'Carpark', size: 20 },
-            { name: 'Carpark 2', icon: '', value: 'Carpark', size: 40 }
+            { name: 'Carpark 1', icon: '', value: 'Carpark', size: 5 },
+            { name: 'Carpark 2', icon: '', value: 'Carpark', size: 10 }
         ],
         "outdoor": [
             { name: 'Garden', icon: '', value: 'Garden', size: 60 },

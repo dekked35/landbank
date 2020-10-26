@@ -449,7 +449,13 @@
             <div class="ui-g-12 ui-md-5 ui-lg-4" style="text-align: right;">
               <app-standard-size [standardType]="'size'" [type]="'parking'" [owner]="this.owner"></app-standard-size>
             </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
+            <div class="ui-g-12 ui-md-4 ui-lg-4 box_layout"  style="float: center;" *ngIf="currentProperty === 'condo'">
+              จำนวนห้องทั้งหมด {{this.tempProductStore[this.owner].totalRoomQuantity}} ห้อง จะมีที่จอดรถ {{this.tempProductStore[this.owner].parkingLotQuantity | number:'1.0-0'}} คัน
+          </div>
+          <div class="ui-g-12 ui-md-4 ui-lg-4 box_layout"  style="float: center;" *ngIf="currentProperty === 'hotel'">
+              จำนวนห้องทั้งหมด {{this.tempProductStore[this.owner].totalRoomQuantity}} ห้อง จะมีที่จอดรถ {{this.tempProductStore[this.owner].totalParkingLotQuantity | number:'1.0-0'}} คัน
+          </div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8" style="text-align: right;">
               <app-standard-size [standardType]="'parkingPic'" [type]="'parking'" [owner]="this.owner"></app-standard-size>
             </div>
         </div>
@@ -531,9 +537,9 @@
                                     [disabled]="parking.area <= 0 || parking.noRoom <= 0"
                                     (click)="saveButton(PARKING,i)" icon="pi pi-save" label="บันทึก"
                                     style="margin-right: .2em"></button>
-                                <button pButton type="button" class="ui-button-danger"
+                                <!-- <button pButton type="button" class="ui-button-danger"
                                     *ngIf="(enableEdit && enableEditIndex === i && typeEdit === PARKING) || !enableEdit"
-                                    (click)="deleteItem(i, PARKING)" icon="pi pi-times"></button>
+                                    (click)="deleteItem(i, PARKING)" icon="pi pi-times"></button> -->
                                 <!-- <button pButton type="button" class="ui-button-warning"
                                 *ngIf="enableEdit && enableEditIndex === i && typeEdit === PARKING"
                                 (click)="cancleEdit(PARKING)" icon="pi pi-times"></button> -->
@@ -543,7 +549,7 @@
                 </table>
             </div>
         </div>
-        <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="currentProperty === 'hotel'" >
+        <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="currentProperty === 'hotel'" >
           <h3><b>กฏกระทรวง</b></h3>
           <span class="font-red-color" >เมื่อจำนวนห้องน้อยกว่า 100 <br>
             ห้องพัก 30 ห้องแรก ต้องมีที่จอดอย่างน้อย 10 คัน <br>
@@ -551,7 +557,7 @@
             หากเหลือเศษไม่ถึง 5 ห้องให้คิดป็น 5 ห้องมีที่จอด 1 คัน</span>
           <p style="color: #0060BE">หากเกิน 100 ห้องขึ้นไป ในส่วนที่มากกว่า 100 ให้คิด 10 ห้อง มี 1 ที่จอด</p>
         </div>
-        <div class="ui-g-6 ui-md-6 ui-lg-6" *ngIf="currentProperty === 'condo'" >
+        <div class="ui-g-12 ui-md-12 ui-lg-12" *ngIf="currentProperty === 'condo'" >
           <h3><b>กฏกระทรวง</b></h3>
           <span class="font-red-color">คำนวนตามพื้ที่ใช้สอย <br>
             - ถ้าในเขตกรุงเทพ 60 ตร.ม. ขึ้นไป ต้องมีที่จอดรถ 1 คัน / 1 ห้อง<br>
@@ -559,10 +565,9 @@
         </div>
         <div class="ui-g-6 ui-md-6 ui-lg-6"></div>
         <div class="ui-g-6 ui-md-6 ui-lg-6">
-            <div style="float: right;">
-                <!-- <p-button icon="pi pi-plus-circle" label="เพิ่ม" (click)="addItem(PARKING)"></p-button> -->
+            <!-- <div style="float: right;">
                 <p-button [styleClass]="owner" [disabled]="enableEdit && typeEdit !== PARKING" icon="pi pi-plus-circle" label="เพิ่ม" (onClick)="addItem(PARKING)"></p-button>
-            </div>
+            </div> -->
         </div>
         <div class="ui-g-6 ui-md-6 ui-lg-6">
             พื้นที่รวมที่จอดรถในอาคาร

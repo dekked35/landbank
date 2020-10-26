@@ -20,9 +20,9 @@
                     <!-- สีผังเมือง <div [ngStyle]="getStyleTown()"></div> -->
                 </figcaption>
             </div>
-            <div>
+            <div style="margin-bottom: 5px;">
                 <div class="box_color" [style.background-color]="areaData.townPlanColor"></div>
-                <span style="margin-left : 10px;">{{areaData.wording}}</span>
+                <span style="margin-left : 10px;">พื้นที่ {{areaData.wording}} มี FAR {{farValue}} : 1 </span> <br>
                 <!-- <p-dropdown [options]="colorsTown" [(ngModel)]="areaData.townPlanColor">
                     <ng-template let-item pTemplate="selectedItem">
                         <div class="box_color" [style.background-color]="item.color"></div>
@@ -34,6 +34,7 @@
                     </ng-template>
                 </p-dropdown> -->
             </div>
+            <span>*สามารถสร้างอาคารได้พื้นที่สูงสุดไม่เกิน ได้ {{farValue}} เท่า ของพื้นที่ดิน</span>
         </div>
 
         <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
@@ -193,7 +194,7 @@
                 <img src="../../../assets/icons/icon_greenarea.svg"></figure>
             <figcaption>
                 <!-- ราคาที่ดิน <span> {{ areaInput.landPrice }}</span> -->
-                พื้นที่ว่างปราศจากที่ปกคลุม
+                พื้นที่ปกคลุม
                 <span> {{ areaData.emptyArea | number:'1.2-2'}}</span> ตร.ม.
             </figcaption>
         </div>
@@ -281,9 +282,9 @@
                   ></p-radioButton>
             </div>
             <div *ngIf="selectedModel.id === 4 && propertyType === 'condo'" class="ui-g-12 ui-md-12 ui-lg-12">
-              <p-checkbox  name="selectedCondo" label="Type A" [value]="'typeA'" [(ngModel)]="selectedCondo" inputId="typeA"
+              <p-checkbox  name="selectedCondo" label="อาคาร 1" [value]="'type1'" [(ngModel)]="selectedCondo" inputId="type1"
                    (click)="clickAddItem('typeA')"  ></p-checkbox > &nbsp;&nbsp;
-              <p-checkbox  name="selectedCondo" label="Type B" [value]="'typeB'" [(ngModel)]="selectedCondo" inputId="typeB"
+              <p-checkbox  name="selectedCondo" label="อาคาร 2" [value]="'type2'" [(ngModel)]="selectedCondo" inputId="type2"
                   (click)="clickAddItem('typeB')"></p-checkbox >
               <!-- <p-radioButton name="condoType" label="Type A" [value]="true" [(ngModel)]="selectedTypeCondo"
                   (click)="changeTypeCondo()" ></p-radioButton> &nbsp;&nbsp;
@@ -304,6 +305,17 @@
             </div>
 
             <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
+                  <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+                    <figure>
+                        <img src="../../../assets/icons/icon_sign.svg"></figure>
+                    <figcaption>
+                        พื้นที่ปกคลุม
+                        <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.coverArea | number: '1.0-2' }} </span>
+                        คิดเป็น
+                        <span> {{ standardArea.area.coverArea | number:'1.2-2'}}</span>
+                        ตร.ว.
+                    </figcaption>
+                </div> -->
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                     <figure>
                         <img src="../../../assets/icons/icon_sign.svg"></figure>
@@ -587,13 +599,13 @@
                     </figcaption>
                 </div>
               </div>
-              <div *ngIf="propertyType === 'condo' && selectedCondo.includes('typeA')" >
+              <div *ngIf="propertyType === 'condo' && selectedCondo.includes('type1')" >
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                     <figure>
                         <img src="../../../assets/icons/icon_hotel.svg">
                     </figure>
                     <figcaption>
-                        พื้นที่ห้องพัก Type A
+                        พื้นที่ห้องพัก อาคาร 1
                         <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.room | number: '1.2-2' }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.room"
                             (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
@@ -630,7 +642,7 @@
                     </div>
                 </ng-container>
 
-                <ng-container *ngIf="propertyType === 'condo' && selectedCondo.includes('typeA') ">
+                <ng-container *ngIf="propertyType === 'condo' && selectedCondo.includes('type1') ">
                   <span style="padding-left: 25px;">สามารถแบ่งสัดส่วนของห้องพักได้ดังนี้ (รวม 100%)</span>
                   <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" style="padding-left: 25px;">
                       <figcaption>
@@ -711,12 +723,12 @@
                 </div>
               </div>
 
-              <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="propertyType === 'condo' && selectedModel.id === 4 && selectedCondo.includes('typeB')" >
+              <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="propertyType === 'condo' && selectedModel.id === 4 && selectedCondo.includes('type2')" >
                   <figure>
                       <img src="../../../assets/icons/icon_hotel.svg">
                   </figure>
                   <figcaption>
-                      พื้นที่ห้องพัก Type B
+                      พื้นที่ห้องพัก อาคาร 2
                       <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.resort | number: '1.2-2' }} </span>
                       <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.resort"
                           (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
@@ -764,7 +776,7 @@
                         Store Booth
                         <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCommu.percent.storeBooth | number }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCommu.percent.storeBooth"
-                            (change)="updateProductRoomRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                            (change)="updateProductRoomRatioCommu($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                         คิดเป็น
                         <span> {{ (standardArea.area.room * standardRoomAreaCommu.percent.storeBooth)/100   | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
@@ -776,7 +788,7 @@
                         Small Booth
                         <span *ngIf="selectedModel.id !== 4"> {{ standardRoomAreaCommu.percent.smallBooth | number }} </span>
                         <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardRoomAreaCommu.percent.smallBooth"
-                            (change)="updateProductRoomRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
+                            (change)="updateProductRoomRatioCommu($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
                         คิดเป็น
                         <span> {{ (standardArea.area.room * standardRoomAreaCommu.percent.smallBooth)/100  | number:'1.2-2' }}</span> ตร.ม.
                     </figcaption>
@@ -788,7 +800,7 @@
                         <figure>
                             <img src="../../../assets/icons/icon_pool.svg"></figure>
                         <figcaption>
-                            {{propertyType !== 'communityMall' ? 'พื้นที่ให้เช่า' : 'พื้นที่ส่วนกลาง'}}
+                            {{propertyType === 'communityMall' ? 'พื้นที่ให้เช่า' : 'พื้นที่ส่วนกลาง'}}
                             <span *ngIf="selectedModel.id !== 4"> {{ standardArea.percent.central | number }} </span>
                             <input size="4" *ngIf="selectedModel.id === 4" [(ngModel)]="standardArea.percent.central"
                                 (change)="calculateAreaRatio($event)" pKeyFilter="num" type="num" pInputText inputWithComma/> %
@@ -883,7 +895,7 @@
                     ที่จอดรถในอาคาร &nbsp;
                     <p-radioButton name="parking" label="มี" [value]="true" [(ngModel)]="selectedParking"
                         (click)="clickParkingRatio()"></p-radioButton> &nbsp;&nbsp;
-                    <p-radioButton name="parking" label="ไม่มี" [value]="false" [(ngModel)]="selectedParking"
+                    <p-radioButton name="parking" label="ไม่มี (เป็นพื้นที่ให้เช่า)" [value]="false" [(ngModel)]="selectedParking"
                         (click)="clickParkingRatio()"></p-radioButton>
                 </div>
                 <div *ngIf="selectedModel.id === 4 && propertyType === 'condo'" class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
