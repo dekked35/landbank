@@ -9,7 +9,7 @@ export const chartsType = {
           position: 'bottom'
         },
         colors: ['#0060be', '#feb019', '#00be6b','#FF0000'],
-        labels: ['พื้นที่ขาย', 'ถนน', 'พื้นที่สีเขียว','พื่นที่ส่วนกลาง'],
+        labels: ['พื้นที่ขาย+พื้นที่ปกคลุม', 'ถนน', 'พื้นที่สีเขียว','พื่นที่ส่วนกลาง'],
         series: [1,1,1],
         responsive: [{
           breakpoint: 480,

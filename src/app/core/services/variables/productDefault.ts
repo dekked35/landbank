@@ -54,7 +54,7 @@ export const productDefault = {
         "parking": [ {
             "type"  : "ที่จอดรถ",
             "name" : "Carpark 1",
-            "area" : 20,
+            "area" : 5,
             "noRoom" : 5
           }],
         "outdoor" : [{
@@ -102,7 +102,7 @@ export const productDefault = {
         "parking": [ {
             "type"  : "ที่จอดรถ",
             "name" : "Carpark 1",
-            "area" : 20,
+            "area" : 5,
             "noRoom" : 2}
         ],
         "outdoor" : [
@@ -118,19 +118,19 @@ export const productDefault = {
             "type"  : "ห้องพัก",
             "name" : "Pool Villa",
             "area" : 65,
-            "noRoom" : 1
+            "noRoom" : 0
           },
           {
             "type"  : "ห้องพัก",
             "name" : "Family Room",
             "area" : 45,
-            "noRoom" : 1
+            "noRoom" : 0
           },
           {
             "type"  : "ห้องพัก",
             "name" : "Jacuzzi Villa",
             "area" : 65,
-            "noRoom" : 1
+            "noRoom" : 0
           },
         ]
     },

@@ -170,7 +170,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
 
   async InputOnchanges($event) {
     this.convertNum()
-    if (['village', 'townhome', 'resort'].includes(this.currentProperty)) {
+    if (['village', 'townhome'].includes(this.currentProperty)) {
       if (this.spendingsData !== undefined) {
         this.spendingsData.totalSalary =
           +this.spendingsData.sellPeriod *

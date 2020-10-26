@@ -1,74 +1,74 @@
-import { Component, OnInit, HostListener } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { SelectItem } from "primeng/api";
+import { Component, OnInit, HostListener } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { SelectItem } from 'primeng/api';
 
-import { DefaultsVariableService } from "../../core/services/defaults-variable.service";
-import { SchemaManagerService } from "../../core/services/schema-manager.service";
-import { RequestManagerService } from "../../core/services/request-manager.service";
-import { CalculatorManagerService } from "../../core/services/calculator-manager.service";
+import { DefaultsVariableService } from '../../core/services/defaults-variable.service';
+import { SchemaManagerService } from '../../core/services/schema-manager.service';
+import { RequestManagerService } from '../../core/services/request-manager.service';
+import { CalculatorManagerService } from '../../core/services/calculator-manager.service';
 
-import * as pageAction from "../../core/actions/page.actions";
-import * as areaAction from "../../core/actions/area.actions";
-import * as fromCore from "../../core/reducers";
-import * as productAction from "../../core/actions/product.actions";
-import { ActivatedRoute } from "@angular/router";
-import { parse } from "querystring";
+import * as pageAction from '../../core/actions/page.actions';
+import * as areaAction from '../../core/actions/area.actions';
+import * as fromCore from '../../core/reducers';
+import * as productAction from '../../core/actions/product.actions';
+import { ActivatedRoute } from '@angular/router';
+import { parse } from 'querystring';
 
-const ratioConvert = ["deposit", "rentPerMonth", "rentNoYear"];
+const ratioConvert = ['deposit', 'rentPerMonth', 'rentNoYear'];
 
 const villageWord = [
-  "บ้าน 1 ชั้น",
-  "บ้าน 2 ชั้น",
-  "บ้าน 3 ชั้น",
-  "ถนน",
-  "พื้นที่สีเขียว",
+  'บ้าน 1 ชั้น',
+  'บ้าน 2 ชั้น',
+  'บ้าน 3 ชั้น',
+  'ถนน',
+  'พื้นที่สีเขียว',
 ];
 
 const hotelWord = [
-  "Pool Villa",
-  "Family Room",
-  "Jacuzzi Villa",
-  "ส่วนของพื้นที่จอดรถ",
-  "ส่วนของพื้นที่ภายนอกห้องพัก",
+  'Pool Villa',
+  'Family Room',
+  'Jacuzzi Villa',
+  'ส่วนของพื้นที่จอดรถ',
+  'ส่วนของพื้นที่ภายนอกห้องพัก',
 ];
 
 const condoValue = {
   typeA: [
     {
-      type: "ห้องพัก",
-      name: "1 Bedroom (A)",
+      type: 'ห้องพัก',
+      name: '1 Bedroom (A)',
       area: 32,
       noRoom: 0,
     },
     {
-      type: "ห้องพัก",
-      name: "2 Bedroom (A)",
+      type: 'ห้องพัก',
+      name: '2 Bedroom (A)',
       area: 55,
       noRoom: 0,
     },
     {
-      type: "ห้องพัก",
-      name: "3 Bedroom (A)",
+      type: 'ห้องพัก',
+      name: '3 Bedroom (A)',
       area: 75,
       noRoom: 0,
     },
   ],
   typeB: [
     {
-      type: "ห้องพัก",
-      name: "1 Bedroom (B)",
+      type: 'ห้องพัก',
+      name: '1 Bedroom (B)',
       area: 35,
       noRoom: 0,
     },
     {
-      type: "ห้องพัก",
-      name: "2 Bedroom (B)",
+      type: 'ห้องพัก',
+      name: '2 Bedroom (B)',
       area: 60,
       noRoom: 0,
     },
     {
-      type: "ห้องพัก",
-      name: "3 Bedroom (B)",
+      type: 'ห้องพัก',
+      name: '3 Bedroom (B)',
       area: 80,
       noRoom: 0,
     },
@@ -77,23 +77,46 @@ const condoValue = {
 
 const imageType = {
   village: {
-    0: "home1.svg",
-    1: "home2.svg",
-    2: "home3.svg",
+    0: 'home1.svg',
+    1: 'home2.svg',
+    2: 'home3.svg',
   },
   resort: {
-    0: "room/Pool Villa.svg",
-    1: "room/Family Room.svg",
-    2: "room/Jacuzzi Villa.svg",
+    0: 'room/Pool Villa.svg',
+    1: 'room/Family Room.svg',
+    2: 'room/Jacuzzi Villa.svg',
   },
 };
 
 @Component({
-  selector: "app-area",
-  templateUrl: "./area.component.html",
-  styleUrls: ["./area.component.css"],
+  selector: 'app-area',
+  templateUrl: './area.component.html',
+  styleUrls: ['./area.component.css'],
 })
 export class AreaComponent implements OnInit {
+
+  constructor(
+    private store: Store<any>,
+    private defaultsVariableService: DefaultsVariableService,
+    private requestManagerService: RequestManagerService,
+    private calculatorManagerService: CalculatorManagerService,
+    private shemaManagerService: SchemaManagerService,
+    private route: ActivatedRoute
+  ) {
+    this.store.select(fromCore.getPage).subscribe((data) => {
+      if (data.page !== this.propertyType) {
+        const isReloadData = this.propertyType === '' ? false : true;
+        const isNewPage =
+          this.propertyType !== '' &&
+          this.propertyType !== data.page &&
+          Object.keys(this.param).length > 0
+            ? true
+            : false;
+        this.propertyType = data.page;
+        this.initializeAreaSchema(isReloadData, isNewPage);
+      }
+    });
+  }
   is_loading: boolean;
   is_loading_product: boolean;
   areaData: any;
@@ -101,7 +124,7 @@ export class AreaComponent implements OnInit {
   tempProductData: any;
   spendingsData: any;
 
-  propertyType = "";
+  propertyType = '';
   rating = 3;
   // models: SelectItem[];
   totalAreaRatio = 0;
@@ -151,7 +174,7 @@ export class AreaComponent implements OnInit {
       storeBooth: 50,
       smallBooth: 50
     }
-  }
+  };
 
   // Hot fix.
   standardSellAreaRatio: any = {
@@ -168,35 +191,35 @@ export class AreaComponent implements OnInit {
 
   standardCentralProduct: any = {
     hotel: [
-      { name: "Lobby", type: "ส่วนกลาง", area: 80, noRoom: 0 },
-      { name: "Pool", type: "ส่วนกลาง", area: 50, noRoom: 0 },
-      { name: "BOH & Store", type: "ส่วนกลาง", area: 150, noRoom: 0 },
-      { name: "Restaurant", type: "ส่วนกลาง", area: 120, noRoom: 0 },
-      { name: "Spa", type: "ส่วนกลาง", area: 60, noRoom: 0 },
-      { name: "Gym", type: "ส่วนกลาง", area: 50, noRoom: 0 },
-      { name: "Kitchen", type: "ส่วนกลาง", area: 50, noRoom: 0 },
-      { name: "Kid Club", type: "ส่วนกลาง", area: 60, noRoom: 0 },
-      { name: "Restroom", type: "ส่วนกลาง", area: 80, noRoom: 0 },
+      { name: 'Lobby', type: 'ส่วนกลาง', area: 80, noRoom: 0 },
+      { name: 'Pool', type: 'ส่วนกลาง', area: 50, noRoom: 0 },
+      { name: 'BOH & Store', type: 'ส่วนกลาง', area: 150, noRoom: 0 },
+      { name: 'Restaurant', type: 'ส่วนกลาง', area: 120, noRoom: 0 },
+      { name: 'Spa', type: 'ส่วนกลาง', area: 60, noRoom: 0 },
+      { name: 'Gym', type: 'ส่วนกลาง', area: 50, noRoom: 0 },
+      { name: 'Kitchen', type: 'ส่วนกลาง', area: 50, noRoom: 0 },
+      { name: 'Kid Club', type: 'ส่วนกลาง', area: 60, noRoom: 0 },
+      { name: 'Restroom', type: 'ส่วนกลาง', area: 80, noRoom: 0 },
     ],
     condo: [
-      { name: "Lobby", type: "ส่วนกลาง", area: 87, noRoom: 0 },
-      { name: "Pool", type: "ส่วนกลาง", area: 100, noRoom: 0 },
-      { name: "BOH & Store", type: "ส่วนกลาง", area: 87, noRoom: 0 },
-      { name: "Spa", type: "ส่วนกลาง", area: 107, noRoom: 0 },
-      { name: "Gym", type: "ส่วนกลาง", area: 107, noRoom: 0 },
-      { name: "Lobby lounge", type: "ส่วนกลาง", area: 87, noRoom: 0 },
-      { name: "Restroom lobby", type: "ส่วนกลาง", area: 22, noRoom: 0 },
-      { name: "Restroom", type: "ส่วนกลาง", area: 107, noRoom: 0 },
+      { name: 'Lobby', type: 'ส่วนกลาง', area: 87, noRoom: 0 },
+      { name: 'Pool', type: 'ส่วนกลาง', area: 100, noRoom: 0 },
+      { name: 'BOH & Store', type: 'ส่วนกลาง', area: 87, noRoom: 0 },
+      { name: 'Spa', type: 'ส่วนกลาง', area: 107, noRoom: 0 },
+      { name: 'Gym', type: 'ส่วนกลาง', area: 107, noRoom: 0 },
+      { name: 'Lobby lounge', type: 'ส่วนกลาง', area: 87, noRoom: 0 },
+      { name: 'Restroom lobby', type: 'ส่วนกลาง', area: 22, noRoom: 0 },
+      { name: 'Restroom', type: 'ส่วนกลาง', area: 107, noRoom: 0 },
     ],
     communityMall: [
-      { name: 'Restaurant', type: "ส่วนกลาง", area: 60, noRoom: 0 },
-      { name: 'IT Store', type: "ส่วนกลาง", area: 30, noRoom: 0 },
-      { name: 'Gym', type: "ส่วนกลาง", area: 90, noRoom: 0 },
-      { name: 'Spa', type: "ส่วนกลาง", area: 60, noRoom: 0 },
-      { name: 'Cinema', type: "ส่วนกลาง", area: 120, noRoom: 0 },
-      { name: 'Food Court', type: "ส่วนกลาง", area: 100, noRoom: 0 },
-      { name: 'General Store', type: "ส่วนกลาง", area: 50, noRoom: 0 },
-      { name: 'Learning Store', type: "ส่วนกลาง", area: 60, noRoom: 0 },
+      { name: 'Restaurant', type: 'ส่วนกลาง', area: 60, noRoom: 0 },
+      { name: 'IT Store', type: 'ส่วนกลาง', area: 30, noRoom: 0 },
+      { name: 'Gym', type: 'ส่วนกลาง', area: 90, noRoom: 0 },
+      { name: 'Spa', type: 'ส่วนกลาง', area: 60, noRoom: 0 },
+      { name: 'Cinema', type: 'ส่วนกลาง', area: 120, noRoom: 0 },
+      { name: 'Food Court', type: 'ส่วนกลาง', area: 100, noRoom: 0 },
+      { name: 'General Store', type: 'ส่วนกลาง', area: 50, noRoom: 0 },
+      { name: 'Learning Store', type: 'ส่วนกลาง', area: 60, noRoom: 0 },
   ],
   };
 
@@ -225,33 +248,12 @@ export class AreaComponent implements OnInit {
   selectedCommunity = true;
   selectedTypeParking = true;
   selectedTypeCondo = true;
-  selectedHotel = ["hotel"];
-  selectedCondo = ["typeA"]
+  selectedHotel = ['hotel'];
+  selectedCondo = ['type1'];
 
   displayDialogMsg: string;
 
-  constructor(
-    private store: Store<any>,
-    private defaultsVariableService: DefaultsVariableService,
-    private requestManagerService: RequestManagerService,
-    private calculatorManagerService: CalculatorManagerService,
-    private shemaManagerService: SchemaManagerService,
-    private route: ActivatedRoute
-  ) {
-    this.store.select(fromCore.getPage).subscribe((data) => {
-      if (data.page !== this.propertyType) {
-        const isReloadData = this.propertyType === "" ? false : true;
-        const isNewPage =
-          this.propertyType !== "" &&
-          this.propertyType !== data.page &&
-          Object.keys(this.param).length > 0
-            ? true
-            : false;
-        this.propertyType = data.page;
-        this.initializeAreaSchema(isReloadData, isNewPage);
-      }
-    });
-  }
+  tableSize: any;
 
   ngOnInit() {
     this.store.select(fromCore.getArea).subscribe((data) => {
@@ -291,12 +293,12 @@ export class AreaComponent implements OnInit {
     const productData = this.shemaManagerService.getProductSchema(
       this.propertyType
     );
-    if (["village", "townhome"].includes(this.propertyType)) {
+    if (['village', 'townhome'].includes(this.propertyType)) {
       this.standardSellAreaRatio.typeOne = productData.user.products[0].ratio;
       this.standardSellAreaRatio.typeTwo = productData.user.products[1].ratio;
       this.standardSellAreaRatio.typeThree = productData.user.products[2].ratio;
     }
-    if (this.propertyType === "village") {
+    if (this.propertyType === 'village') {
       this.standardCenterArea.swimming =
         areaData.standardArea.centerArea.swimming;
       this.standardCenterArea.fitnessZone =
@@ -304,7 +306,7 @@ export class AreaComponent implements OnInit {
       this.standardCenterArea.officeZone =
         areaData.standardArea.centerArea.officeZone;
     }
-    if (this.propertyType === "resort") {
+    if (this.propertyType === 'resort') {
       this.standardCenterAreaResort.lobby =
         areaData.standardArea.centerArea.lobby;
       this.standardCenterAreaResort.pool =
@@ -352,15 +354,15 @@ export class AreaComponent implements OnInit {
       this.propertyType,
       this.selectedModel.id
     );
-    if (["village", "townhome"].includes(this.propertyType)) {
+    if (['village', 'townhome'].includes(this.propertyType)) {
       const newStandartArea = this.parseObject(this.standardArea);
       const allSellArea =
-        newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
+      newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
       const centerArea: any = Object.values(newStandartArea.centerArea).reduce(
         (t: number, value: number) => t + value,
         0
-      );
-      const newRatioCenter = ((centerArea * 1.25) / 4 / parseFloat(this.totalArea.toString().replace(/,/g, ""))) * 100;
+        );
+      const newRatioCenter = ((centerArea * 1.25) / 4 / parseFloat(this.totalArea.toString().replace(/,/g, ''))) * 100;
       newStandartArea.percent.centerArea = newRatioCenter;
       newStandartArea.percent.sellArea = allSellArea - newRatioCenter;
       this.standardArea = newStandartArea;
@@ -385,7 +387,7 @@ export class AreaComponent implements OnInit {
         fitnessZone: 0,
         officeZone: 0,
       };
-      if (["village", "townhome"].includes(this.propertyType)) {
+      if (['village', 'townhome'].includes(this.propertyType)) {
         newProductData.user.products.map((element) => {
           element.ratio = 0;
           return element;
@@ -394,7 +396,7 @@ export class AreaComponent implements OnInit {
       this.productData = newProductData;
       this.store.dispatch(new productAction.SuccessAction(newProductData));
     } else {
-      if (["village", "townhome"].includes(this.propertyType)) {
+      if (['village', 'townhome'].includes(this.propertyType)) {
         this.standardSellAreaRatio.typeOne = productData.user.products[0].ratio;
         this.standardSellAreaRatio.typeTwo = productData.user.products[1].ratio;
         this.standardSellAreaRatio.typeThree = productData.user.products[2].ratio;
@@ -406,9 +408,9 @@ export class AreaComponent implements OnInit {
           return element;
         });
         this.productData = newProductData;
-      } else if (this.propertyType === "hotel") {
+      } else if (this.propertyType === 'hotel') {
         this.updateProductRoomRatio(true);
-      } else if (this.propertyType === "condo") {
+      } else if (this.propertyType === 'condo') {
         this.updateProductRoomRatioCondo(true);
       }
       this.store.dispatch(new productAction.SuccessAction(newProductData));
@@ -421,7 +423,7 @@ export class AreaComponent implements OnInit {
   }
 
   InputChangeTotalArea($event) {
-    if (["village", "townhome"].includes(this.propertyType)) {
+    if (['village', 'townhome'].includes(this.propertyType)) {
       const newStandartArea = this.parseObject(this.standardArea);
       const allSellArea =
         newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
@@ -432,7 +434,7 @@ export class AreaComponent implements OnInit {
       const newRatioCenter =
         ((centerArea * 1.25) /
           4 /
-          parseFloat(this.totalArea.toString().replace(/,/g, ""))) *
+          parseFloat(this.totalArea.toString().replace(/,/g, ''))) *
         100;
       newStandartArea.percent.centerArea = newRatioCenter;
       newStandartArea.percent.sellArea = allSellArea - newRatioCenter;
@@ -445,17 +447,17 @@ export class AreaComponent implements OnInit {
     for (const item in this.areaData) {
       if (ratioConvert.includes(item)) {
         this.areaData[item] = parseFloat(
-          this.areaData[item].toString().replace(/,/g, "")
+          this.areaData[item].toString().replace(/,/g, '')
         );
       }
     }
-    this.totalArea = parseFloat(this.totalArea.toString().replace(/,/g, ""));
-    this.landPrice = parseFloat(this.landPrice.toString().replace(/,/g, ""));
+    this.totalArea = parseFloat(this.totalArea.toString().replace(/,/g, ''));
+    this.landPrice = parseFloat(this.landPrice.toString().replace(/,/g, ''));
   }
 
   clickRatio() {
     this.convertNum();
-    if (this.areaData.costLandType === "buy") {
+    if (this.areaData.costLandType === 'buy') {
       this.areaData = this.calculatorManagerService.calculateArea(
         this.areaData
       );
@@ -465,24 +467,24 @@ export class AreaComponent implements OnInit {
 
   checkRatio(product: any) {
     if (
-      ["village", "townhome"].includes(this.propertyType) &&
+      ['village', 'townhome'].includes(this.propertyType) &&
       product.user.length > 0
     ) {
       this.standardSellAreaRatio.typeOne = product.user.products[0].ratio;
       this.standardSellAreaRatio.typeTwo = product.user.products[1].ratio;
       this.standardSellAreaRatio.typeThree = product.user.products[2].ratio;
-    } else if (["hotel", "condo","communityMall"].includes(this.propertyType)) {
+    } else if (['hotel', 'condo','communityMall'].includes(this.propertyType)) {
       if (product && product.user && product.user.centrals) {
         let newStandardCentral = this.parseObject(
           this.standardCentralProduct[this.propertyType]
           );
         newStandardCentral = newStandardCentral.map( (item) => {
-          item.noRoom = 0
+          item.noRoom = 0;
           return item;
         });
         product.user.centrals.forEach((element) => {
           const index = newStandardCentral.findIndex((item) => item.name === element.name);
-          if(index !== -1) {
+          if (index !== -1) {
             newStandardCentral[index].noRoom = element.noRoom;
           }
         });
@@ -494,15 +496,15 @@ export class AreaComponent implements OnInit {
   calculateAreaRatio($event) {
     const percent = this.standardArea.percent;
     let totalAreaRatio = 0;
-    for (let [key, value] of Object.entries(percent)) {
+    for (const [key, value] of Object.entries(percent)) {
       totalAreaRatio += +value;
     }
     Object.keys(this.standardArea.percent).forEach((element) => {
-      if (this.standardArea.percent[element] === "") {
+      if (this.standardArea.percent[element] === '') {
         this.standardArea.percent[element] = 0;
       } else {
         this.standardArea.percent[element] = parseFloat(
-          this.standardArea.percent[element].toString().replace(/,/g, "")
+          this.standardArea.percent[element].toString().replace(/,/g, '')
         );
       }
     });
@@ -522,14 +524,14 @@ export class AreaComponent implements OnInit {
     const maxProduct = newProductData.user.products.reduce((sum, data) => {
       let changeToNum = data.ratio;
       changeToNum =
-        typeof changeToNum === "string"
-          ? parseFloat(changeToNum.toString().replace(/,/g, ""))
+        typeof changeToNum === 'string'
+          ? parseFloat(changeToNum.toString().replace(/,/g, ''))
           : changeToNum;
       return changeToNum + sum;
     }, 0);
     if (maxProduct > 100) {
       this.displayDialogMsg =
-        "โปรดระบุสัดส่วนของพื้นที่ขายให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น";
+        'โปรดระบุสัดส่วนของพื้นที่ขายให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น';
       this.displayDialog = true;
     } else {
       this.displayDialog = false;
@@ -544,16 +546,16 @@ export class AreaComponent implements OnInit {
     this.centerAreaSave = {
       swimming:
         parseFloat(
-          this.standardCenterArea.swimming.toString().replace(/,/g, "")
-        ) / 4,
+          this.standardCenterArea.swimming.toString().replace(/,/g, '')
+        ),
       fitnessZone:
         parseFloat(
-          this.standardCenterArea.fitnessZone.toString().replace(/,/g, "")
-        ) / 4,
+          this.standardCenterArea.fitnessZone.toString().replace(/,/g, '')
+        ),
       officeZone:
         parseFloat(
-          this.standardCenterArea.officeZone.toString().replace(/,/g, "")
-        ) / 4,
+          this.standardCenterArea.officeZone.toString().replace(/,/g, '')
+        ),
     };
     const centerZone =
       Object.keys(this.centerAreaSave).reduce(
@@ -565,12 +567,12 @@ export class AreaComponent implements OnInit {
       (centerZone / newAreaData.availableArea) * 100;
     newStandard.centerArea = this.centerAreaSave;
     let totalAreaRatio = 0;
-    for (let [key, value] of Object.entries(newStandard.percent)) {
+    for (const [key, value] of Object.entries(newStandard.percent)) {
       totalAreaRatio += +value;
     }
     Object.keys(this.standardArea.percent).forEach((element) => {
       this.standardArea.percent[element] = parseFloat(
-        this.standardArea.percent[element].toString().replace(/,/g, "")
+        this.standardArea.percent[element].toString().replace(/,/g, '')
       );
     });
     this.totalAreaRatio = totalAreaRatio;
@@ -586,7 +588,7 @@ export class AreaComponent implements OnInit {
   convertToNum(item: any) {
     Object.keys(item).forEach(
       (block) =>
-        (item[block] = parseFloat(item[block].toString().replace(/,/g, "")))
+        (item[block] = parseFloat(item[block].toString().replace(/,/g, '')))
     );
     return item;
   }
@@ -597,27 +599,27 @@ export class AreaComponent implements OnInit {
     const newProductData = this.parseObject(this.productData);
     let totalAreaRatio = 0;
     let totalResortRatio = 0;
-    for (let [key, value] of Object.entries(percent)) {
+    for (const [key, value] of Object.entries(percent)) {
       if (
-        ["deluxe", "superDeluxe"].includes(key) &&
-        this.propertyType === "hotel"
+        ['deluxe', 'superDeluxe'].includes(key) &&
+        this.propertyType === 'hotel'
       ) {
-        totalAreaRatio += +parseFloat(value.toString().replace(/,/g, ""));
+        totalAreaRatio += +parseFloat(value.toString().replace(/,/g, ''));
       }
       if (
-        ["familyRoom", "jacuzziVilla", "poolVilla"].includes(key) &&
-        this.propertyType === "hotel"
+        ['familyRoom', 'jacuzziVilla', 'poolVilla'].includes(key) &&
+        this.propertyType === 'hotel'
       ) {
-        totalResortRatio += +parseFloat(value.toString().replace(/,/g, ""));
+        totalResortRatio += +parseFloat(value.toString().replace(/,/g, ''));
       }
     }
     if (totalAreaRatio > 100) {
       this.displayDialogMsg =
-        "โปรดระบุสัดส่วนของพื้นที่รวมห้องพักให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น";
+        'โปรดระบุสัดส่วนของพื้นที่รวมห้องพักให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น';
       this.displayDialog = true;
     } else if (totalResortRatio > 100) {
       this.displayDialogMsg =
-        "โปรดระบุสัดส่วนของพื้นที่รวมบ้านพักให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น";
+        'โปรดระบุสัดส่วนของพื้นที่รวมบ้านพักให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น';
       this.displayDialog = true;
     }
     {
@@ -645,12 +647,12 @@ export class AreaComponent implements OnInit {
     const percent = this.standardRoomAreaCommu.percent;
     const newProductData = this.parseObject(this.productData);
     let totalAreaRatio = 0;
-    for (let [key, value] of Object.entries(percent)) {
+    for (const [key, value] of Object.entries(percent)) {
         totalAreaRatio += +value;
     }
     if (totalAreaRatio > 100) {
       this.displayDialogMsg =
-        "โปรดระบุสัดส่วนของพื้นที่ให้เช่าให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น";
+        'โปรดระบุสัดส่วนของพื้นที่ให้เช่าให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น';
       this.displayDialog = true;
     } else {
       this.displayDialog = false;
@@ -694,16 +696,16 @@ export class AreaComponent implements OnInit {
     const percentB = this.standardRoomAreaCondo.percentB;
     const newProductData = this.parseObject(this.productData);
     let totalAreaRatioTypeA = 0;
-    let totalAreaRatioTypeB = 0
-    for (let [key, value] of Object.entries(percentA)) {
-      totalAreaRatioTypeA += +parseFloat(value.toString().replace(/,/g, ""));
+    let totalAreaRatioTypeB = 0;
+    for (const [key, value] of Object.entries(percentA)) {
+      totalAreaRatioTypeA += +parseFloat(value.toString().replace(/,/g, ''));
     }
-    for (let [key, value] of Object.entries(percentB)) {
-      totalAreaRatioTypeB += +parseFloat(value.toString().replace(/,/g, ""));
+    for (const [key, value] of Object.entries(percentB)) {
+      totalAreaRatioTypeB += +parseFloat(value.toString().replace(/,/g, ''));
     }
     if (totalAreaRatioTypeA > 100 || totalAreaRatioTypeB > 100) {
       this.displayDialogMsg =
-        "โปรดระบุสัดส่วนของพื้นที่รวมห้องพักให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น";
+        'โปรดระบุสัดส่วนของพื้นที่รวมห้องพักให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น';
       this.displayDialog = true;
     } else {
       this.displayDialog = false;
@@ -730,7 +732,7 @@ export class AreaComponent implements OnInit {
     const newProductData = this.parseObject(this.productData);
     let setProduct = this.standardCentralProduct[this.propertyType];
     setProduct = setProduct.map((element) => {
-      element.noRoom = parseFloat(element.noRoom.toString().replace(/,/g, ""));
+      element.noRoom = parseFloat(element.noRoom.toString().replace(/,/g, ''));
       return element;
     });
     newProductData.user.centrals = setProduct;
@@ -750,8 +752,8 @@ export class AreaComponent implements OnInit {
   changeParkingWord() {
     const newProductData = this.parseObject(this.productData);
     newProductData.wordingParking = this.selectedTypeParking
-      ? "ภายในกรุงเทพ"
-      : "ภายนอกกรุงเทพ";
+      ? 'ภายในกรุงเทพ'
+      : 'ภายนอกกรุงเทพ';
     this.productData = newProductData;
     this.store.dispatch(new productAction.SuccessAction(newProductData));
   }
@@ -760,9 +762,9 @@ export class AreaComponent implements OnInit {
     const params = this.convertParamToObject(param);
     const costLandType =
       (this.areaData.costLandType === undefined ||
-        this.areaData.costLandType === "") &&
+        this.areaData.costLandType === '') &&
       isReload
-        ? "buy"
+        ? 'buy'
         : this.areaData.costLandType;
     this.convertNum();
     this.areaData.lawAreaUsage = params.far * params.totalArea * 4;
@@ -772,10 +774,10 @@ export class AreaComponent implements OnInit {
     this.osrValue = params.osr;
     this.totalArea = params.totalArea;
     this.landPrice = params.landPrice;
-    this.availableArea = ["village", "townhome"].includes(this.propertyType)
+    this.availableArea = ['village', 'townhome'].includes(this.propertyType)
       ? +params.totalArea
       : params.far * params.landPrice;
-    if (this.propertyType === "village") {
+    if (this.propertyType === 'village') {
       const newStandartArea = this.parseObject(this.standardArea);
       const allSellArea =
         newStandartArea.percent.centerArea + newStandartArea.percent.sellArea;
@@ -789,19 +791,11 @@ export class AreaComponent implements OnInit {
       this.standardArea = newStandartArea;
     }
     this.reloadData(true);
-    this.getAreaBasicService(
-      +this.osrValue,
-      +this.farValue,
-      +this.totalArea,
-      +this.landPrice,
-      +this.areaData.availableArea,
-      costLandType
-    );
   }
 
   reloadData(isReload: boolean) {
     if (isReload) {
-      const costLandType = (this.areaData.costLandType === undefined || this.areaData.costLandType === "") && isReload ? "buy" : this.areaData.costLandType;
+      const costLandType = (this.areaData.costLandType === undefined || this.areaData.costLandType === '') && isReload ? 'buy' : this.areaData.costLandType;
       this.convertNum();
       this.getAreaBasicService(
         +this.osrValue,
@@ -820,7 +814,7 @@ export class AreaComponent implements OnInit {
     if (this.selectedModel.id === 4 && this.totalAreaRatio > 100) {
       maxLimit = true;
       this.displayDialogMsg =
-        "โปรดระบุสัดส่วนพื้นที่ให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น";
+        'โปรดระบุสัดส่วนพื้นที่ให้ถูกต้อง โดยสัดส่วนพื้นที่ต้องรวมกันไม่เกิน 100% เท่านั้น';
     }
 
     // if(this.selectedModel.id === 4 && this.totalAreaRatio < 100)  {
@@ -838,12 +832,12 @@ export class AreaComponent implements OnInit {
   convertParamToObject(params: any) {
     const paramNew = this.parseObject(params);
     Object.keys(paramNew).forEach((item) => {
-      if (["osr", "far", "totalArea", "landPrice"].includes(item)) {
+      if (['osr', 'far', 'totalArea', 'landPrice'].includes(item)) {
         paramNew[item] = parseFloat(
-          paramNew[item].toString().replace(/,/g, "")
+          paramNew[item].toString().replace(/,/g, '')
         );
-      } else if (["colorTown"].includes(item)) {
-        paramNew[item] = ["#", paramNew[item]].join("");
+      } else if (['colorTown'].includes(item)) {
+        paramNew[item] = ['#', paramNew[item]].join('');
       }
     });
     return paramNew;
@@ -872,11 +866,13 @@ export class AreaComponent implements OnInit {
       deposit: this.areaData.deposit,
       rentPerMonth: this.areaData.rentPerMonth,
       rentNoYear: this.areaData.rentNoYear,
+      coverArea : this.areaData.emptyArea
     };
     areaData = this.calculatorManagerService.calculateArea(areaData);
     this.store.dispatch(new areaAction.IsLoadingAction(true));
     let newAreaData = await this.requestManagerService.requestArea(areaData);
     this.standardArea.area = newAreaData.standardArea.area;
+    // this.standardArea.percent = newAreaData.standardArea.percent;
     newAreaData.deposit = newAreaData.deposit
     ? newAreaData.deposit
     : this.areaData.deposit;
@@ -896,31 +892,31 @@ export class AreaComponent implements OnInit {
   }
 
   getStyleTown() {
-    return { "background-color:": this.areaData.townPlanColor };
+    return { 'background-color:': this.areaData.townPlanColor };
   }
 
   getScoreColor(type: string) {
-    if (type === "มาก") {
-      return { color: "green" };
+    if (type === 'มาก') {
+      return { color: 'green' };
     }
-    if (type === "ปานกลาง") {
-      return { color: "orange" };
+    if (type === 'ปานกลาง') {
+      return { color: 'orange' };
     }
-    if (type === "น้อย") {
-      return { color: "red" };
+    if (type === 'น้อย') {
+      return { color: 'red' };
     }
   }
 
   getWording(type: boolean) {
     if (type) {
-      return "ภายในกรุงเทพ";
+      return 'ภายในกรุงเทพ';
     } else {
-      return "ภายนอกกรุงเทพ";
+      return 'ภายนอกกรุงเทพ';
     }
   }
 
   getWordingType(index: number) {
-    if (this.propertyType === "village") {
+    if (this.propertyType === 'village') {
       return villageWord[index];
     } else {
       return hotelWord[index];
@@ -930,18 +926,16 @@ export class AreaComponent implements OnInit {
   getImage(index: number) {
     return imageType[this.propertyType][index];
   }
-
-  tableSize: any;
-  @HostListener("window:resize", ["$event"])
+  @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.checkInnerWidth();
   }
 
   checkInnerWidth() {
     if (window.innerWidth < 500) {
-      this.tableSize = { width: "320px" };
+      this.tableSize = { width: '320px' };
     } else {
-      this.tableSize = { width: "480px" };
+      this.tableSize = { width: '480px' };
     }
   }
 }

@@ -36,9 +36,7 @@ export class ProductBasicSummaryHotelComponent implements OnInit, OnChanges {
 
     this.store.select(fromCore.getProduct)
     .subscribe(data => {
-      if (data.payload[this.owner].rooms.length === 0) {
-        this.products = data.payload[this.owner];
-      }
+      this.products = data.payload[this.owner];
       if(data.payload){
         const {wordingParking} = data.payload;
         if (wordingParking) {
