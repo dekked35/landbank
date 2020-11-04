@@ -3,14 +3,15 @@ export const chartsType = {
         chart: {
           // width: 380,
           type: 'pie',
-          fontFamily: "Prompt",
+          fontFamily: 'Prompt',
         },
         legend: {
           position: 'bottom'
         },
-        colors: ['#0060be', '#FF0000', '#feb019', '#00be6b', '#6B77E1',  '#81894E'],
-        labels: ['พื้นที่รวมห้องพัก','พื้นที่รวมบ้านพัก', 'พื้นที่รวมส่วนกลาง', 'พื้นที่รวมทางเดิน','พื้นที่จอดรถในอาคาร', 'พื้นที่นอกอาคาร'],
-        series: [70,15,5,5,5],
+        colors: ['#81894E', '#0060be', '#FF0000', '#feb019', '#00be6b', '#6B77E1',  '#ff9d5c'],
+        // tslint:disable-next-line: max-line-length
+        labels: ['พื้นที่ปกคลุม', 'พื้นที่รวมห้องพัก', 'พื้นที่รวมบ้านพัก', 'พื้นที่รวมส่วนกลาง', 'พื้นที่รวมทางเดิน', 'พื้นที่จอดรถในอาคาร', 'พื้นที่นอกอาคาร'],
+        series: [70, 15, 5, 5, 5],
         responsive: [{
           breakpoint: 480,
           options: {
@@ -25,12 +26,13 @@ export const chartsType = {
     },
     product: {
         chart: {
-            //width: 380,
+            // width: 380,
             type: 'pie',
-            fontFamily: "Prompt",
+            fontFamily: 'Prompt',
         },
-        colors:['#0060be', '#FF0000', '#FFDA29', '#009499',  '#feb019', '#81894E'],
-        labels: ["พื้นที่รวมห้องพัก","พื้นที่รวมบ้านพัก","พื้นที่รวมส่วนกลาง", "พื้นที่รวมทางเดิน", "พื้นที่จอดรถในอาคาร", "พื้นที่ภายนอกอาคารไม่ได้คำนวณ"],
+        colors: ['#0060be', '#FF0000', '#FFDA29', '#009499',  '#feb019', '#81894E'],
+        // tslint:disable-next-line: max-line-length
+        labels: ['พื้นที่รวมห้องพัก', 'พื้นที่รวมบ้านพัก', 'พื้นที่รวมส่วนกลาง', 'พื้นที่รวมทางเดิน', 'พื้นที่จอดรถในอาคาร', 'พื้นที่ภายนอกอาคารไม่ได้คำนวณ'],
         series: [1, 0, 0, 0, 0],
         legend: {
                     position: 'bottom'
@@ -49,12 +51,13 @@ export const chartsType = {
     },
     productCom: {
       chart: {
-          //width: 380,
+          // width: 380,
           type: 'pie',
-          fontFamily: "Prompt",
+          fontFamily: 'Prompt',
       },
-      colors:['#FF6600', '#FF0000', '#FFDA29', '#009499',  '#feb019', '#81894E'],
-      labels: ["พื้นที่รวมห้องพัก","พื้นที่รวมบ้านพัก","พื้นที่รวมส่วนกลาง", "พื้นที่รวมทางเดิน", "พื้นที่จอดรถในอาคาร", "พื้นที่ภายนอกอาคารไม่ได้คำนวณ"],
+      colors: ['#FF6600', '#FF0000', '#FFDA29', '#009499',  '#feb019', '#81894E'],
+      // tslint:disable-next-line: max-line-length
+      labels: ['พื้นที่รวมห้องพัก', 'พื้นที่รวมบ้านพัก', 'พื้นที่รวมส่วนกลาง', 'พื้นที่รวมทางเดิน', 'พื้นที่จอดรถในอาคาร', 'พื้นที่ภายนอกอาคารไม่ได้คำนวณ'],
       series: [1, 0, 0, 0, 0],
       legend: {
                   position: 'bottom'
@@ -73,12 +76,12 @@ export const chartsType = {
   },
     spendings: {
         chart: {
-            //width: 380,
+            // width: 380,
             type: 'pie',
-            fontFamily: "Prompt",
+            fontFamily: 'Prompt',
         },
-        colors:[ '#feb019', '#00be6b', '#6B77E1'], // '#0060be',
-        labels: [ "Special Equipment + Pre Opening", "ค่าใช้จ่ายรายเดือน", "ค่าก่อสร้าง"], // "ค่าที่ดินทั้งหมด",
+        colors: [ '#feb019', '#00be6b', '#6B77E1'], // '#0060be',
+        labels: [ 'Special Equipment + Pre Opening', 'ค่าใช้จ่ายรายเดือน', 'ค่าก่อสร้าง'], // "ค่าที่ดินทั้งหมด",
         series: [1, 0, 0],
         legend: {
                     position: 'bottom'
@@ -95,4 +98,4 @@ export const chartsType = {
             }
         }]
     }
-}
+};

@@ -304,6 +304,18 @@
                 สัดส่วนพื้นที่คงเหลือ <span> {{ raminingAreaRatio | number: '1.0-2' }} </span> %
             </div>
 
+            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
+              <figure>
+                <img src="../../../assets/icons/icon_greenarea.svg"></figure>
+              <figcaption>
+                  พื้นที่ปกคลุม
+                  <span> {{ standardArea.percent.coverArea | number: '1.0-2' }} </span>%
+                  คิดเป็น
+                  <span> {{ standardArea.area.coverArea | number: '1.0-2' }}</span>
+                  ตร.ว.
+              </figcaption>
+          </div>
+
             <ng-container *ngIf="propertyType === 'village' || propertyType === 'townhome' ">
                   <!-- <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                     <figure>

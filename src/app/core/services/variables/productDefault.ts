@@ -136,8 +136,8 @@ export const productDefault = {
     },
     "communityMall" : {
         "room" : [
-            { "type"  : "ร้านค้า", "name" : "Store Booth", "area" : 2, "noRoom" : 10  },
-            { "type"  : "ร้านค้า", "name" : "Small Store", "area" : 10, "noRoom" : 10  }
+            { "type"  : "ร้านค้า", "name" : "Store Booth", "area" : 20, "noRoom" : 10  },
+            { "type"  : "ร้านค้า", "name" : "Small Store", "area" : 100, "noRoom" : 10  }
           ],
         "central" : [
             { "type"  : "ส่วนกลาง", "name" : "Restaurant", "area" : 60, "noRoom" : 3 },
@@ -145,7 +145,7 @@ export const productDefault = {
             {  "type"  : "ส่วนกลาง", "name" : "Gym",  "area" : 90, "noRoom" : 2  }
         ],
         "parking": [
-            { "type"  : "ที่จอดรถ",  "name" : "Carpark 1", "area" : 20, "noRoom" : 5 }
+            { "type"  : "ที่จอดรถ",  "name" : "Carpark 1", "area" : 5, "noRoom" : 5 }
         ],
         "outdoor" : [
             { "type"  : "พื้นที่ภายนอก", "name" : "Garden", "area" : 50, "noRoom" : 1

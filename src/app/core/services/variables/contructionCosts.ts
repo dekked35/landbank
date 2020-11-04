@@ -102,6 +102,9 @@ export const contructionCosts = {
             { name: 'Garden', cost: 5000 },
             { name: 'Entrance Gate', cost: 1000000 },
             { name: 'Entrance Fence', cost: 5000 }
+        ],
+        'resort': [
+            {name: 'corridor', cost: 10000 },
         ]
     },
     'resort' : {
