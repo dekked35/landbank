@@ -91,6 +91,7 @@ export class CalculatorManagerService {
     }
     areaData.lawAreaUsage = totalArea * farValue * 4;
     areaData.emptyArea = areaData.lawAreaUsage * osrValue / 100;
+    areaData.coverArea = ['village', 'townhome'].includes(this.propertyType) ? areaData.emptyArea / 4 : areaData.emptyArea;
     return areaData;
 
   }
@@ -272,7 +273,7 @@ export class CalculatorManagerService {
         return { ...room, cost: cost, totalCost: +room.noRoom * cost * (+room.area) };
       });
     }
-    if (productData.resort.reduce((accumulator, currentValue) => accumulator + currentValue.noRoom, 0) > 0) {
+    if (productData.resort && productData.resort.reduce((accumulator, currentValue) => accumulator + currentValue.noRoom, 0) > 0) {
       speadingsData.resort = productData.resort.map((room) => {
         const cost = this.defaultsVariableService.getContructionCost(this.propertyType, this.RESORT, room.name);
         return { ...room, cost: cost, totalCost: +room.noRoom * cost * (+room.area) };
@@ -314,7 +315,7 @@ export class CalculatorManagerService {
         'totalCost': costCentralCorridor * centralsCoridorArea
       });
     }
-    if (productData.resort.reduce((accumulator, currentValue) => accumulator + currentValue.noRoom, 0) > 0) {
+    if (productData.resort && productData.resort.reduce((accumulator, currentValue) => accumulator + currentValue.noRoom, 0) > 0) {
       const resortCoridorArea = this.getTotalArea(productData.resort) * 0.15;
       speadingsData.resort.push({
         'type': 'central',
@@ -355,7 +356,7 @@ export class CalculatorManagerService {
         incomePerDay: +room.noRoom * incomePrice
       };
     });
-    if (productData.resort.reduce((accumulator, currentValue) => accumulator + currentValue.noRoom, 0) > 0) {
+    if (productData.resort && productData.resort.reduce((accumulator, currentValue) => accumulator + currentValue.noRoom, 0) > 0) {
       implicitsCost.incomes = implicitsCost.incomes.concat(productData.resort.map((room) => {
         const incomePrice = this.defaultsVariableService.getIncome(this.propertyType, this.ROOM, room.name);
         return {

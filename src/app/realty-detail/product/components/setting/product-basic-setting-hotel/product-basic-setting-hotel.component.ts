@@ -142,6 +142,11 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
               // tslint:disable-next-line: max-line-length
               this.resortProducts = this.calculatorManagerService.estimateRoomProduct(this.areaData, this.resortProducts, null, this.currentProperty);
             }
+            if (area.payload && this.currentProperty === 'condo') {
+              // const { wordParking } = area.payload
+              // console.log(area.payload.wordParking)
+                this.wording = this.areaData.wordParking;
+            }
             this.dispatchProduct();
           }
       });
@@ -154,12 +159,12 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
           this.resortProducts = this.tempProductStore[this.owner].resort;
           this.centralProducts = this.tempProductStore[this.owner].centrals.filter( item => item.noRoom > 0);
           this.parkingProducts = this.tempProductStore[this.owner].parking;
-          // this.dispatchProduct();
-          this.checkDisplayErrorDialog()
+          // this.checkDisplayErrorDialog()
         }
-        console.log(this.tempProductStore[this.owner].parkingLotQuantity)
         if (data.payload && this.currentProperty === 'condo') {
-          this.wording = data.payload.wordingParking;
+          if (this.wording !== data.payload.wordingParking) {
+            this.wording = data.payload.wordingParking;
+          }
         }
       });
 
@@ -452,6 +457,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
             storeProduct.unsubscribe();
           }
         }
+        productData.wordingParking = this.wording;
         this.store.dispatch(new productAction.IsLoadingAction(true));
         this.getProductService(productData);
     }
@@ -482,7 +488,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     // tslint:disable-next-line: max-line-length
     const speandingsData = this.calculatorManagerService.calculateProductToSpeading(productData[this.owner], this.parseObject(this.speadingData));
     // type == central means that object it's not show icon.
-
+    console.log('is in');
     const payload = {
       'propertyType': this.currentProperty,
       'area_input': {
@@ -568,6 +574,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
 
   checkDisplayErrorDialog() {
     try {
+    console.log(this.centralProducts)
     const room_used =  this.getTotalArea(this.ROOM) + (this.getTotalArea(this.ROOM) * 0.15);
     const central_used =  this.getTotalArea(this.CENTRAL) + (this.getTotalArea(this.CENTRAL) * 0.2);
     const parking_used =  this.getTotalArea(this.PARKING) + (this.getTotalArea(this.PARKING) * 0.4);
@@ -586,6 +593,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
       console.log('Room error ' + room_used + ':' + this.areaData.standardArea.area.room );
       return '';
     }
+    console.log(central_used,this.areaData.standardArea.area.central)
     if (+central_used > +this.areaData.standardArea.area.central) {
       this.displayErrDialog = true;
       this.displayErrDialogMsg = 'ไม่มีพื้นที่คงเหลือสำหรับพื้นที่ส่วนกลาง โปรดกำหนดพื้นที่ใหม่อีกครั้ง';

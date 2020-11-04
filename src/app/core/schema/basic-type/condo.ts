@@ -83,7 +83,8 @@ export const condo = {
             "totalOutdoorArea": 0.0,  // พื้นที่ภายนอกอาคารไม่ได้คำนวณ
             "totalRoomQuantity": 0.0, // จำนวนห้องพักทั้งหมด
             "remainingArea": 0.0, // พื้นที่ว่างคงเหลือ
-        }
+        },
+        "wordingParking" : 'ภายในกรุงเทพ'
     },
     "spendings": {
         "rooms": [],

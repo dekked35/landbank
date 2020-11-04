@@ -73,8 +73,8 @@ export const productOptions = {
     },
     "communityMall": {
         "room": [
-            { name: 'Store Booth', value: 'Store Booth', size: 50 },
-            { name: 'Small Store', value: 'Small Store', size: 10 },
+            { name: 'Store Booth', value: 'Store Booth', size: 20 },
+            { name: 'Small Store', value: 'Small Store', size: 100 },
         ],
         "central": [
             { name: 'Restaurant', value: 'Restaurant', size: 60 },
@@ -87,8 +87,8 @@ export const productOptions = {
             { name: 'Learning Store', value: 'Learning Store', size: 60 },
         ],
         "parking": [
-            { name: 'Carpark 1', value: 'Carpark', size: 20 },
-            { name: 'Carpark 2', value: 'Carpark', size: 40 }
+            { name: 'Carpark 1', value: 'Carpark', size: 5 },
+            { name: 'Carpark 2', value: 'Carpark', size: 10 }
         ],
         "outdoor": [
             { name: 'Garden', value: 'Garden', size: 60 },

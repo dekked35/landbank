@@ -473,7 +473,7 @@ export class AreaComponent implements OnInit {
       this.standardSellAreaRatio.typeOne = product.user.products[0].ratio;
       this.standardSellAreaRatio.typeTwo = product.user.products[1].ratio;
       this.standardSellAreaRatio.typeThree = product.user.products[2].ratio;
-    } else if (['hotel', 'condo','communityMall'].includes(this.propertyType)) {
+    } else if (['hotel', 'condo', 'communityMall'].includes(this.propertyType)) {
       if (product && product.user && product.user.centrals) {
         let newStandardCentral = this.parseObject(
           this.standardCentralProduct[this.propertyType]
@@ -723,6 +723,7 @@ export class AreaComponent implements OnInit {
       newProductData.competitor.rooms = userRooms;
       newProductData.user.resort = userResort;
       newProductData.competitor.resort = userResort;
+      console.log('is in')
       this.store.dispatch(new productAction.SuccessAction(newProductData));
       // this.reloadData(true);
     }
@@ -756,6 +757,7 @@ export class AreaComponent implements OnInit {
       : 'ภายนอกกรุงเทพ';
     this.productData = newProductData;
     this.store.dispatch(new productAction.SuccessAction(newProductData));
+    this.reloadData(true);
   }
 
   reloadDataParam(isReload: boolean, param: any) {
@@ -866,13 +868,17 @@ export class AreaComponent implements OnInit {
       deposit: this.areaData.deposit,
       rentPerMonth: this.areaData.rentPerMonth,
       rentNoYear: this.areaData.rentNoYear,
-      coverArea : this.areaData.emptyArea
+      coverArea : this.areaData.coverArea,
+
     };
     areaData = this.calculatorManagerService.calculateArea(areaData);
     this.store.dispatch(new areaAction.IsLoadingAction(true));
     let newAreaData = await this.requestManagerService.requestArea(areaData);
+    // if(this.selectedModel.id !== 4 ) {
+      this.standardArea = this.calculateNewStandardArea(newAreaData);
+    // }
     this.standardArea.area = newAreaData.standardArea.area;
-    // this.standardArea.percent = newAreaData.standardArea.percent;
+    // this.standardArea.percent = newAreaData.percent;
     newAreaData.deposit = newAreaData.deposit
     ? newAreaData.deposit
     : this.areaData.deposit;
@@ -883,6 +889,7 @@ export class AreaComponent implements OnInit {
     ? newAreaData.rentNoYear
     : this.areaData.rentNoYear;
     newAreaData = this.calculatorManagerService.calculateArea(newAreaData);
+    newAreaData.wordParking = this.selectedTypeParking ? 'ภายในกรุงเทพ' : 'ภายนอกกรุงเทพ';
     this.store.dispatch(new areaAction.SuccessAction(newAreaData));
     this.store.dispatch(new areaAction.IsLoadingAction(false));
   }
@@ -937,5 +944,28 @@ export class AreaComponent implements OnInit {
     } else {
       this.tableSize = { width: '480px' };
     }
+  }
+
+  calculateNewStandardArea(areaData) {
+    let all = 0;
+    const itemObj = {};
+    const temp = this.parseObject(areaData.standardArea);
+    const {area} = temp;
+    if (this.selectedModel.id === 4) {
+      all = areaData.availableArea;
+    } else {
+      Object.values(area).forEach( item => {
+        all = all + +item;
+      });
+    }
+    Object.keys(area).forEach( item => {
+      if (area[item] < 0) {
+        itemObj[item] = 0;
+      } else {
+        itemObj[item] = parseFloat((area[item] / all * 100).toFixed(2));
+      }
+    });
+    temp.percent = itemObj;
+    return temp;
   }
 }
