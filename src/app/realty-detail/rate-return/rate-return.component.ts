@@ -43,7 +43,7 @@ export class RateReturnComponent implements OnInit {
     private requestManagerService: RequestManagerService,
     private calculatorManagerService: CalculatorManagerService,
     private shemaManagerService: SchemaManagerService,
-    private basicTypeService:BasicTypeService) { 
+    private basicTypeService:BasicTypeService) {
     this.store.select(fromCore.getPage)
     .subscribe(page => {
       this.currentProperty = page.page;
@@ -99,7 +99,7 @@ export class RateReturnComponent implements OnInit {
     console.log("Input changes")
     this.getImplicitCostService();
   }
-  
+
   onSlideEnd($event, field){
     console.log($event);
     if(field === 'occupancy') {
@@ -113,7 +113,7 @@ export class RateReturnComponent implements OnInit {
 
     this.getImplicitCostService();
   }
-  
+
   async getImplicitCostService(){
     let payload = {
       "propertyType": this.currentProperty,
@@ -130,7 +130,7 @@ export class RateReturnComponent implements OnInit {
   }
 
   async getRateReturnService(){
-    
+
     let payload = {
       "propertyType": this.currentProperty,
       "area_input": this.areaData,
@@ -145,13 +145,13 @@ export class RateReturnComponent implements OnInit {
   }
   generateRateReturnInput(){
     let payload = {
-      "bankLoad": this.rateReturnData.bankLoad,
-      "privateCash": this.rateReturnData.privateCash,
-      "bankInterest": this.rateReturnData.bankInterest,
-      "returnRate": this.rateReturnData.returnRate,
-      "cashFlowYear": this.rateReturnData.cashFlowYear,
-      "ratioInvestmentValue": this.rateReturnData.ratioInvestmentValue,
-      "borrowPeriod": this.rateReturnData.borrowPeriod
+      "bankLoad": +this.rateReturnData.bankLoad,
+      "privateCash": +this.rateReturnData.privateCash,
+      "bankInterest": +this.rateReturnData.bankInterest,
+      "returnRate": +this.rateReturnData.returnRate,
+      "cashFlowYear": +this.rateReturnData.cashFlowYear,
+      "ratioInvestmentValue": +this.rateReturnData.ratioInvestmentValue,
+      "borrowPeriod": +this.rateReturnData.borrowPeriod
     }
     if (['hotel', 'comunityMall'].includes(this.currentProperty)){
       payload = this.rateReturnData;

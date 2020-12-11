@@ -34,16 +34,16 @@
             <ng-container
                 *ngIf="currentProperty === 'village' || currentProperty === 'townhome' || currentProperty === 'condo'">
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                    รายรับ (ต่อเดือน) <span> {{ rateReturnData.incomePerMonth | number:'1.2-2'}} </span> บาท
+                    รายรับ (ต่อเดือน) <span> {{ rateReturnData.monthlyIncome | number:'1.2-2'}} </span> บาท
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                    รายจ่าย (ต่อเดือน) <span> {{ rateReturnData.expensePerMonth | number:'1.2-2'}} </span>
+                    รายจ่าย (ต่อเดือน) <span> {{ rateReturnData.monthlyExpense | number:'1.2-2'}} </span>
                     บาท
                 </div>
             </ng-container>
             <ng-container *ngIf="currentProperty === 'hotel' || currentProperty === 'communityMall'">
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                    รายได้ต่อเดือนสุทธิ <span> {{ rateReturnData.incomePerMonth | number:'1.2-2'}} </span>
+                    รายได้ต่อเดือนสุทธิ <span> {{ rateReturnData.monthlyIncome | number:'1.2-2'}} </span>
                     บาท
                 </div>
             </ng-container>
@@ -53,8 +53,8 @@
             </div>
             <div class="ui-g-8 ui-md-4 ui-lg-4 ">
                 <div class="box_layout">จำนวนเดือน <span>
-                        {{ rateReturnData.breakEvenPointMonthCash | number }} </span> เดือน</div>
-                <div class="box_layout"> จำนวนปี <span> {{ rateReturnData.breakEvenPointYearCash | number }}
+                        {{ rateReturnData.monthlyCashBreakEvenPoint | number:'1.0-0' }} </span> เดือน</div>
+                <div class="box_layout"> จำนวนปี <span> {{ rateReturnData.yearCashBreakEvenPoint | number:'1.0-0' }}
                     </span> ปี</div>
             </div>
         </div>
@@ -101,16 +101,16 @@
             <ng-container
                 *ngIf="currentProperty === 'village' || currentProperty === 'townhome' || currentProperty === 'condo'">
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                    รายรับ (ต่อเดือน) <span> {{ rateReturnData.incomePerMonth | number:'1.2-2'}} </span> บาท
+                    รายรับ (ต่อเดือน) <span> {{ rateReturnData.monthlyIncome | number:'1.2-2'}} </span> บาท
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                    รายจ่าย (ต่อเดือน) <span> {{ rateReturnData.incomePerMonth | number:'1.2-2'}} </span>
+                    รายจ่าย (ต่อเดือน) <span> {{ rateReturnData.monthlyIncome | number:'1.2-2'}} </span>
                     บาท
                 </div>
             </ng-container>
             <ng-container *ngIf="currentProperty === 'hotel' || currentProperty === 'communityMall'">
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                    รายได้ต่อเดือนสุทธิ <span> {{ rateReturnData.incomePerMonth | number:'1.2-2'}} </span>
+                    รายได้ต่อเดือนสุทธิ <span> {{ rateReturnData.monthlyIncome | number:'1.2-2'}} </span>
                     บาท
                 </div>
             </ng-container>
@@ -120,8 +120,8 @@
             </div>
             <div class="ui-g-8 ui-md-4 ui-lg-4 ">
                 <div class="box_layout">จำนวนเดือน <span>
-                        {{ rateReturnData.breakEvenPointMonthBank | number }} </span> เดือน</div>
-                <div class="box_layout"> จำนวนปี <span> {{ rateReturnData.breakEvenPointYearBank | number }}
+                        {{ rateReturnData.monthlyBankBreakEvenPoint | number:'1.0-0' }} </span> เดือน</div>
+                <div class="box_layout"> จำนวนปี <span> {{ rateReturnData.yearBankBreakEvenPoint | number:'1.0-0' }}
                     </span> ปี</div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
@@ -134,19 +134,19 @@
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                NPV <span> {{ rateReturnData.npvValue | number }} </span> บาท
+                NPV <span> {{ rateReturnData.npv | number }} </span> บาท
                 <span class="font-gray-color">
                     หมายเหตุ: NPV มีค่าไม่ติดลบจึงควรลงทุน
                 </span>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                IRR <span>{{ rateReturnData.irrValue  | number:'1.2-2' }} </span> %
+                IRR <span>{{ rateReturnData.irr  | number:'1.2-2' }} </span> %
                 <span class="font-gray-color">
                     หมายเหตุ IRR มีค่ามากกว่าต้นทุนทางการเงิน จึงควรลงทุน
                 </span>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                ต้นทุนทางการเงิน <span>{{ rateReturnData.financeCosts  | number:'1.2-2' }} </span> %
+                ต้นทุนทางการเงิน <span>{{ rateReturnData.privateCash  | number:'1.2-2' }} </span> %
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
                 Payback Period <span>{{ rateReturnData.paybackPeriod  | number }} </span> เดือน
