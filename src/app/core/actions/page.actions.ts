@@ -4,7 +4,9 @@ export const PAGE = '[Page] Page Selected'
 
 export class PageAction implements Action {
   readonly type = PAGE
-  constructor (public payload) { }
+  constructor (public payload) {
+    localStorage.setItem('page',payload)
+   }
 
 }
 

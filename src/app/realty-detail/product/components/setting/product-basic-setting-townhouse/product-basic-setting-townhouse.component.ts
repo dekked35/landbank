@@ -189,15 +189,37 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   initializeProductSchema() {
     this.store.dispatch(new productAction.IsLoadingAction(true));
-    let productData = this.schemaManagerService.getProductSchema(this.currentProperty);
+    let productData, speadingsData, implicitCostData, profitData, rateReturnData;
+    if (localStorage.getItem('product')) {
+      productData = JSON.parse(localStorage.getItem('product'));
+    } else {
+      productData = this.schemaManagerService.getProductSchema(this.currentProperty);
+    }
     productData = this.calculatorManagerService.calculateProduct(this.areaData, productData);
-    this.store.dispatch(new productAction.SuccessAction(productData));
-    this.store.dispatch(new productAction.IsLoadingAction(false));
 
-    const speadingsData = this.schemaManagerService.getSpeadingSchema(this.currentProperty);
-    const implicitCostData = this.schemaManagerService.getImplicitSchema(this.currentProperty);
-    const profitData = this.schemaManagerService.getProfitSchama(this.currentProperty);
-    const rateReturnData = this.schemaManagerService.getRateReturn(this.currentProperty);
+    if (localStorage.getItem('spending')) {
+      speadingsData = JSON.parse(localStorage.getItem('spending'));
+    } else {
+      speadingsData = this.schemaManagerService.getSpeadingSchema(this.currentProperty);
+    }
+
+    if (localStorage.getItem('implicit')) {
+      implicitCostData = JSON.parse(localStorage.getItem('implicit'));
+    } else {
+      implicitCostData = this.schemaManagerService.getImplicitSchema(this.currentProperty);
+    }
+
+    if (localStorage.getItem('profit')) {
+      profitData = JSON.parse(localStorage.getItem('profit'));
+    } else {
+      profitData = this.schemaManagerService.getProfitSchama(this.currentProperty);
+    }
+
+    if (localStorage.getItem('rateReturn')) {
+      rateReturnData = JSON.parse(localStorage.getItem('rateReturn'));
+    } else {
+      rateReturnData = this.schemaManagerService.getRateReturn(this.currentProperty);
+    }
 
     this.store.dispatch(new productAction.SuccessAction(productData));
     this.store.dispatch(new spendingsAction.SuccessAction(speadingsData));
@@ -429,7 +451,8 @@ export class ProductBasicSettingTownhouseComponent implements OnInit {
 
   convertNumAndCheckSize() {
     this.convertField.forEach(element => {
-      this.ownerProductData[element] = parseFloat(this.ownerProductData[element].toString().replace(/,/g, ''));
+      // tslint:disable-next-line: max-line-length
+      this.ownerProductData[element] = typeof this.ownerProductData[element] === 'string' ? parseFloat(this.ownerProductData[element].toString().replace(/,/g, '')) : this.ownerProductData[element];
     });
     // tslint:disable-next-line: max-line-length
     this.allArea = (this.ownerProductData.behindDepth * this.ownerProductData.width) + (this.ownerProductData.frontDepth * this.ownerProductData.width) + (this.ownerProductData.depth * this.ownerProductData.width)

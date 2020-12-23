@@ -43,9 +43,9 @@ const imageType = {
     2 : 'home3-3.png'
   },
   resort : {
-    0 : "room/Pool Villa.svg",
-    1 : "room/Family Room.svg",
-    2 : "room/Jacuzzi Villa.svg",
+    0 : 'room/Pool Villa.svg',
+    1 : 'room/Family Room.svg',
+    2 : 'room/Jacuzzi Villa.svg',
   }
 };
 
@@ -63,7 +63,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   currentProperty: string;
   areaData: any;
   products: Array<any> = [];
-  competitorColor : {};
+  competitorColor: {};
   is_loading: boolean;
 
   constructor(private store: Store<any>,
@@ -149,6 +149,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
         this.is_loading = product.isLoading;
         this.productData = product.payload;
         this.products = this.parseObject(this.productData[this.owner]['products']);
+        console.log(this.products)
       });
 
     this.subscriptionSpending = this.store.select(fromCore.getSpendings)
@@ -183,18 +184,42 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
       })
     });
     this.rateControl = new FormControl('', [Validators.max(100), Validators.min(0)]);
-    this.competitorColor = this.owner === 'competitor' ? { 'color' : '#ff781f' } : { }
+    this.competitorColor = this.owner === 'competitor' ? { 'color' : '#ff781f' } : { };
   }
 
   initializeProductSchema() {
     this.store.dispatch(new productAction.IsLoadingAction(true));
-    let productData = this.schemaManagerService.getProductSchema(this.currentProperty);
+    let productData, speadingsData, implicitCostData, profitData, rateReturnData;
+    if (localStorage.getItem('product')) {
+      productData = JSON.parse(localStorage.getItem('product'));
+    } else {
+      productData = this.schemaManagerService.getProductSchema(this.currentProperty);
+    }
     productData = this.calculatorManagerService.calculateProduct(this.areaData, productData);
 
-    const speadingsData = this.schemaManagerService.getSpeadingSchema(this.currentProperty);
-    const implicitCostData = this.schemaManagerService.getImplicitSchema(this.currentProperty);
-    const profitData = this.schemaManagerService.getProfitSchama(this.currentProperty);
-    const rateReturnData = this.schemaManagerService.getRateReturn(this.currentProperty);
+    if (localStorage.getItem('spending')) {
+      speadingsData = JSON.parse(localStorage.getItem('spending'));
+    } else {
+      speadingsData = this.schemaManagerService.getSpeadingSchema(this.currentProperty);
+    }
+
+    if (localStorage.getItem('implicit')) {
+      implicitCostData = JSON.parse(localStorage.getItem('implicit'));
+    } else {
+      implicitCostData = this.schemaManagerService.getImplicitSchema(this.currentProperty);
+    }
+
+    if (localStorage.getItem('profit')) {
+      profitData = JSON.parse(localStorage.getItem('profit'));
+    } else {
+      profitData = this.schemaManagerService.getProfitSchama(this.currentProperty);
+    }
+
+    if (localStorage.getItem('rateReturn')) {
+      rateReturnData = JSON.parse(localStorage.getItem('rateReturn'));
+    } else {
+      rateReturnData = this.schemaManagerService.getRateReturn(this.currentProperty);
+    }
 
     this.store.dispatch(new productAction.SuccessAction(productData));
     this.store.dispatch(new spendingsAction.SuccessAction(speadingsData));
@@ -212,7 +237,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
   }
 
   handleRatioEnd(index: number, $event: any, text?: string) {
-    this.convertNum()
+    this.convertNum();
     if (text) {
       switch (text) {
         case 'size':
@@ -242,18 +267,21 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   convertNum() {
     this.products.forEach( (element, index) => {
-      this.products[index].size = parseFloat(this.products[index].size.toString().replace(/,/g, ''));
-      this.products[index].area = parseFloat(this.products[index].area.toString().replace(/,/g, ''));
-      this.products[index].cost = parseFloat(this.products[index].cost.toString().replace(/,/g, ''));
+      // tslint:disable-next-line: max-line-length
+      this.products[index].size = typeof this.products[index].size === 'string' ? parseFloat(this.products[index].size.toString().replace(/,/g, '')) : this.products[index].size;
+      // tslint:disable-next-line: max-line-length
+      this.products[index].area = typeof this.products[index].area === 'string' ? parseFloat(this.products[index].area.toString().replace(/,/g, '')) : this.products[index].area;
+      // tslint:disable-next-line: max-line-length
+      this.products[index].cost = typeof this.products[index].cost === 'string' ? parseFloat(this.products[index].cost.toString().replace(/,/g, '')) : this.products[index].cost;
     });
   }
 
   async getBasicService() {
-  this.convertNum()
+  this.convertNum();
   // this.checkDisplayErrorDialogValue()
-  if(this.productData) {
+  if (this.productData) {
     const payload = {
-      'propertyType': this.currentProperty === 'resort' ? "village" : this.currentProperty,
+      'propertyType': this.currentProperty === 'resort' ? 'village' : this.currentProperty,
       'area_input': {
         ...this.areaData,
         'percent': this.areaData.standardArea.percent,
@@ -267,7 +295,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     newProductData = this.calculatorManagerService.calculateProduct(this.areaData, newProductData);
     this.store.dispatch(new productAction.SuccessAction(newProductData));
     this.store.dispatch(new productAction.IsLoadingAction(false));
-    if(this.owner === 'competitor') {
+    if (this.owner === 'competitor') {
       this.setArea = this.productData.competitor.usedArea;
     }
     // this.checkDisplayErrorDialog()
@@ -302,7 +330,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   parsePayloadResponse(response: any) {
     const productData = JSON.parse(JSON.stringify(response));
-    if(productData['user'].products){
+    if (productData['user'].products) {
       productData['user'].products[0].cost = this.parseMillionToUnitFormat(response['user'].products[0].cost);
       productData['user'].products[1].cost = this.parseMillionToUnitFormat(response['user'].products[1].cost);
       productData['user'].products[2].cost = this.parseMillionToUnitFormat(response['user'].products[2].cost);
@@ -317,8 +345,8 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     console.log('fill in speading.');
     this.store.dispatch(new spendingsAction.IsLoadingAction(true));
     const payload = this.generateSpeadingPayload(this.speadingData);
-    let newSpendingData = await this.requestManagerService.requestSpeading(payload,'productBasic');
-    if(newSpendingData) {
+    let newSpendingData = await this.requestManagerService.requestSpeading(payload, 'productBasic');
+    if (newSpendingData) {
       newSpendingData = this.mappingSpeadingResponse(this.speadingData, this.parseObject(newSpendingData));
       this.store.dispatch(new spendingsAction.SuccessAction(newSpendingData));
       this.store.dispatch(new spendingsAction.IsLoadingAction(false));
@@ -330,7 +358,7 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   generateSpeadingPayload(speadingData: any) {
     const tempInput = this.parseObject(speadingData);
-    if(this.areaData.total_land_price) {
+    if (this.areaData.total_land_price) {
       tempInput.priceLandBought = this.areaData.total_land_price;
     }
     const productData = JSON.parse(JSON.stringify(this.productData));
@@ -441,11 +469,11 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     try {
-      if(!!changes.firstChange === false) {
+      if (!!changes.firstChange === false) {
         this.getBasicService();
       }
     } catch (e) {
-      console.log('error')
+      console.log('error');
     }
   }
 
@@ -465,23 +493,23 @@ export class ProductBasicSettingVillageComponent implements OnInit, OnDestroy {
     }
   }
 
-  convertAreaToSize(){
+  convertAreaToSize() {
     this.products.map( (arr , index) => {
       const demoArea = arr.area / this.convertRatio[index];
       arr.size = Math.round(demoArea);
       return arr;
-    })
+    });
   }
 
-  getWordingType(index: number){
-    if(this.currentProperty === 'village') {
+  getWordingType(index: number) {
+    if (this.currentProperty === 'village') {
       return villageWord[index];
     } else {
       return hotelWord[index];
     }
   }
 
-  getImage(index: number){
+  getImage(index: number) {
     let wording = this.currentProperty;
     if (this.owner === 'competitor') {
       wording += 'Com';

@@ -198,11 +198,8 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
 
   initializeProductSchema() {
     this.store.dispatch(new productAction.IsLoadingAction(true));
-    let productData = this.schemaManagerService.getProductSchema(this.currentProperty);
-    const speadingsData = this.schemaManagerService.getSpeadingSchema(this.currentProperty);
-    const implicitCostData = this.schemaManagerService.getImplicitSchema(this.currentProperty);
-    const rateReturnData = this.schemaManagerService.getRateReturn(this.currentProperty);
 
+    let productData, speadingsData, implicitCostData, profitData, rateReturnData;
     this.roomProducts = this.defaultsVariableService.getProductDefault(this.currentProperty, this.ROOM);
     this.centralProducts = this.defaultsVariableService.getProductDefault(this.currentProperty, this.CENTRAL);
     this.parkingProducts = this.defaultsVariableService.getProductDefault(this.currentProperty, this.PARKING);
@@ -220,6 +217,36 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.standardSizeParkings = this.defaultsVariableService.getStandardSize(this.currentProperty, this.PARKING);
     this.standardSizeOutdoors = this.defaultsVariableService.getStandardSize(this.currentProperty, this.OUTDOOR);
     this.standardSizeResorts = this.defaultsVariableService.getStandardSize(this.currentProperty, this.RESORT);
+
+    if (localStorage.getItem('product')) {
+      productData = JSON.parse(localStorage.getItem('product'));
+    } else {
+      productData = this.schemaManagerService.getProductSchema(this.currentProperty);
+    }
+
+    if (localStorage.getItem('spending')) {
+      speadingsData = JSON.parse(localStorage.getItem('spending'));
+    } else {
+      speadingsData = this.schemaManagerService.getSpeadingSchema(this.currentProperty);
+    }
+
+    if (localStorage.getItem('implicit')) {
+      implicitCostData = JSON.parse(localStorage.getItem('implicit'));
+    } else {
+      implicitCostData = this.schemaManagerService.getImplicitSchema(this.currentProperty);
+    }
+
+    if (localStorage.getItem('profit')) {
+      profitData = JSON.parse(localStorage.getItem('profit'));
+    } else {
+      profitData = this.schemaManagerService.getProfitSchama(this.currentProperty);
+    }
+
+    if (localStorage.getItem('rateReturn')) {
+      rateReturnData = JSON.parse(localStorage.getItem('rateReturn'));
+    } else {
+      rateReturnData = this.schemaManagerService.getRateReturn(this.currentProperty);
+    }
 
     productData = this.calculatorManagerService.calculateProduct(this.areaData, productData);
     this.store.dispatch(new productAction.SuccessAction(productData));

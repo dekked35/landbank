@@ -284,9 +284,13 @@ export class AreaComponent implements OnInit {
   }
 
   initializeAreaSchema(isReloadData: boolean, isNewPage?: boolean) {
+    let areaData
     this.store.dispatch(new areaAction.IsLoadingAction(true));
-    let areaData = this.shemaManagerService.getAreaSchema(this.propertyType);
-
+    if(localStorage.getItem('area')) {
+      areaData = JSON.parse(localStorage.getItem('area'))
+    } else {
+      areaData = this.shemaManagerService.getAreaSchema(this.propertyType);
+    }
     areaData = this.calculatorManagerService.calculateArea(areaData);
     this.store.dispatch(new areaAction.SuccessAction(areaData));
 

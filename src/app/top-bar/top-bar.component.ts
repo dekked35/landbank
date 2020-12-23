@@ -52,7 +52,7 @@ export class TopBarComponent implements OnInit {
   constructor(private store: Store<any>,
     private requestManagerService: RequestManagerService,
     private basicTypeService: BasicTypeService) {
-    this.store.dispatch(new pageAction.PageAction('village'));
+    this.store.dispatch(new pageAction.PageAction(localStorage.getItem('page') ? localStorage.getItem('page') : 'village'));
     this.store.select(fromCore.getPage)
     .subscribe(page => {
       this.currentProperty = page.page;

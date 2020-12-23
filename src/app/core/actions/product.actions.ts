@@ -14,7 +14,9 @@ export class IsLoadingAction implements Action {
 
 export class SuccessAction implements Action {
   readonly type = SUCCESS
-  constructor (public payload) { }
+  constructor (public payload) {
+    localStorage.setItem('product', JSON.stringify(payload));
+  }
 }
 
 export class TriggerRoomAction implements Action {
