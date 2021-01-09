@@ -200,8 +200,8 @@ export const village = {
 
         'breakEvenPointMonthCash' : 0.0, // จุดคุ้มทุนจำนวนเดือน
         'breakEvenPointYearCash' : 0.0, // จุดคุ้มทุนจำนวนปี
-        'bankLoad' : 80, // สัดส่วนการกู้ธนาคาร
-        'privateCash' : 20,  // สัดส่วนการเงินส่วนตัว
+        'bankInvestmentFundRatio' : 80, // สัดส่วนการกู้ธนาคาร
+        'privateInvestmentFundRatio' : 20,  // สัดส่วนการเงินส่วนตัว
         'bankInterest' : 8, // อัตราดอกเบี้ย
         'returnRate' : 13, // อัตราผลการตอบแทนที่นักลงทุนต้องการ
         'breakEvenPointMonthBank' : 0.0, // จุดคุ้มทุนจำนวนเดือน

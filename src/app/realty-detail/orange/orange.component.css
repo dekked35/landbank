@@ -1,0 +1,30 @@
+
+.wrap_graph_product {
+    align-self: center;
+}
+
+.chart_expense {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.icon-home {
+  width: 60px;
+  top: 20%;
+}
+
+.box_color {
+  margin-left: 10px;
+}
+
+.p-word{
+  color: #0060be;
+}
+
+.wording{
+  color: black;
+}
+
+.display-inline{
+  display: inline;
+}

@@ -115,6 +115,7 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.store.select(fromCore.getPage)
       .subscribe(page => {
         this.currentProperty = page.page;
+        console.log('is in initial')
         this.initializeProductSchema();
       });
 
@@ -218,31 +219,31 @@ export class ProductBasicSettingHotelComponent implements OnInit, OnDestroy, OnC
     this.standardSizeOutdoors = this.defaultsVariableService.getStandardSize(this.currentProperty, this.OUTDOOR);
     this.standardSizeResorts = this.defaultsVariableService.getStandardSize(this.currentProperty, this.RESORT);
 
-    if (localStorage.getItem('product')) {
+    if (localStorage.getItem('product') && localStorage.getItem('page') === this.currentProperty) {
       productData = JSON.parse(localStorage.getItem('product'));
     } else {
       productData = this.schemaManagerService.getProductSchema(this.currentProperty);
     }
 
-    if (localStorage.getItem('spending')) {
+    if (localStorage.getItem('spending') && localStorage.getItem('page') === this.currentProperty) {
       speadingsData = JSON.parse(localStorage.getItem('spending'));
     } else {
       speadingsData = this.schemaManagerService.getSpeadingSchema(this.currentProperty);
     }
 
-    if (localStorage.getItem('implicit')) {
+    if (localStorage.getItem('implicit') && localStorage.getItem('page') === this.currentProperty) {
       implicitCostData = JSON.parse(localStorage.getItem('implicit'));
     } else {
       implicitCostData = this.schemaManagerService.getImplicitSchema(this.currentProperty);
     }
 
-    if (localStorage.getItem('profit')) {
+    if (localStorage.getItem('profit') && localStorage.getItem('page') === this.currentProperty) {
       profitData = JSON.parse(localStorage.getItem('profit'));
     } else {
       profitData = this.schemaManagerService.getProfitSchama(this.currentProperty);
     }
 
-    if (localStorage.getItem('rateReturn')) {
+    if (localStorage.getItem('rateReturn') && localStorage.getItem('page') === this.currentProperty) {
       rateReturnData = JSON.parse(localStorage.getItem('rateReturn'));
     } else {
       rateReturnData = this.schemaManagerService.getRateReturn(this.currentProperty);

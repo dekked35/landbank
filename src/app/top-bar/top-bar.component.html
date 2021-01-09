@@ -1,37 +1,89 @@
+<div style="padding: 10px 5px 10px 50px;">
+  <app-orange></app-orange>
+</div>
 <div class="ui-g ctn_backoffice">
-    <div class="ui-g-12 ui-md-12 ui-lg-12 large-size-screen menu_feas">
-      <ul>
-        <li [ngClass]="{'active': currentProperty=='village'}" (click)="selectProperty('village')">หมู่บ้านจัดสรร
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='townhome'}" (click)="selectProperty('townhome')">อาคารพาณิชย์
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='condo'}" (click)="selectProperty('condo')">คอนโด
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='hotel'}" (click)="selectProperty('hotel')">โรงแรม
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='communityMall'}" (click)="selectProperty('communityMall')">Community Mall
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-      </ul>
-    </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-12 small-size-screen menu_feas">
-      <ul>
-        <li [ngClass]="{'active': currentProperty=='village'}" [ngStyle]="toggleNgStyle('village')"
-          (click)="toggleProperty('village')">หมู่บ้านจัดสรร
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='townhome'}" [ngStyle]="toggleNgStyle('townhome')"
-          (click)="toggleProperty('townhome')">อาคารพาณิชย์
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='condo'}" [ngStyle]="toggleNgStyle('condo')"
-          (click)="toggleProperty('condo')">คอนโด
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='hotel'}" [ngStyle]="toggleNgStyle('hotel')"
-          (click)="toggleProperty('hotel')">โรงแรม
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-        <li [ngClass]="{'active': currentProperty=='communityMall'}" [ngStyle]="toggleNgStyle('communityMall')"
-          (click)="toggleProperty('communityMall')">Community Mall
-          <i class="pi pi-angle-down" aria-hidden="true"></i></li>
-      </ul>
-    </div>
+  <div class="ui-g-12 ui-md-12 ui-lg-12 large-size-screen menu_feas">
+    <ul>
+      <li
+        [ngClass]="{ active: currentProperty == 'village' }"
+        (click)="selectProperty('village')"
+      >
+        หมู่บ้านจัดสรร <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li
+        [ngClass]="{ active: currentProperty == 'townhome' }"
+        (click)="selectProperty('townhome')"
+      >
+        อาคารพาณิชย์ <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li
+        [ngClass]="{ active: currentProperty == 'condo' }"
+        (click)="selectProperty('condo')"
+      >
+        คอนโด <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li
+        [ngClass]="{ active: currentProperty == 'hotel' }"
+        (click)="selectProperty('hotel')"
+      >
+        โรงแรม <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li
+        [ngClass]="{ active: currentProperty == 'communityMall' }"
+        (click)="selectProperty('communityMall')"
+      >
+        Community Mall <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li>
+        <button
+          id="button-print"
+          pButton
+          type="button"
+          (click)="onExportClick()"
+          label="Print To PDF"
+        ></button>
+      </li>
+    </ul>
+  </div>
+  <div class="ui-g-12 ui-md-12 ui-lg-12 small-size-screen menu_feas">
+    <ul>
+      <li
+        [ngClass]="{ active: currentProperty == 'village' }"
+        [ngStyle]="toggleNgStyle('village')"
+        (click)="toggleProperty('village')"
+      >
+        หมู่บ้านจัดสรร <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li
+        [ngClass]="{ active: currentProperty == 'townhome' }"
+        [ngStyle]="toggleNgStyle('townhome')"
+        (click)="toggleProperty('townhome')"
+      >
+        อาคารพาณิชย์ <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li
+        [ngClass]="{ active: currentProperty == 'condo' }"
+        [ngStyle]="toggleNgStyle('condo')"
+        (click)="toggleProperty('condo')"
+      >
+        คอนโด <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li
+        [ngClass]="{ active: currentProperty == 'hotel' }"
+        [ngStyle]="toggleNgStyle('hotel')"
+        (click)="toggleProperty('hotel')"
+      >
+        โรงแรม <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+      <li
+        [ngClass]="{ active: currentProperty == 'communityMall' }"
+        [ngStyle]="toggleNgStyle('communityMall')"
+        (click)="toggleProperty('communityMall')"
+      >
+        Community Mall <i class="pi pi-angle-down" aria-hidden="true"></i>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <div class="ctn_backoffice">

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as env from '../environments/environment';
-import * as html2pdf from 'html2pdf.js'
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,20 +22,6 @@ export class AppComponent {
 
   getMainWeb(path: string){
     return this.LANDBANK_MAIN_WEB + "/th/" + path
-  }
-
-  onExportClick() {
-    const option = {
-      filename: 'landbank-pdf.pdf',
-      image: {type : 'png'},
-      html2canvas: {},
-      jsPDF: { orientation : 'landscape', format: 'a3',},
-      pagebreak: {after: ['#pagebreak1','#pagebreak2','#pagebreak3']}
-    };
-
-    const content: Element = document.getElementById('element-to-export');
-
-    html2pdf().from(content).set(option).save()
   }
 
 }

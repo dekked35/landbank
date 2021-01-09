@@ -17,6 +17,7 @@ import * as townhomeSchema from '../core/schema/basic-type/townhome';
 import * as condoSchema from '../core/schema/basic-type/condo';
 import * as hotelSchema from '../core/schema/basic-type/hotel';
 import * as communityMallSchema from '../core/schema/basic-type/communityMall';
+import * as html2pdf from 'html2pdf.js';
 
 
 const schemaDefaults = {
@@ -67,6 +68,7 @@ export class TopBarComponent implements OnInit {
 
   selectProperty(propertyType: string) {
     if (this.currentProperty !== propertyType) {
+      localStorage.removeItem("page")
       this.store.dispatch(new pageAction.PageAction(propertyType));
     }
   }
@@ -77,6 +79,7 @@ export class TopBarComponent implements OnInit {
 
   showExpension: boolean = false;
   toggleProperty(propertyType: string) {
+    localStorage.removeItem("page")
     this.store.dispatch(new pageAction.PageAction(propertyType));
 
     if (this.showExpension) {
@@ -99,6 +102,18 @@ export class TopBarComponent implements OnInit {
         return style_none;
       }
     }
+  }
+
+  onExportClick() {
+    const option = {
+      filename: 'landbank-pdf.pdf',
+      image: {type : 'png'},
+      jsPDF: { orientation : 'landscape', format: 'a3'},
+      pagebreak: {after: ['#pagebreak1','#pagebreak2','#pagebreak3']}
+    };
+
+    const content = document.getElementById('element-to-export');
+    html2pdf().from(content).set(option).save()
   }
 
 }

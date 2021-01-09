@@ -9,7 +9,7 @@
                     อัตราผลตอบแทน
                 </h1>
                 <h1 *ngIf="currentProperty === 'village' || currentProperty === 'townhome'">
-                    IPR อัตราผลตอบแทนภายใน
+                    IRR อัตราผลตอบแทนภายใน
                 </h1>
             </figcaption>
         </div>
@@ -53,7 +53,7 @@
             </div>
             <div class="ui-g-8 ui-md-4 ui-lg-4 ">
                 <div class="box_layout">จำนวนเดือน <span>
-                        {{ rateReturnData.monthlyCashBreakEvenPoint | number:'1.0-0' }} </span> เดือน</div>
+                        {{ rateReturnData.breakPointMonthlyWithCash | number:'1.0-0' }} </span> เดือน</div>
                 <div class="box_layout"> จำนวนปี <span> {{ rateReturnData.yearCashBreakEvenPoint | number:'1.0-0' }}
                     </span> ปี</div>
             </div>
@@ -72,15 +72,15 @@
                 </div>
             </div>
             <div class="ui-g-4 ui-md-4 ui-lg-3 box_layout" style="text-align: center;">
-                สัดส่วนการกู้ธนาคาร <span> {{ rateReturnData.bankLoad }} %</span>
+                สัดส่วนการกู้ธนาคาร <span> {{ rateReturnData.bankInvestmentFundRatio }} %</span>
             </div>
             <div class="ui-g-4 ui-md-4 ui-lg-3" style="text-align: center; padding-top: 10px;">
-                <p-slider [(ngModel)]="rateReturnData.bankLoad" [min]="0" [max]="100"
+                <p-slider [(ngModel)]="rateReturnData.bankInvestmentFundRatio" [min]="0" [max]="100"
                     (onChange)="handleLoanChange($event)" (onSlideEnd)="onSlideEnd($event, '')">
                 </p-slider>
             </div>
             <div class="ui-g-4 ui-md-4 ui-lg-3 box_layout" style="text-align: center;">
-                เงินส่วนตัว <span> {{rateReturnData.privateCash }} %</span>
+                เงินส่วนตัว <span> {{rateReturnData.privateInvestmentFundRatio }} %</span>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-5" style="padding-top:15px;">
                 อัตราดอกเบี้ย <input size="10" [(ngModel)]="rateReturnData.bankInterest"
@@ -104,7 +104,7 @@
                     รายรับ (ต่อเดือน) <span> {{ rateReturnData.monthlyIncome | number:'1.2-2'}} </span> บาท
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                    รายจ่าย (ต่อเดือน) <span> {{ rateReturnData.monthlyIncome | number:'1.2-2'}} </span>
+                    รายจ่าย (ต่อเดือน) <span> {{ rateReturnData.monthlyExpense | number:'1.2-2'}} </span>
                     บาท
                 </div>
             </ng-container>
@@ -120,7 +120,7 @@
             </div>
             <div class="ui-g-8 ui-md-4 ui-lg-4 ">
                 <div class="box_layout">จำนวนเดือน <span>
-                        {{ rateReturnData.monthlyBankBreakEvenPoint | number:'1.0-0' }} </span> เดือน</div>
+                        {{ rateReturnData.breakPointMonthlyWithBank | number:'1.0-0' }} </span> เดือน</div>
                 <div class="box_layout"> จำนวนปี <span> {{ rateReturnData.yearBankBreakEvenPoint | number:'1.0-0' }}
                     </span> ปี</div>
             </div>
@@ -183,7 +183,7 @@
                         <tr>
                             <td>ส่วนทุน</td>
                             <td class="box_layout">
-                                <span>{{ rateReturnData.privateFund  | number:'1.2-2' }}</span> </td>
+                                <span>{{ rateReturnData.personalInvestmentBudget  | number:'1.2-2' }}</span> </td>
                             <td class="box_layout">
                                 <!-- <span>{{ rateReturnData.ratioPrivateFund  | number:'1.2-2' }}</span> %</td> -->
                                 <span>{{ rateReturnData.privateCash  | number:'1.2-2' }}</span> %</td>
@@ -196,7 +196,7 @@
                         <tr>
                             <td>ส่วนเงินกู้</td>
                             <td class="box_layout">
-                                <span>{{ rateReturnData.borrowFund | number:'1.2-2' }}</span> </td>
+                                <span>{{ rateReturnData.bankInvestmentBudget | number:'1.2-2' }}</span> </td>
                             <td class="box_layout">
                                 <!-- <span>{{ rateReturnData.ratioBorrowFund | number:'1.2-2' }}</span> %</td> -->
                                 <span>{{ rateReturnData.bankLoad | number:'1.2-2' }}</span> %</td>

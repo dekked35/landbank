@@ -90,9 +90,7 @@ export class RateReturnComponent implements OnInit {
 
 
   handleLoanChange($event) {
-    this.rateReturnData.privateCash =  100 - this.rateReturnData.bankLoad;
-    this.rateReturnData.ratioPrivateFund =  this.rateReturnData.privateCash;
-    this.rateReturnData.ratioBorrowFund =  this.rateReturnData.bankLoad;
+    this.rateReturnData.privateInvestmentFundRatio = 100 - this.rateReturnData.bankInvestmentFundRatio
   }
 
   inputOnChange($event){
@@ -105,10 +103,7 @@ export class RateReturnComponent implements OnInit {
     if(field === 'occupancy') {
       this.implicitsCostData.occupancy = $event.value;
     } else {
-      this.rateReturnData.privateCash =  100 - this.rateReturnData.bankLoad;
-      this.rateReturnData.ratioPrivateFund =  this.rateReturnData.privateCash;
-      this.rateReturnData.ratioBorrowFund =  this.rateReturnData.bankLoad;
-
+      this.rateReturnData.privateInvestmentFundRatio = 100 - this.rateReturnData.bankInvestmentFundRatio
     }
 
     this.getImplicitCostService();
@@ -145,8 +140,8 @@ export class RateReturnComponent implements OnInit {
   }
   generateRateReturnInput(){
     let payload = {
-      "bankLoad": +this.rateReturnData.bankLoad,
-      "privateCash": +this.rateReturnData.privateCash,
+      "privateInvestmentFundRatio": +this.rateReturnData.privateInvestmentFundRatio,
+      "bankInvestmentFundRatio": +this.rateReturnData.bankInvestmentFundRatio,
       "bankInterest": +this.rateReturnData.bankInterest,
       "returnRate": +this.rateReturnData.returnRate,
       "cashFlowYear": +this.rateReturnData.cashFlowYear,
