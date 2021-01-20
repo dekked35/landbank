@@ -87,7 +87,7 @@ export class SpendingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.store.select(fromCore.getArea).subscribe((area) => {
       this.areaData = area.payload;
-      if(this.areaData.total_land_price) {
+      if(this.areaData.total_land_price && this.spendingsData) {
         this.spendingsData.priceLandBought = this.areaData.total_land_price;
       }
     });

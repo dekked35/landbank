@@ -1,3 +1,4 @@
+import { OrangeComponent } from './realty-detail/orange/orange.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -62,7 +63,8 @@ import {NumberCommaDirective} from './shared/number-comma.directive'
     ImplicitCostComponent,
     ContructionCostTableComponent,
     ProfitTableComponent,
-    NumberCommaDirective
+    NumberCommaDirective,
+    OrangeComponent
   ],
   imports: [
     BrowserModule,

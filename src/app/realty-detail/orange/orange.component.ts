@@ -89,11 +89,11 @@ const imageType = {
 };
 
 @Component({
-  selector: 'app-area',
-  templateUrl: './area.component.html',
-  styleUrls: ['./area.component.css'],
+  selector: 'app-orange',
+  templateUrl: './orange.component.html',
+  styleUrls: ['./orange.component.css'],
 })
-export class AreaComponent implements OnInit {
+export class OrangeComponent implements OnInit {
 
   constructor(
     private store: Store<any>,
@@ -141,6 +141,12 @@ export class AreaComponent implements OnInit {
   error: any;
   allArea: number;
   param: any;
+  setArea: number;
+  bedRoom = 5;
+  restRoom = 7;
+  provience = 'กรุงเทพ';
+  floor = 3;
+  location = '16/90 แขวงวชิระพยาบาล เขตดุสิต กรุงเทพมหานคร'
 
   standardRoomArea: any = {
     percent: {
@@ -272,16 +278,14 @@ export class AreaComponent implements OnInit {
     });
     this.reloadData(true);
 
-    this.store.select(fromCore.getProduct).subscribe((data) => {
-      this.is_loading_product = data.isLoading;
-      this.productData = data.payload;
-      this.checkRatio(this.productData);
-    });
+  }
 
-    this.store.select(fromCore.getSpendings).subscribe((data) => {
-      this.is_loading_product = data.isLoading;
-      this.spendingsData = data.payload;
-    });
+  setValue(value) {
+    this.farValue = value.farValue;
+    this.osrValue = value.osrValue;
+    this.totalArea = value.totalArea;
+    this.landPrice = value.landPrice;
+    this.availableArea = value.availableArea;
   }
 
   initializeAreaSchema(isReloadData: boolean, isNewPage?: boolean) {
@@ -342,6 +346,7 @@ export class AreaComponent implements OnInit {
     this.models = this.defaultsVariableService.getAreaRatio(this.propertyType);
     this.selectedParking = true;
     this.checkInnerWidth();
+    this.setArea = this.availableArea * 4;
     if (isNewPage) {
       this.reloadDataParam(isReloadData, this.param);
     } else {
@@ -357,14 +362,6 @@ export class AreaComponent implements OnInit {
     }
     this.calculateAreaRatio(null);
     // this.reloadData(true)
-  }
-
-  setValue(value) {
-    this.farValue = value.farValue;
-    this.osrValue = value.osrValue;
-    this.totalArea = value.totalArea;
-    this.landPrice = value.landPrice;
-    this.availableArea = value.availableArea;
   }
 
   changeModel() {
@@ -787,11 +784,7 @@ export class AreaComponent implements OnInit {
         ? 'buy'
         : this.areaData.costLandType;
     this.convertNum();
-    if (['village', 'townhome'].includes(this.propertyType)) {
-      this.areaData.lawAreaUsage = params.totalArea * 4;
-    } else {
-      this.areaData.lawAreaUsage = (params.far * params.totalArea * 4);
-    }
+    this.areaData.lawAreaUsage = params.far * params.totalArea * 4;
     this.areaData.emptyArea =
       (this.areaData.lawAreaUsage * params.osrValue) / 100;
     this.farValue = params.far;

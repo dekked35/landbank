@@ -1,0 +1,185 @@
+<p-panel>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">
+      <figure>
+        <img class="icon-home" src="../../../assets/icons/home1.svg" />
+      </figure>
+      <figcaption>
+        <h1>บ้าน กทม.</h1>
+      </figcaption>
+    </div>
+  </div>
+
+  <div class="ui-g text_cover">
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+      <div class="box_layout">
+        <figcaption>
+          <p class="p-word">ประเภท</p>
+        </figcaption>
+          <span  class="wording">ที่ดิน </span>
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-8">
+      <div class="box_layout">
+        <figcaption>
+          <p class="p-word">เกรด</p>
+        </figcaption>
+        <span class="wording">B </span>
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+      <div class="box_layout">
+        <figcaption>
+          <p class="p-word">ผังสีเมือง</p>
+          <!-- สีผังเมือง <div [ngStyle]="getStyleTown()"></div> -->
+        </figcaption>
+        <div
+          class="box_color"
+          [style.background-color]="areaData.townPlanColor"
+        ></div>
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+      <div class="box_layout">
+        <figcaption>
+          <p class="p-word">FAR</p>
+        </figcaption>
+        <input
+          class="number box_color"
+          [(ngModel)]="farValue"
+          size="10"
+          (change)="InputChange($event)"
+          pKeyFilter="num"
+          type="num"
+          pInputText
+          inputWithComma
+        />
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4">
+      <div class="box_layout">
+        <figcaption>
+          <p class="p-word">OSR</p>
+        </figcaption>
+        <input
+          class="number box_color"
+          [(ngModel)]="osrValue"
+          size="10"
+          (change)="InputChange($event)"
+          pKeyFilter="num"
+          type="num"
+          pInputText
+          inputWithComma
+        />
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+      <figcaption>
+        <p class="p-word display-inline">ขนาดพื้นที่</p>
+        <input
+          style="margin-left: 5px"
+          [(ngModel)]="totalArea"
+          size="6"
+          (change)="InputChangeTotalArea($event)"
+          pKeyFilter="num"
+          type="num"
+          pInputText
+          inputWithComma
+        />
+        ตร.ว.
+      </figcaption>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+      <figcaption>
+        <p class="p-word display-inline">พื้นที่ใช้สอย</p>
+        <input
+          style="margin-left: 5px"
+          [(ngModel)]="setArea"
+          size="6"
+          pKeyFilter="num"
+          type="num"
+          pInputText
+          inputWithComma
+        />
+        ตร.ม.
+      </figcaption>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+      <figcaption>
+        <p class="p-word display-inline">จำนวนห้องนอน</p>
+        <input
+          style="margin-left: 5px"
+          [(ngModel)]="bedRoom"
+          size="4"
+          pKeyFilter="num"
+          type="num"
+          pInputText
+          inputWithComma
+        />
+      </figcaption>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+      <figcaption>
+        <p class="p-word display-inline">จำนวนห้องน้ำ</p>
+        <input
+          style="margin-left: 5px"
+          [(ngModel)]="restRoom"
+          size="4"
+          pKeyFilter="num"
+          type="num"
+          pInputText
+          inputWithComma
+        />
+      </figcaption>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+      <figcaption>
+        <p class="p-word display-inline">จำนวนชั้น</p>
+        <input
+          style="margin-left: 5px"
+          [(ngModel)]="floor"
+          size="4"
+          pKeyFilter="num"
+          type="num"
+          pInputText
+          inputWithComma
+        />
+      </figcaption>
+    </div>
+
+    <div class="ui-g-12 ui-md-6 ui-lg-4 box_layout_2">
+      <figcaption>
+        <p class="p-word display-inline">จังหวัด</p>
+        <input
+          style="margin-left: 5px"
+          [(ngModel)]="provience"
+          size="10"
+          pInputText
+        />
+      </figcaption>
+    </div>
+
+    <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout_2">
+      <figcaption>
+        <p class="p-word display-inline">สถานที่ตั้ง</p>
+        <input
+          style="margin-left: 5px"
+          [(ngModel)]="location"
+          pInputText
+          size="60"
+        />
+      </figcaption>
+    </div>
+
+  </div>
+</p-panel>
