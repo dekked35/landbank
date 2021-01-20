@@ -53,7 +53,7 @@
             </div>
             <div class="ui-g-8 ui-md-4 ui-lg-4 ">
                 <div class="box_layout">จำนวนเดือน <span>
-                        {{ rateReturnData.breakPointMonthlyWithCash | number:'1.0-0' }} </span> เดือน</div>
+                        {{ rateReturnData.monthlyCashBreakEvenPoint | number:'1.0-0' }} </span> เดือน</div>
                 <div class="box_layout"> จำนวนปี <span> {{ rateReturnData.yearCashBreakEvenPoint | number:'1.0-0' }}
                     </span> ปี</div>
             </div>
@@ -120,7 +120,7 @@
             </div>
             <div class="ui-g-8 ui-md-4 ui-lg-4 ">
                 <div class="box_layout">จำนวนเดือน <span>
-                        {{ rateReturnData.breakPointMonthlyWithBank | number:'1.0-0' }} </span> เดือน</div>
+                        {{ rateReturnData.monthlyBankBreakEvenPoint | number:'1.0-0' }} </span> เดือน</div>
                 <div class="box_layout"> จำนวนปี <span> {{ rateReturnData.yearBankBreakEvenPoint | number:'1.0-0' }}
                     </span> ปี</div>
             </div>
@@ -146,10 +146,10 @@
                 </span>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                ต้นทุนทางการเงิน <span>{{ rateReturnData.privateCash  | number:'1.2-2' }} </span> %
+                ต้นทุนทางการเงิน <span>{{ rateReturnData.investmentBudget  | number:'1.2-2' }} </span> %
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                Payback Period <span>{{ rateReturnData.paybackPeriod  | number }} </span> เดือน
+                Payback Period <span>{{ rateReturnData.cashFlowDuration  | number }} </span> เดือน
             </div>
         </div>
         <div class="ui-g-12 ui-md-12 ui-lg-6">
@@ -175,7 +175,7 @@
                         <tr>
                             <td>มูลค่าเงินลงทุน</td>
                             <td class="box_layout">
-                                <span>{{ rateReturnData.investmentValue | number:'1.2-2' }}</span> </td>
+                                <span>{{ rateReturnData.investmentBudget | number:'1.2-2' }}</span> </td>
                             <td class="box_layout">
                                 <span>{{ rateReturnData.ratioInvestmentValue | number }}</span> % </td>
                             <td> </td>
@@ -208,7 +208,7 @@
                 </div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                ต้นทุนทางการเงินเฉลี่ย (WACC) <span>{{ rateReturnData.financeCosts  | number:'1.2-2' }}
+                ต้นทุนทางการเงินเฉลี่ย (WACC) <span>{{ rateReturnData.wacc  | number:'1.2-2' }}
                 </span> %
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">

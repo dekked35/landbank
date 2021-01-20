@@ -54,24 +54,24 @@ export const village = {
                 {
                     'type': 'บ้าน 1 ชั้น',
                     'size': 50,
-                    'area': 110,
-                    'cost': 1,
+                    'area': 100,
+                    'cost': 10,
                     'ratio': 50,
                     'quantity': 0
                 },
                 {
                     'type': 'บ้าน 2 ชั้น',
-                    'size': 50,
-                    'area': 180,
-                    'cost': 2,
+                    'size': 100,
+                    'area': 200,
+                    'cost': 20,
                     'ratio': 25,
                     'quantity': 0
                 },
                 {
                     'type': 'บ้าน 3 ชั้น',
-                    'size': 50,
-                    'area': 200,
-                    'cost': 3,
+                    'size': 100,
+                    'area': 300,
+                    'cost': 30,
                     'ratio': 25,
                     'quantity': 0
                 }
@@ -86,24 +86,24 @@ export const village = {
               {
                   'type': 'บ้าน 1 ชั้น',
                   'size': 50,
-                  'area': 110,
-                  'cost': 1,
+                  'area': 100,
+                  'cost': 10,
                   'ratio': 50,
                   'quantity': 0
               },
               {
                   'type': 'บ้าน 2 ชั้น',
-                  'size': 50,
-                  'area': 180,
-                  'cost': 2,
+                  'size': 100,
+                  'area': 200,
+                  'cost': 20,
                   'ratio': 25,
                   'quantity': 0
               },
               {
                   'type': 'บ้าน 3 ชั้น',
-                  'size': 50,
-                  'area': 200,
-                  'cost': 3,
+                  'size': 100,
+                  'area': 300,
+                  'cost': 30,
                   'ratio': 25,
                   'quantity': 0
               }

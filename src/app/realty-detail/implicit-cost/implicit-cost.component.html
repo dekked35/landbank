@@ -53,45 +53,6 @@
              <span class="font-gray-color"> หมายเหตุ : ต้องไม่เกิน 10,000 บาทต่อตารางวา </span>
           </div>
        </div>
-        <!-- <div class="ui-g-12 ui-md-12 ui-lg-12">
-            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" >
-                พื้นที่ใช้ขาย
-                <span *ngIf="!is_loading_implicitCost">
-                    {{ implicitsCostData.sellAreaSize | number:'1.2-2'  }} </span>
-                <span *ngIf="is_loading_implicitCost">
-                    <app-loading></app-loading>
-                </span>
-                ตารางวา
-            </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                ต้นทุนที่ดินที่ใช้ขาย
-                <span *ngIf="!is_loading_implicitCost"> {{ implicitsCostData.costLand | number:'1.2-2'  }}
-                </span>
-                <span *ngIf="is_loading_implicitCost">
-                    <app-loading></app-loading>
-                </span>
-                บาท/ตารางวา
-                <span class="font-gray-color"> หมายเหตุ : ต้องไม่เกิน 10,000 บาทต่อตารางวา </span>
-            </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout">
-                ต้นทุนทั้งหมด
-                <span *ngIf="!is_loading_implicitCost"> {{ implicitsCostData.costAll | number:'1.2-2'  }}
-                </span>
-                <span *ngIf="is_loading_implicitCost">
-                    <app-loading></app-loading>
-                </span>
-                บาท
-            </div>
-            <div class="ui-g-12 ui-md-12 ui-lg-12 box_layout" *ngIf="currentProperty === 'townhome'">
-                มูลค่าทั้งโครงการ
-                <span *ngIf="!is_loading_implicitCost">
-                    {{ implicitsCostData.costProject | number:'1.2-2'  }} </span>
-                <span *ngIf="is_loading_implicitCost">
-                    <app-loading></app-loading>
-                </span>
-                บาท/ตารางวา
-            </div>
-        </div> -->
     </div>
     <div class="ui-g-12 ui-md-12 ui-lg-6" *ngIf="currentProperty === 'village' || currentProperty === 'townhome' ">
         <div class="ui-g-12 ui-md-12 ui-lg-12 bg_myasset_detail">

@@ -787,7 +787,11 @@ export class AreaComponent implements OnInit {
         ? 'buy'
         : this.areaData.costLandType;
     this.convertNum();
-    this.areaData.lawAreaUsage = params.far * params.totalArea * 4;
+    if (['village', 'townhome'].includes(this.propertyType)) {
+      this.areaData.lawAreaUsage = params.totalArea * 4;
+    } else {
+      this.areaData.lawAreaUsage = (params.far * params.totalArea * 4);
+    }
     this.areaData.emptyArea =
       (this.areaData.lawAreaUsage * params.osrValue) / 100;
     this.farValue = params.far;

@@ -24,13 +24,14 @@ export class CalculatorManagerService {
   }
 
   calculateArea(areaData: any) {
+    const {farValue, osrValue} = areaData;
     // คำนวณพื้นที่ที่ใช้ได้ตามกฏหมาย
-    const far = +areaData.farValue;
+
     const totalArea = +areaData.totalArea;
     if (['village', 'townhome'].includes(this.propertyType)) {
       areaData.availableArea =  totalArea;
     } else {
-      areaData.availableArea = (far * totalArea * 4);
+      areaData.availableArea = (farValue * totalArea * 4);
     }
     // คำนวณราคาที่ดิน
     const landPrice = +areaData.landPrice;
@@ -42,7 +43,6 @@ export class CalculatorManagerService {
       }
     }
     areaData.wording = '';
-    const {farValue, osrValue} = areaData;
 
     if (farValue <= 3 && osrValue >= 10) {
       areaData.townPlanColor = '#FFFC10';
@@ -89,7 +89,11 @@ export class CalculatorManagerService {
     } else {
       areaData.wording = 'ไม่พบในฐานข้อมูล';
     }
-    areaData.lawAreaUsage = totalArea * farValue * 4;
+    if (['village', 'townhome'].includes(this.propertyType)) {
+      areaData.lawAreaUsage = totalArea * 4;
+    } else {
+      areaData.lawAreaUsage = (farValue * totalArea * 4);
+    }
     areaData.emptyArea = areaData.lawAreaUsage * osrValue / 100;
     areaData.coverArea = ['village', 'townhome'].includes(this.propertyType) ? areaData.emptyArea / 4 : areaData.emptyArea;
     return areaData;
